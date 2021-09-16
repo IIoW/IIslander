@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "description": "The IIslander Discord bot for the IIslands of War Discord server",
     "contributors": [
-        "Antti <antti@antti.codes>"
+        "Antti <antti@antti.codes>",
+        "Commentator2.0 <kommentator2.9.0.1@gmail.com"
     ],
     "private": true,
     "license": "MIT",
@@ -18,7 +19,8 @@
     },
     "dependencies": {
         "discord.js": "^13.1.0",
-        "dotenv": "^10.0.0"
+        "dotenv": "^10.0.0",
+        "yarn": "^1.22.11"
     },
     "devDependencies": {
         "@commitlint/cli": "^13.1.0",

@@ -1,5 +1,6 @@
 import { Client, Intents } from 'discord.js';
 import config from './config';
+import loadModules from './loadModules';
 
 const client = new Client({
     intents: [
@@ -11,9 +12,6 @@ const client = new Client({
     ],
 });
 
-client.login(config.token);
+loadModules(client);
 
-// Temporary sanity check
-client.on('ready', () => {
-    console.log('Succesfully logged in.');
-});
+client.login(config.token);
