@@ -1,0 +1,42 @@
+{
+    "name": "iislander",
+    "version": "1.0.0",
+    "description": "The IIslander Discord bot for the IIslands of War Discord server",
+    "contributors": [
+        "Antti <antti@antti.codes>"
+    ],
+    "private": true,
+    "license": "MIT",
+    "main": "src/index.js",
+    "type": "module",
+    "scripts": {
+        "start": "node -r dotenv/config --es-module-specifier-resolution=node --trace-warnings .",
+        "lint": "yarn eslint src --fix --ext js",
+        "format": "yarn prettier --write .",
+        "update": "yarn upgrade-interactive --latest",
+        "prepare": "husky install"
+    },
+    "dependencies": {
+        "discord.js": "^13.1.0",
+        "dotenv": "^10.0.0"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^13.1.0",
+        "@commitlint/config-conventional": "^13.1.0",
+        "eslint": "^7.32.0",
+        "eslint-config-airbnb-base": "^14.2.1",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "^2.24.2",
+        "husky": "^7.0.2",
+        "lint-staged": "^11.1.2",
+        "prettier": "^2.4.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/IIoW/IIslander.git"
+    },
+    "bugs": {
+        "url": "https://github.com/IIoW/IIslander/issues"
+    },
+    "homepage": "https://github.com/IIoW/IIslander#readme"
+}
