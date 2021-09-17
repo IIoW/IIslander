@@ -1,6 +1,7 @@
 import { Client, Intents } from 'discord.js';
 import config from './config';
 import loadModules from './loadModules';
+import { setup as utilSetup } from './util';
 
 const client = new Client({
     intents: [
@@ -12,6 +13,7 @@ const client = new Client({
     ],
 });
 
+utilSetup(client);
 loadModules(client);
 
 client.login(config.token);
