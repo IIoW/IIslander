@@ -27,9 +27,6 @@ export default async (client) => {
 
     /**
      * Setting up all events.
-     */
-
-    /**
      * binds all events inside the subscriptions map to call all functions provided
      */
     subscriptions.forEach((funs, event) => {

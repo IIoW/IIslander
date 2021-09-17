@@ -2,7 +2,7 @@
  * Function called, when an error occurred while executing an event.
  * prints out the stacktrace.
  * @param client discord client
- * @param exception the exception which occured
+ * @param exception the exception which occurred
  */
 function error(client, exception) {
     console.error(`An error occurred:\n${exception.stack}`);
