@@ -1,4 +1,11 @@
-const command = RegExp('<choose \\d>');
+import config from '../../../config';
+
+const command = RegExp('<choose ?\\d>');
+
+const getEmoji = (client, search) =>
+    client.guilds.cache
+        .get(config.defaultGuild)
+        .emojis.cache.find((emote) => emote.name === search);
 
 /**
  *
@@ -11,11 +18,9 @@ async function fun(client, message) {
     // If the match is not defined or 0
     if (!amount) return;
     for (let i = 1; i < amount + 1; i += 1) {
-        // TODO: Fetch number emotes
         // eslint-disable-next-line no-await-in-loop
-        // await message.react(/* Get the emoji from i somehow */);
+        await message.react(getEmoji(client, `_${i}`));
     }
-    await message.channel.send(`you have ${amount} options to choose from`);
 }
 
 export { command, fun };

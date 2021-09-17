@@ -15,9 +15,8 @@ async function loadCommands() {
             }
         })
     );
-
+    console.log(`loaded commands:\n\t${Array.from(commands.keys()).join('\n\t')}`);
     console.log('Finished loading inline commands');
-    console.log(commands);
 }
 
 /**
