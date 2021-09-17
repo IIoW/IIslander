@@ -5,8 +5,7 @@
  * @param exception the exception which occured
  */
 function error(client, exception) {
-    console.log('an error occurred:');
-    console.error(exception.stack);
+    console.error(`An error occurred:\n${exception.stack}`);
 }
 /**
  * subscribes to error events.
