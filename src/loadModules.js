@@ -1,5 +1,3 @@
-// Removing import temporary for now, until this is tested and works
-// import * as events from './modules/events';
 import fs from 'fs';
 
 const subscriptions = new Map();
@@ -10,21 +8,22 @@ export default async (client) => {
      */
     const modules = fs.readdirSync('./src/modules');
 
-    for (const moduleName of modules) {
-        // Loads the module
-        // eslint-disable-next-line no-await-in-loop
-        const module = await import(`./modules/${moduleName}/module.js`);
-        // skips the module, in case it is disabled.
-        if (module.enabled) {
-            // Loads each of it's subscriptions into their according list.
-            module.subscriptions.forEach((fun, event) => {
-                if (!subscriptions.has(event)) {
-                    subscriptions.set(event, []);
-                }
-                subscriptions.get(event).push(fun);
-            });
-        }
-    }
+    await Promise.all(
+        modules.map(async (moduleName) => {
+            // Loads the module
+            const module = await import(`./modules/${moduleName}/module.js`);
+            // skips the module, in case it is disabled.
+            if (module.enabled) {
+                // Loads each of it's subscriptions into their according list.
+                module.subscriptions.forEach((fun, event) => {
+                    if (!subscriptions.has(event)) {
+                        subscriptions.set(event, []);
+                    }
+                    subscriptions.get(event).push(fun);
+                });
+            }
+        })
+    );
 
     /**
      * Setting up all events.
