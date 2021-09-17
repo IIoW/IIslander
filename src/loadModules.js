@@ -30,22 +30,17 @@ export default async (client) => {
      */
 
     /**
-     * Calles all provided functions with the given arguments.
-     * @param {import('discord.js').Client} client
-     * @param {Function[]} funs
-     * @param {*[]} args
-     */
-    // eslint-disable-next-line no-shadow
-    function callEventFunctions(client, funs, ...args) {
-        funs.forEach((fun) => {
-            fun(client, ...args);
-        });
-    }
-
-    /**
      * binds all events inside the subscriptions map to call all functions provided
      */
     subscriptions.forEach((funs, event) => {
-        client.on(event, callEventFunctions.bind(null, client, funs));
+        client.on(event, (...args) => {
+            funs.forEach(async (fun) => {
+                try {
+                    await fun(client, ...args);
+                } catch (e) {
+                    client.emit('error', e);
+                }
+            });
+        });
     });
 };
