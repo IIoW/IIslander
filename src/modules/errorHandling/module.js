@@ -1,19 +1,22 @@
+/**
+ * Function called, when an error occurred while executing an event.
+ * prints out the stacktrace.
+ * @param client discord client
+ * @param exception the exception which occured
+ */
 function error(client, exception) {
     console.log('an error occurred:');
     console.error(exception.stack);
 }
 /**
- * The events this module is subscribed to (entry points of this module, called when the specified event is triggered)
+ * subscribes to error events.
  */
 const subscriptions = new Map();
 subscriptions.set('error', error);
 
 /**
- * if this module should be loaded on startup
+ * do not disable. this handles all errors.
  */
 const enabled = true;
 
-/**
- * Opens up the subscription to be accessible from the outside.
- */
 export { subscriptions, enabled };
