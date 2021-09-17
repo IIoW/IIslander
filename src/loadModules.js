@@ -2,66 +2,45 @@
 // import * as events from './modules/events';
 import fs from 'fs';
 
-const subscriptions = {
-    'ready': [],
-    'messageCreate': [],
-    'messageDelete': [],
-    'messageReactionAdd': [],
-    'messageReactionRemove': [],
-    'guildMemeberAdd': []
-};
+const subscriptions = Map();
 
 export default (client) => {
 
     /**
      * loads all modules and their subscriptions
      */
-    fs.readdir('./src/modules').forEach((moduleName) => {
+    fs.readdirSync('./src/modules').forEach((moduleName) => {
         // Loads the module
         const module = import(`./src/modules/${moduleName}/module.js`);
         // skips the module, in case it is disabled.
         if (!module.enabled) continue;
         // Loads each of it's subscriptions into their according list.
         module.subscriptions.forEach((event, fun) => {
-            subscriptions[event].add(fun);
+            if (!subscriptions.has(event)) {
+                subscriptions.set(event, []);
+            }
+            subscriptions.get(event).add(fun);
         });
     });
 
     /**
      * Setting up all events.
-     * Currently all events have to be added manually,
-     * but if you know a way how to auto bind and pass the parameters, 
-     * feel free to change it up, that it binds all events specified in subscriptions
      */
 
-    client.on('ready', () => {
-        subscriptions['ready'].forEach(fun => {
-            fun(client);
+    /**
+     * Calles all provided functions with the given arguments.
+     */
+    function callEventFunctions(client, funs, ...args) {
+        funs.forEach( fun => {
+            fun(client, ...args)
         });
-    });
-    client.on('messageCreate', (message) => {
-        subscriptions['messageCreate'].forEach(fun => {
-            fun(client, message);
-        });
-    });
-    client.on('messageDelete', (message) => {
-        subscriptions['messageDelete'].forEach(fun => {
-            fun(client, message);
-        });
-    });
-    client.on('messageReactionAdd', (reaction, user) => {
-        subscriptions['messageReactionAdd'].forEach(fun => {
-            fun(client, reaction, user);
-        });
-    });
-    client.on('messageReactionRemove', (reaction, user) => {
-        subscriptions['messageReactionRemove'].forEach(fun => {
-            fun(client, reaction, user);
-        });
-    });
-    client.on('guildMemberAdd', (member) => {
-        subscriptions['guildMemeberAdd'].forEach(fun => {
-            fun(client, member);
-        });
+    }
+
+    /**
+     * binds all events inside the subscriptions map to call all functions provided
+     */
+
+    subscriptions.forEach( (event, funs) => {
+        client.on(event, callEventFunctions.bind(null, client, funs))
     });
 }
