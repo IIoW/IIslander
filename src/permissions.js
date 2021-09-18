@@ -23,7 +23,7 @@ function getUserRoles(member) {
  * @param {import('discord.js').GuildMember} member
  */
 export function pin(member) {
-    return getUserRoles(member).some((role) => allowPin.indexOf(role) !== -1);
+    return getUserRoles(member).some((role) => allowPin.includes(role));
 }
 
 /**
@@ -33,11 +33,7 @@ export function awardLevel(member) {
     return (
         Math.max(
             ...getUserRoles(member).map((role) =>
-                Math.max(
-                    ...Object.values(xpRoleRequirement).map((roles, index) =>
-                        roles.indexOf(role) !== -1 ? index : -1
-                    )
-                )
+                Math.max(...Object.values(xpRoleRequirement).map((roles) => roles.indexOf(role)))
             )
         ) + 1
     );
