@@ -31,28 +31,43 @@ function permissionFor(userDto, member) {
     };
 }
 
+// Databases
+
 /**
- * Databases
+ * Serialize database objects.
  */
-
 function serializer(object) {
-    return object.toJson();
+    return object.toJSON();
 }
-
+/**
+ * Deserialize user database objects.
+ */
 function deserializerUserDto(object) {
-    return UserDto.fromJson(object);
+    return UserDto.fromJSON(object);
 }
-
+/**
+ * Deserialize auto response database objects.
+ */
 function deserializerResponseDto(object) {
-    return ResponseDto.fromJson(object);
+    return ResponseDto.fromJSON(object);
 }
 
+/**
+ * Database to store user data in it.
+ * @type {Enmap<string, UserDto>}
+ * @see {@link UserDto}
+ */
 const userDb = new Enmap({
     name: 'users',
     serializer,
     deserializer: deserializerUserDto,
 });
 
+/**
+ * Database to store auto response data in it.
+ * @type {Enmap<string, ResponseDto>}
+ * @see {@link ResponseDto}
+ */
 const responseDb = new Enmap({
     name: 'autoresponses',
     serializer,

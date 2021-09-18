@@ -1,6 +1,7 @@
+/** Class representing user data. */
 export default class UserDto {
     /**
-     *
+     * Create new user data.
      * @param {number} xp
      * @param {Map<string, number>} cooldown
      * @param {string} faction
@@ -13,7 +14,11 @@ export default class UserDto {
         this.key = key;
     }
 
-    toJson() {
+    /**
+     * Serializes the user object.
+     * @returns A JSON representation of the user.
+     */
+    toJSON() {
         return {
             xp: this.xp,
             cooldown: Object.fromEntries(this.cooldown),
@@ -22,7 +27,12 @@ export default class UserDto {
         };
     }
 
-    static fromJson(object) {
+    /**
+     * Deserialize JSON data.
+     * @param {object} object - The object to deserialize.
+     * @returns {UserDto} The user object from the JSON.
+     */
+    static fromJSON(object) {
         return new UserDto(object.xp, object.cooldown, object.faction, object.key);
     }
 }

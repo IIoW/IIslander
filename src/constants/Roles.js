@@ -1,3 +1,6 @@
+/**
+ * Constants for role names.
+ */
 export default {
     DEVELOPER: 'developer',
     MINI_DEV: 'mini-dev',
