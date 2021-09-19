@@ -1,8 +1,12 @@
+import { pin } from '../../../permissions';
+
 const command = '<pin>';
 
 async function fun(client, message) {
-    console.warn('Currently ignoring user permissions.');
-    // TODO: add user permission check
+    if (!pin(message.member)) {
+        message.react('🚫')
+        return;
+    }
     await message.pin();
     await message.react('📌');
 }
