@@ -16,7 +16,7 @@ const setup = (newClient) => {
 /**
  * Get an emoji from name from the default guild.
  * @param {string} search - The string to search for.
- * @returns {import('discord.js').Emoji} The emoji for that name if found.
+ * @returns {import('discord.js').EmojiIdentifierResolvable} The emoji for that name if found.
  */
 const getEmoji = (search) =>
     client.guilds.cache
