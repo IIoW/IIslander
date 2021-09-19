@@ -4,7 +4,7 @@ const command = '<pin>';
 
 async function fun(client, message) {
     if (!pin(message.member)) {
-        message.react('🚫')
+        message.react('🚫');
         return;
     }
     await message.pin();

@@ -1,11 +1,6 @@
-import config from '../../../config';
+import { getEmoji } from '../../../util';
 
 const command = RegExp('<choose ?\\d>');
-
-const getEmoji = (client, search) =>
-    client.guilds.cache
-        .get(config.defaultGuild)
-        .emojis.cache.find((emote) => emote.name === search);
 
 /**
  *
