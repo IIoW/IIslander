@@ -12,7 +12,7 @@ function messageEdit(client, messageOld, messageNew) {
     processCommandsEditMessage(client, messageOld, messageNew);
 }
 
-function ready(client) {
+function ready() {
     loadCommands();
 }
 
