@@ -1,26 +1,27 @@
 /** Class representing auto response data. */
 export default class ResponseDto {
-    // TODO: Add more types to the jsdocs. I don't know what types
-    // exists and I haven't heard from commentator yet.
     /**
      * Create new auto response data.
-     * @param {Regex} trigger - The regex to trigger.
-     * @param {'text'} type - The type.
-     * @param {String} response - What to respond with.
+     * @param {String[]} trigger - The regex to trigger.
+     * @param {boolean} isRegex - If the trigger is a regular expression
+     * @param {'text'|'image'} type - The type.
+     * @param {String} response - What to respond with or the image location.
      */
-    constructor(trigger = /.*/, type = 'text', response = '') {
+    constructor(trigger = [''], isRegex = false, type = 'text', response = '') {
         this.trigger = trigger;
+        this.isRegex = isRegex;
         this.type = type;
         this.response = response;
     }
 
     /**
      * Serializes the auto response object.
-     * @returns A JSON representation of the auto response.
+     * @returns {object} A JSON representation of the auto response.
      */
     toJSON() {
         return {
             trigger: this.trigger,
+            isRegex: this.isRegex,
             type: this.type,
             response: this.response,
         };
@@ -32,6 +33,6 @@ export default class ResponseDto {
      * @returns {ResponseDto} The auto response object from the JSON.
      */
     static fromJSON(object) {
-        return new ResponseDto(new RegExp(object.trigger), object.type, object.response);
+        return new ResponseDto(object.trigger, object.isRegex, object.type, object.response);
     }
 }
