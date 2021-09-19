@@ -4,7 +4,8 @@
     "description": "The IIslander Discord bot for the IIslands of War Discord server",
     "contributors": [
         "Antti <antti@antti.codes>",
-        "Commentator2.0 <kommentator2.9.0.1@gmail.com>"
+        "Commentator2.0 <kommentator2.9.0.1@gmail.com>",
+        "WilsontheWolf"
     ],
     "private": true,
     "license": "MIT",

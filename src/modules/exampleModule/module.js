@@ -1,3 +1,5 @@
+import { getUserLevel } from '../../permissions';
+
 function ready(client) {
     // place your internal functions here.
     // I'd recommend putting them in a different file and just passing the call through, to not messy this file.
@@ -11,6 +13,7 @@ function messageCreate(client, msg) {
     // place your internal functions here.
     // I'd recommend putting them in a different file and just passing the call through, to not messy this file.
     console.log(msg.content);
+    console.log(getUserLevel(msg.member));
 }
 
 /**

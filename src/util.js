@@ -2,7 +2,6 @@ import Enmap from 'enmap';
 import config from './config';
 import UserDto from './dto/UserDto';
 import ResponseDto from './dto/ResponseDto';
-import { awardLevel, pin } from './permissions';
 
 let client;
 
@@ -23,13 +22,6 @@ const getEmoji = (search) =>
     client.guilds.cache
         .get(config.defaultGuild)
         .emojis.cache.find((emote) => emote.name === search);
-
-function permissionFor(userDto, member) {
-    return {
-        awardLevel: awardLevel(member),
-        pin: pin(member),
-    };
-}
 
 // Databases
 
@@ -61,6 +53,7 @@ const userDb = new Enmap({
     name: 'users',
     serializer,
     deserializer: deserializerUserDto,
+    autoEnsure: new UserDto(),
 });
 
 /**
@@ -72,6 +65,7 @@ const responseDb = new Enmap({
     name: 'autoresponses',
     serializer,
     deserializer: deserializerResponseDto,
+    autoEnsure: new ResponseDto(),
 });
 
-export { setup, getEmoji, permissionFor, userDb, responseDb };
+export { setup, getEmoji, userDb, responseDb };

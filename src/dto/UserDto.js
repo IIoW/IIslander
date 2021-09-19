@@ -14,6 +14,13 @@ export default class UserDto {
         this.key = key;
     }
 
+    get level() {
+        if (this.xp < 0) {
+            return 0;
+        }
+        return Math.floor(((2.2 / 100) * this.xp) ** (1 / 2.2));
+    }
+
     /**
      * Serializes the user object.
      * @returns A JSON representation of the user.
@@ -21,7 +28,7 @@ export default class UserDto {
     toJSON() {
         return {
             xp: this.xp,
-            cooldown: Object.fromEntries(this.cooldown),
+            cooldown: this.cooldown,
             faction: this.faction,
             key: this.key,
         };
