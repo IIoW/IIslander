@@ -1,0 +1,52 @@
+import { Collection } from 'discord.js';
+import fs from 'fs/promises';
+import config from '../../config';
+
+const commands = new Collection();
+
+async function loadCommands() {
+    console.log('Loading mod commands...');
+
+    const commandModules = await fs.readdir('./src/modules/modCommands/commands');
+
+    await Promise.all(
+        commandModules.map(async (moduleName) => {
+            if (moduleName.endsWith('.js')) {
+                const module = await import(`./commands/${moduleName}`);
+                commands.set(module.info.name, { fun: module.fun, info: module.info });
+            }
+        })
+    );
+    console.log(`loaded commands:\n\t${Array.from(commands.keys()).join('\n\t')}`);
+    console.log('Finished loading mod commands');
+}
+
+/**
+ *
+ * @param {import('discord.js').Client} client
+ * @param {import('discord.js').Message} message
+ */
+async function processCommandsNewMessage(client, message) {
+    // Avoid botception
+    if (message.author.bot) return;
+
+    // This block of code ensures the command is valid and gets it.
+    if (!message.content.startsWith(config.prefix)) return;
+    const args = message.content.trim().slice(config.prefix.length).split(/ +/g);
+    const command = args.shift().toLowerCase();
+    const cmd = commands.get(command);
+    if (!cmd) return;
+
+    // Ensure the member is cached
+    if (message.guild && !message.member) await message.guild.members.fetch(message.author);
+    try {
+        await cmd.fun(client, message, args);
+    } catch (e) {
+        console.error(`Error running command "${command}":\n${e?.stack || e}`);
+        message
+            .reply(`Something went wrong processing that command!\n\`\`\`\n${e}\n\`\`\``)
+            .catch((err) => console.error('Error sending error!\n', err));
+    }
+}
+
+export { loadCommands, processCommandsNewMessage };
