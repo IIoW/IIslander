@@ -1,11 +1,12 @@
-import fs from 'fs';
+import { Collection } from 'discord.js';
+import fs from 'fs/promises';
 
-const commands = new Map();
+const commands = new Collection();
 
 async function loadCommands() {
     console.log('Loading inline commands...');
 
-    const commandModules = fs.readdirSync('./src/modules/inlineCommands/commands');
+    const commandModules = await fs.readdir('./src/modules/inlineCommands/commands');
 
     await Promise.all(
         commandModules.map(async (moduleName) => {
@@ -15,7 +16,11 @@ async function loadCommands() {
             }
         })
     );
-    console.log(`loaded commands:\n\t${Array.from(commands.keys()).join('\n\t')}`);
+    console.log(
+        `loaded commands:\n\t${Array.from(commands.keys())
+            .map((v) => v.toString().replace(/^\/?<(.+)>\/?$/, '$1'))
+            .join('\n\t')}`
+    );
     console.log('Finished loading inline commands');
 }
 
@@ -25,11 +30,16 @@ async function loadCommands() {
  * @param {import('discord.js').Message} message
  */
 async function processCommandsNewMessage(client, message) {
-    commands.forEach((fun, command) => {
-        if (message.content.match(command) !== null) {
-            fun(client, message);
-        }
-    });
+    // Avoid botception
+    if (message.author.bot) return;
+    await Promise.all(
+        commands.map((fun, command) => {
+            if (message.content.match(command) !== null) {
+                return fun(client, message);
+            }
+            return undefined;
+        })
+    );
 }
 
 /**

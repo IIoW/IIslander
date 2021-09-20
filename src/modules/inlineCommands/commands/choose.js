@@ -14,7 +14,7 @@ async function fun(client, message) {
     if (!amount) return;
     for (let i = 1; i < amount + 1; i += 1) {
         // eslint-disable-next-line no-await-in-loop
-        await message.react(getEmoji(client, `_${i}`));
+        await message.react(getEmoji(`_${i}`));
     }
 }
 

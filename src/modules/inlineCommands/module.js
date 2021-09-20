@@ -5,15 +5,15 @@ import {
 } from './processCommands';
 
 function messageCreate(client, message) {
-    processCommandsNewMessage(client, message);
+    return processCommandsNewMessage(client, message);
 }
 
 function messageEdit(client, messageOld, messageNew) {
-    processCommandsEditMessage(client, messageOld, messageNew);
+    return processCommandsEditMessage(client, messageOld, messageNew);
 }
 
 function ready() {
-    loadCommands();
+    return loadCommands();
 }
 
 const subscriptions = new Map();
