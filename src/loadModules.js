@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 
 const subscriptions = new Map();
 
@@ -6,7 +6,7 @@ export default async (client) => {
     /**
      * loads all modules and their subscriptions
      */
-    const modules = fs.readdirSync('./src/modules');
+    const modules = await fs.readdir('./src/modules');
 
     await Promise.all(
         modules.map(async (moduleName) => {
