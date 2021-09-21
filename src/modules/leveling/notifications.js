@@ -1,4 +1,4 @@
-import { levelMessages, roleMessages } from '../../constants/messages';
+import { levelMessages, roleMessages } from '../../constants/Messages';
 import { getChannel } from '../../util';
 import Levels from '../../constants/Levels';
 
