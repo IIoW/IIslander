@@ -14,6 +14,9 @@ async function replaceAndSend(string, values) {
     await channel.send(message);
 }
 
+/**
+ * @return {Promise<void>}
+ */
 async function sendRoleNotification(member, level) {
     await replaceAndSend(roleMessages[Object.values(Levels).indexOf(level)], {
         name: `**${member}**`,
@@ -23,17 +26,15 @@ async function sendRoleNotification(member, level) {
 /**
  * @param {import('discord.js').GuildMember} member
  * @param {number} level
- * @returns {Promise<boolean>}
+ * @returns {Promise<void>}
  */
 export default async function sendLevelNotification(member, level) {
     if (Object.values(Levels).indexOf(level) !== -1 && level !== 0)
         return sendRoleNotification(member, level);
     const messageIndex = Math.floor(Math.random() * levelMessages.length);
 
-    await replaceAndSend(levelMessages[messageIndex], {
+    return replaceAndSend(levelMessages[messageIndex], {
         name: `**${member.displayName}**`,
         level: `**Level ${level}**`,
     });
-
-    return true;
 }

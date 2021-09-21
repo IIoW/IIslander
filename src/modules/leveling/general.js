@@ -1,6 +1,9 @@
 import { userDb } from '../../util';
 import sendLevelNotification from './notifications';
 
+/**
+ * @return {Promise<void>}
+ */
 async function addXp(member, xp) {
     const userDto = userDb.get(member.id);
 
@@ -25,7 +28,6 @@ async function addXp(member, xp) {
         }
     }
     userDb.set(member.id, userDto);
-    return true;
 }
 
 async function removeXp(member, xp) {
