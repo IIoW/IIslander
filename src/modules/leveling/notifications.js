@@ -16,7 +16,7 @@ async function replaceAndSend(string, values) {
 
 async function sendRoleNotification(member, level) {
     replaceAndSend(roleMessages[Object.values(Levels).indexOf(level)], {
-        name: `**<@${member.user.id}>**`,
+        name: `**${member}**`,
     });
 }
 
