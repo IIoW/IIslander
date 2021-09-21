@@ -1,4 +1,4 @@
-import { levelMessages, roleMessages } from './messages';
+import { levelMessages, roleMessages } from '../../constants/messages';
 import { getChannel } from '../../util';
 import Levels from '../../constants/Levels';
 
@@ -15,7 +15,7 @@ async function replaceAndSend(string, values) {
 }
 
 async function sendRoleNotification(member, level) {
-    await replaceAndSend(roleMessages[Object.values(Levels).indexOf(level)], {
+    replaceAndSend(roleMessages[Object.values(Levels).indexOf(level)], {
         name: `**<@${member.user.id}>**`,
     });
 }
@@ -29,7 +29,7 @@ export default async function sendLevelNotification(member, level) {
         return sendRoleNotification(member, level);
     const messageIndex = Math.floor(Math.random() * levelMessages.length);
 
-    await replaceAndSend(levelMessages[messageIndex], {
+    replaceAndSend(levelMessages[messageIndex], {
         name: `**${member.displayName}**`,
         level: `**Level ${level}**`,
     });
