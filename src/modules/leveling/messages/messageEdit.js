@@ -1,5 +1,5 @@
 import { addXp, removeXp } from '../general';
-import getXpOfMessage from './const';
+import getXpOfMessage from '../utils';
 import config from '../../../config';
 
 export default async function messageEdit(client, messageOld, messageNew) {

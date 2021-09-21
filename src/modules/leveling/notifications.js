@@ -6,7 +6,7 @@ import Levels from '../../constants/Levels';
  * Replace objects in block brackets with the values in the passed object.
  * @param {string} string - The string to replace
  * @param {Object<string, string>} values - An object with strings to replace with.
- * @returns {string} The new string.
+ * @returns {Promise<void>} The new string.
  */
 async function replaceAndSend(string, values) {
     const message = string.replace(/\[(\w+)\]/g, (orig, key) => values[key] || orig);
@@ -15,7 +15,7 @@ async function replaceAndSend(string, values) {
 }
 
 async function sendRoleNotification(member, level) {
-    replaceAndSend(roleMessages[Object.values(Levels).indexOf(level)], {
+    await replaceAndSend(roleMessages[Object.values(Levels).indexOf(level)], {
         name: `**${member}**`,
     });
 }
@@ -23,13 +23,14 @@ async function sendRoleNotification(member, level) {
 /**
  * @param {import('discord.js').GuildMember} member
  * @param {number} level
+ * @returns {Promise<boolean>}
  */
 export default async function sendLevelNotification(member, level) {
     if (Object.values(Levels).indexOf(level) !== -1 && level !== 0)
         return sendRoleNotification(member, level);
     const messageIndex = Math.floor(Math.random() * levelMessages.length);
 
-    replaceAndSend(levelMessages[messageIndex], {
+    await replaceAndSend(levelMessages[messageIndex], {
         name: `**${member.displayName}**`,
         level: `**Level ${level}**`,
     });

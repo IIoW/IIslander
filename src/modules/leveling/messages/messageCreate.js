@@ -1,5 +1,5 @@
 import { addXp } from '../general';
-import getXpOfMessage from './const';
+import getXpOfMessage from '../utils';
 import config from '../../../config';
 
 export default async function messageCreate(client, message) {

@@ -25,6 +25,7 @@ const getEmoji = (search) =>
 
 /**
  * @param {string} name
+ * @returns {Promise<import('discord.js').Channel>}
  */
 async function getChannel(name) {
     return client.channels.cache.get(config[name]);
