@@ -1,5 +1,5 @@
 const xpCharacters = /\w/g;
 
 export default function getXpOfMessage(message) {
-    return message.content.split(xpCharacters).length - 1;
+    return message.content.match(xpCharacters).length;
 }
