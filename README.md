@@ -8,14 +8,14 @@ The IIslander Discord bot for the IIslands of War Discord server
     - [XP](#xp)
     - [Actions](#actions)
     - [Moderation](#moderation)
-    - [Sever Management](#sever-management)
+    - [Server Management](#server-management)
     - [DM Commands](#dm-commands)
 - [Self Hosting](#self-hosting)
     - [First Time Setup](#first-time-setup)
     - [Running the Bot](#running-the-bot)
 
 ## Features
-IIslander has many features for the server. Some might not be fully implemented yet. Please see the [issues](https://github.com/IIoW/IIslander/issues) for progress on features.
+IIslander has a wide range of features for the IIslands of War Discord server. Some of them are still under development. Please see the [the projects tab](https://github.com/IIoW/IIslander/projects/1?fullscreen=true) for progress on features.
 
 ### XP
 - Rank Roles
@@ -40,7 +40,7 @@ IIslander has many features for the server. Some might not be fully implemented 
     - Different severities
     - Remove xp
 
-## Sever Management
+## Server Management
 - Roles
 - Messages
     - Welcome messages
