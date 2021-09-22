@@ -9,8 +9,8 @@ import Levels from '../../constants/Levels';
  * @returns {Promise<void>} The new string.
  */
 async function replaceAndSend(string, values) {
-    const message = string.replace(/\[(\w+)\]/g, (orig, key) => values[key] || orig);
-    const channel = await getChannel('channelNotification');
+    const message = string.replace(/\[(\w+)]/g, (orig, key) => values[key] || orig);
+    const channel = await getChannel('notifications');
     await channel.send(message);
 }
 
