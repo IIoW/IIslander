@@ -1,4 +1,4 @@
-import { addXp, removeXp } from '../general';
+import { addXp, removeXp } from '../../../xpHandling';
 import getXpOfMessage from '../utils';
 import config from '../../../config';
 
