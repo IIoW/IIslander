@@ -1,4 +1,4 @@
-import { userDb } from '../../util';
+import { userDb } from './util';
 import sendLevelNotification from './notifications';
 
 /**

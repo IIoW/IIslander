@@ -1,6 +1,6 @@
-import { levelMessages, roleMessages } from '../../constants/Messages';
-import { getChannel } from '../../util';
-import Levels from '../../constants/Levels';
+import { levelMessages, roleMessages } from './constants/Messages';
+import { getChannel } from './util';
+import Levels from './constants/Levels';
 
 /**
  * Replace objects in block brackets with the values in the passed object.
@@ -9,8 +9,8 @@ import Levels from '../../constants/Levels';
  * @returns {Promise<void>} The new string.
  */
 async function replaceAndSend(string, values) {
-    const message = string.replace(/\[(\w+)\]/g, (orig, key) => values[key] || orig);
-    const channel = await getChannel('channelNotification');
+    const message = string.replace(/\[(\w+)]/g, (orig, key) => values[key] || orig);
+    const channel = await getChannel('notifications');
     await channel.send(message);
 }
 
