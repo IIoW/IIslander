@@ -9,7 +9,7 @@ import updateBoard from './starboard';
  * @param {import('discord.js').MessageReaction} messageReaction
  * @param {import('discord.js').User} user
  */
-export default async function onMessageReactionAdd(client, messageReaction, user) {
+export default async function messageReactionAdd(client, messageReaction, user) {
     const reactionName = messageReaction.emoji.name;
     if (user.bot || !Object.values(Emotes.awards).includes(reactionName)) return;
 

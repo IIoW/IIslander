@@ -16,7 +16,6 @@ function messageGetStarValue(message) {
     let points = 0;
 
     const reactionCache = message.reactions.cache.values();
-    console.log(reactionCache);
 
     for (const messageReaction of reactionCache) {
         const emojiName = messageReaction.emoji.name;
@@ -47,6 +46,6 @@ export default async function updateBoard(message) {
             .setColor(message.member.displayHexColor)
             .setDescription(`${message.content} \n\n ${message.url}`)
             .setImage(message.attachments.first()?.url);
-        getChannel('starboard').send({ embeds: [embed] });
+        await getChannel('starboard').send({ embeds: [embed] });
     }
 }
