@@ -13,7 +13,7 @@ async function loadCommands() {
         commandModules.map(async (moduleName) => {
             if (moduleName.endsWith('.js')) {
                 const module = await import(`./commands/${moduleName}`);
-                commands.set(module.info.name, { fun: module.fun, info: module.info });
+                commands.set(module.info.name, module);
             }
         })
     );
@@ -44,7 +44,7 @@ async function processCommandsNewMessage(client, message) {
     } catch (e) {
         console.error(`Error running command "${command}":\n${e?.stack || e}`);
         message
-            .reply(`Something went wrong processing that command!\n\`\`\`\n${e}\n\`\`\``)
+            .reply(`Something went wrong processing that command! Please try again later.`)
             .catch((err) => console.error('Error sending error!\n', err));
     }
 }
