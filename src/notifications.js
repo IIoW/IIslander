@@ -1,6 +1,6 @@
-import { levelMessages, roleMessages } from '../../constants/Messages';
-import { getChannel } from '../../util';
-import Levels from '../../constants/Levels';
+import { levelMessages, roleMessages } from './constants/Messages';
+import { getChannel } from './util';
+import Levels from './constants/Levels';
 
 /**
  * Replace objects in block brackets with the values in the passed object.

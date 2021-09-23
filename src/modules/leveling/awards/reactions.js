@@ -1,7 +1,7 @@
 import Emotes from '../../../constants/Emotes';
 import { xpCooldown, xpReward, xpRewardDonor } from '../../../constants/Awards';
 import { getChannel, userDb } from '../../../util';
-import { addXp } from '../general';
+import { addXp } from '../../../xpHandling';
 import updateBoard from './starboard';
 
 /**
