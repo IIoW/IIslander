@@ -18,9 +18,10 @@ async function replaceAndSend(string, values) {
  * @return {Promise<void>}
  */
 async function sendRoleNotification(member, level) {
-    await replaceAndSend(roleMessages[Object.values(Levels).indexOf(level)], {
-        name: `**${member}**`,
-    });
+    if (level > 0)
+        await replaceAndSend(roleMessages[Object.values(Levels).indexOf(level)], {
+            name: `**${member}**`,
+        });
 }
 
 /**

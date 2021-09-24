@@ -1,21 +1,21 @@
 const levelMessages = [
-    '[name] has evolved to level [level]!',
-    'Way to go [name]! You have levelled up to level [level]!',
-    'BOOM! [name] just levelled up to level [level]!',
-    '[name] is awesome and just levelled up to level [level]!',
-    '[name] is living up to their name and levelled up to level [level]!',
-    'They came. They saw. [name] levelled up to level [level]!',
-    "[name] just can't stop wrecking islands! Have a level [level]!",
-    "[level] INCOMING!! Oh wait, it's just level [name]!",
-    '[name] eats level [level] for breakfast. And second breakfast.',
-    'The elementals see much potential in you [name], so decided to give you level [level]!',
-    '[level] just called. Level [name] answered!',
-    '[name] makes dreadnoughts fall from the sky like rain. Imagine what they could do with level [level]!',
-    'There is no level [level]. Only [name].',
-    'Swirlopps rejoice in delight at your level [level]! Good job [name]!',
-    'Look at [name]! They just defeated 3 iislands at once! Have a level [level] for that.',
-    'Woah! [name] just completely demolished level [level]',
-    'Level [level] is nothing compared to [name]!',
+    '[name] has evolved to [level]!',
+    'Way to go [name]! You have levelled up to [level]!',
+    'BOOM! [name] just levelled up to [level]!',
+    '[name] is awesome and just levelled up to [level]!',
+    '[name] is living up to their name and levelled up to [level]!',
+    'They came. They saw. [name] levelled up to [level]!',
+    "[name] just can't stop wrecking islands! Have a [level]!",
+    "[level] INCOMING!! Oh wait, it's just [name]!",
+    '[name] eats [level] for breakfast. And second breakfast.',
+    'The elementals see much potential in you [name], so decided to give you [level]!',
+    '[level] just called. [name] answered!',
+    '[name] makes dreadnoughts fall from the sky like rain. Imagine what they could do with [level]!',
+    'There is no [level]. Only [name].',
+    'Swirlopps rejoice in delight at your [level]! Good job [name]!',
+    'Look at [name]! They just defeated 3 iislands at once! Have a [level] for that.',
+    'Woah! [name] just completely demolished [level]',
+    '[level] is nothing compared to [name]!',
 ];
 
 const roleMessages = [
@@ -28,7 +28,6 @@ const roleMessages = [
     '[name] and __**epic**__ness go hand in hand like minicannons and overpowered! You can now stream your games on this server and give other members the silver crystal every 12 hours.',
     '[name] is learning quickly! __**rare**__ power has been entrusted to you! You are now able to embed links and give other members the bronze crystal every 4 hours!',
     'The journey is just beginning for [name]! Though you may only be a __**common**__er for now, much greatness lies ahead! You are now able to use voice channels, add your own reactions, and attach files in any channel!',
-    '',
 ];
 
 export { levelMessages, roleMessages };
