@@ -1,4 +1,5 @@
 import { getEmoji } from '../../../util';
+import Emotes from '../../../constants/Emotes';
 
 const command = RegExp('<choose ?\\d>');
 
@@ -14,7 +15,7 @@ async function fun(client, message) {
     if (!amount) return;
     for (let i = 1; i < amount + 1; i += 1) {
         // eslint-disable-next-line no-await-in-loop
-        await message.react(getEmoji(`_${i}`));
+        await message.react(getEmoji(Emotes.font[i]));
     }
 }
 

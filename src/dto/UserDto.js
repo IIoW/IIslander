@@ -8,10 +8,15 @@ export default class UserDto {
      * @param {string} key
      */
     constructor(xp = 0, cooldown = new Map(), faction = '', key = '') {
+        // Data, which is getting saved across reboots
         this.xp = xp;
         this.cooldown = cooldown;
         this.faction = faction;
         this.key = key;
+
+        // Data which is not necessary to be saved
+        this.voiceTimeStampJoin = -1;
+        this.voiceXpMultiplier = 0;
     }
 
     get level() {

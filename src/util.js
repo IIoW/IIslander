@@ -21,7 +21,15 @@ const setup = (newClient) => {
 const getEmoji = (search) =>
     client.guilds.cache
         .get(config.defaultGuild)
-        .emojis.cache.find((emote) => emote.name === search);
+        .emojis.cache.find((emote) => emote.name === search) || search;
+
+/**
+ * @param {string} name
+ * @returns {import('discord.js').Channel}
+ */
+function getChannel(name) {
+    return client.channels.cache.get(config.channels.get(name));
+}
 
 // Databases
 
@@ -68,4 +76,4 @@ const responseDb = new Enmap({
     autoEnsure: new ResponseDto(),
 });
 
-export { setup, getEmoji, userDb, responseDb };
+export { setup, getEmoji, userDb, responseDb, getChannel };
