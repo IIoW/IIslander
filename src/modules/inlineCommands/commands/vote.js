@@ -1,3 +1,5 @@
+import Emotes from '../../../constants/Emotes';
+
 const command = '<vote>';
 
 /**
@@ -7,8 +9,8 @@ const command = '<vote>';
  */
 async function fun(client, message) {
     if (message.content.match('<vote>')) {
-        await message.react('👍');
-        await message.react('👎');
+        await message.react(Emotes.thumbUp);
+        await message.react(Emotes.thumbDown);
     }
 }
 
