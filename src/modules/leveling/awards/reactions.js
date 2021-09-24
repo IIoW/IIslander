@@ -1,8 +1,12 @@
 import Emotes from '../../../constants/Emotes';
 import { xpCooldown, xpReward, xpRewardDonor } from '../../../constants/Awards';
-import { getChannel, userDb } from '../../../util';
+import { getChannel, getRole, userDb } from '../../../util';
 import { addXp } from '../../../xpHandling';
 import updateBoard from './starboard';
+
+function emit(client, reactionName, userid) {
+    client.emit('cooldownEnd', reactionName, userid);
+}
 
 /**
  * @param {import('discord.js').Client} client
@@ -29,6 +33,12 @@ export default async function messageReactionAdd(client, messageReaction, user) 
     userDto.cooldown.set(reactionName, now + xpCooldown[reactionName]);
 
     userDb.set(user.id, userDto);
+
+    const member = await message.guild.members.fetch(user.id);
+
+    await member.roles.add(getRole(`cooldown_${reactionName}`));
+
+    setTimeout(emit, xpCooldown[reactionName], client, reactionName, user.id);
 
     await addXp(message.member, xpReward[reactionName]);
     await addXp(user, xpRewardDonor[reactionName]);
