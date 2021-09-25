@@ -31,6 +31,15 @@ function getChannel(name) {
     return client.channels.cache.get(config.channels.get(name));
 }
 
+/**
+ *
+ * @param {string} name
+ * @return {import('discord.js').RoleResolvable}
+ */
+function getRole(name) {
+    return config.roles.get(name);
+}
+
 // Databases
 
 /**
@@ -76,4 +85,4 @@ const responseDb = new Enmap({
     autoEnsure: new ResponseDto(),
 });
 
-export { setup, getEmoji, userDb, responseDb, getChannel };
+export { setup, getEmoji, userDb, responseDb, getChannel, getRole };
