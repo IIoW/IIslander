@@ -8,18 +8,20 @@ import Emotes from '../../constants/Emotes';
  * @return {Promise<void>}
  */
 export async function messageCreate(client, message) {
-    responseDb.map(async (responseDto) => {
-        const triggers = responseDto.trigger.some((trigger) =>
-            responseDto.isRegex
-                ? message.content.toLowerCase().match(trigger)
-                : message.content.toLowerCase().includes(trigger)
-        );
-        if (triggers) {
-            const msg = await message.channel.send(responseDto.response);
-            await msg.react(Emotes.thumbUp);
-            await msg.react(Emotes.boom);
-        }
-    });
+    await Promise.all(
+        responseDb.map(async (responseDto) => {
+            const triggers = responseDto.trigger.some((trigger) =>
+                responseDto.isRegex
+                    ? message.content.toLowerCase().match(trigger)
+                    : message.content.toLowerCase().includes(trigger)
+            );
+            if (triggers) {
+                const msg = await message.channel.send(responseDto.response);
+                await msg.react(Emotes.thumbUp);
+                await msg.react(Emotes.boom);
+            }
+        })
+    );
 }
 
 /**
