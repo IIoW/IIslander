@@ -22,7 +22,7 @@ async function handleSwearing(client, message) {
         .replaceAll(/7|\+/g, 't')
         .replaceAll('8', 'b')
         .replaceAll(/[^a-z]/g, '');
-    const regex = Blacklist.swearwords.replaceAll('\n', '|');
+    const regex = Blacklist.swearwords.join('|');
     const match = content.match(regex);
     if (match) {
         const userDto = userDb.get(message.author.id);
