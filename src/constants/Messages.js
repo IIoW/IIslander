@@ -30,4 +30,13 @@ const roleMessages = [
     'The journey is just beginning for [name]! Though you may only be a __**common**__er for now, much greatness lies ahead! You are now able to use voice channels, add your own reactions, and attach files in any channel!',
 ];
 
-export { levelMessages, roleMessages };
+const twitterMessages = [
+    'Oooh look, more [role]! Look up to see what the tweet says!',
+    'Another [role]! The tweet above awaits!',
+    "It's a [role]! Check out the tweet above!",
+    "It's time for another [role]! Tweet above!",
+    'I hope like these [role]! Check the tweet above!',
+    "Don't forget to like the [role]! Check the above tweet!",
+];
+
+export { levelMessages, roleMessages, twitterMessages };
