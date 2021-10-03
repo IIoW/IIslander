@@ -30,6 +30,16 @@ const roleMessages = [
     'The journey is just beginning for [name]! Though you may only be a __**common**__er for now, much greatness lies ahead! You are now able to use voice channels, add your own reactions, and attach files in any channel!',
 ];
 
+const swearWarning = [
+    'I know, one sometimes has to rant, but keep it minimal.',
+    'Hey, please stop swearing, this is the last warning, next time you will get a penalty',
+];
+
+const logMessages = new Map([
+    ['swearing', '[user] swore.\nMessage: `[message]`\nTriggered on: `[match]`'],
+    ['everyoneping', '[user] pinged everyone. Message was deleted.\nMessage: `[message]`'],
+]);
+
 const twitterMessages = [
     'Oooh look, more [role]! Look up to see what the tweet says!',
     'Another [role]! The tweet above awaits!',
@@ -175,6 +185,8 @@ const welcomeQuestions = [
 export {
     levelMessages,
     roleMessages,
+    swearWarning,
+    logMessages,
     twitterMessages,
     welcomeMessage,
     welcomeMessages,
