@@ -1,0 +1,14 @@
+version: "3.5"
+
+services:
+  bot:
+    image: ghcr.io/iiow/iislander
+    env_file:
+      - .env
+    volumes:
+      - data:/app/data
+    restart: unless-stopped
+    stop_grace_period: 10s
+
+volumes:
+  data:
