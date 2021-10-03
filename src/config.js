@@ -4,6 +4,7 @@ export default {
     channels: new Map([
         ['notifications', process.env.CHANNEL_NOTIFICATION],
         ['starboard', process.env.CHANNEL_STARBOARD],
+        ['log', process.env.CHANNEL_LOG],
         ['tweets', process.env.CHANNEL_TWEETS],
         ['welcome', process.env.CHANNEL_WELCOME],
         ['just-chatting', process.env.CHANNEL_JUST_CHATTING],
