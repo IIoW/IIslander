@@ -4,11 +4,7 @@ import { getChannel } from '../../util';
 const subscriptions = new Map();
 
 subscriptions.set('guildMemberAdd', async (client, member) => {
-    try {
-        await member.send(welcomeMessage);
-    } catch (e) {
-        /* ignore */
-    }
+    await member.send(welcomeMessage).catch((e) => console.error('Error sending dm', e));
 
     const welcomeChannel = getChannel('welcome');
     const offtopicChannel = getChannel('just-chatting');
