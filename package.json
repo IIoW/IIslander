@@ -16,7 +16,8 @@
         "lint": "yarn eslint src --fix --ext js",
         "format": "yarn prettier --write .",
         "update": "yarn upgrade-interactive --latest",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "build": "docker build -t ghcr.io/iiow/iislander ."
     },
     "dependencies": {
         "discord.js": "^13.1.0",
