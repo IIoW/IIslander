@@ -5,6 +5,8 @@ export default {
         ['notifications', process.env.CHANNEL_NOTIFICATION],
         ['starboard', process.env.CHANNEL_STARBOARD],
         ['tweets', process.env.CHANNEL_TWEETS],
+        ['welcome', process.env.CHANNEL_WELCOME],
+        ['just-chatting', process.env.CHANNEL_JUST_CHATTING],
     ]),
     roles: new Map([
         ['cooldown_tier1bronze', process.env.ROLE_COOLDOWN_1],
