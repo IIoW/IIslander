@@ -32,10 +32,18 @@ export async function messageCreate(client, message) {
  * @return {Promise<void>}
  */
 export async function messageReactionAdd(client, messageReaction, user) {
+    let users;
+    if (messageReaction.partial) {
+        messageReaction = await messageReaction.fetch();
+        users = await messageReaction.users.fetch();
+    } else {
+        users = messageReaction.users.cache;
+    }
+    if (user.partial) user = await user.fetch();
     if (
-        messageReaction.message.author !== client.user ||
-        user === client.user ||
-        !messageReaction.me
+        messageReaction.message.author.id !== client.user.id ||
+        user.id === client.user.id ||
+        !users.has(client.user.id)
     )
         return;
     switch (messageReaction.emoji.name) {

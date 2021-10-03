@@ -49,6 +49,7 @@ async function processCommandsNewMessage(client, message) {
  * @param {import('discord.js').Message} newMessage
  */
 async function processCommandsEditMessage(client, oldMessage, newMessage) {
+    if (newMessage.partial) newMessage = await newMessage.fetch();
     await processCommandsNewMessage(client, newMessage);
 }
 
