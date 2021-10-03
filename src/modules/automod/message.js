@@ -71,7 +71,7 @@ async function handlePings(client, message) {
         const now = Date.now();
         const cooldown = userDto.cooldown.get('everyoneping');
         if (now > cooldown) {
-            userDto.everyoneping = 0; // resets the swear level, if time ran out
+            userDto.everyoneping = 0; // resets the ping counter, if time ran out
         }
         userDto.everyoneping += 1;
         await message.delete();
