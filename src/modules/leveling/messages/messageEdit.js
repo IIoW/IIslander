@@ -6,7 +6,9 @@ import config from '../../../config';
  * @return {Promise<void>}
  */
 export default async function messageEdit(client, messageOld, messageNew) {
-    if (messageOld.author.bot || messageOld.guild?.id !== config.defaultGuild) return;
+    if (messageOld.partial || messageOld.author.bot || messageOld.guild?.id !== config.defaultGuild)
+        return;
+    if (messageNew.partial) messageNew = await messageNew.fetch();
     const oldXp = getXpOfMessage(messageOld);
     const newXp = getXpOfMessage(messageNew);
 

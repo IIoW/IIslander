@@ -14,6 +14,8 @@ function emit(client, reactionName, userid) {
  * @param {import('discord.js').User} user
  */
 export default async function messageReactionAdd(client, messageReaction, user) {
+    if (messageReaction.partial) messageReaction = await messageReaction.fetch();
+
     const reactionName = messageReaction.emoji.name;
     if (user.bot || !Object.values(Emotes.awards).includes(reactionName)) return;
 
