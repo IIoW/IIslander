@@ -117,5 +117,5 @@ export async function messageCreate(client, message) {
  * @return {Promise<void>}
  */
 export async function messageUpdate(client, oldMessage, newMessage) {
-    return messageCreate(client, await newMessage.fetch());
+    return messageCreate(client, newMessage.partial ? await newMessage.fetch() : newMessage);
 }
