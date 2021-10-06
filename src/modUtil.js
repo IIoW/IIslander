@@ -1,5 +1,6 @@
 import OffenseDescriptions from './constants/OffenseDescriptions';
 import OffenseMultiplier from './constants/OffenseMultiplier';
+import OffenceDto from './dto/OffenceDto';
 import { getChannel, userDb } from './util';
 import { getXpFromLevel, removeXp } from './xpHandling';
 
@@ -24,8 +25,7 @@ async function modActionCore({ user, type, reason, actionType } = {}) {
     if (!action) throw new Error(`Unknown action type "${actionType}"`);
     const userDto = userDb.get(user.id);
     const recentOffences = userDto.offences.reduce((num, off) => {
-        // If the offence happened in the last 24 hours
-        if (Date.now() - off.time < 8.64e7) return num + 1;
+        if (off.isRecent) return num + 1;
         return num;
     }, 1);
     const xpDeduction = action.xpDeduction
@@ -36,13 +36,7 @@ async function modActionCore({ user, type, reason, actionType } = {}) {
                   recentOffences
           )
         : null;
-    userDto.offences.push({
-        type: actionType,
-        offence: type,
-        modReason: reason,
-        xpDeduction,
-        time: Date.now(),
-    });
+    userDto.offences.push(new OffenceDto(actionType, type, reason, xpDeduction, Date.now()));
     let dmFailed = false;
     // Have to set the thing before removing xp or
     // else it overwrites with the old numbers.

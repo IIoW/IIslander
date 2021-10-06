@@ -25,15 +25,15 @@ async function fun(client, message, args) {
         if (!num || Number.isNaN(num) || num < 1)
             return message.reply('Please choose a valid number.');
         const { offences } = userDb.get(user.id);
-        const offence = offences[num + 1];
+        const offence = offences[num - 1];
         if (!offence) return message.reply('Invalid offence!');
         const embed = new MessageEmbed()
             .setDescription(
                 `Offence #${num} for ${user}.\n${offence.type}\n${offence.offence}\n<t:${Math.round(
                     offence.time / 1000
                 )}:f>\n${offence.xpDeduction ? `XP Deducted: ${offence.xpDeduction}\n` : ''}${
-                    offence.modReason || 'Error Getting reason'
-                }`
+                    offence.isRecent ? 'Recent Offence!\n' : ''
+                }${offence.modReason || 'Error Getting reason'}`
             )
             .setColor('RED');
         return message.reply({ embeds: [embed] });
@@ -41,8 +41,7 @@ async function fun(client, message, args) {
     const { offences } = userDb.get(user.id);
     const [fields, recentOffences, xpDeduced] = offences.reduce(
         ([embedFields, recent, xp], o, i) => {
-            // If the offence happened in the last 24 hours
-            if (Date.now() - o.time < 8.64e7) recent += 1;
+            if (o.isRecent) recent += 1;
             xp += o.xpDeduction;
             // Only show the latest 25 responses.
             if (offences.length - i < 26)

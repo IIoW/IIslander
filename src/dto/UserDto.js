@@ -1,3 +1,5 @@
+import OffenceDto from './OffenceDto';
+
 /** Class representing user data. */
 export default class UserDto {
     /**
@@ -6,7 +8,7 @@ export default class UserDto {
      * @param {Map<string, number>} cooldown
      * @param {string} faction
      * @param {string} key
-     * @param {Array} offences
+     * @param {OffenceDto[]} offences
      * @param {number} swearlevel
      * @param {number} everyoneping
      */
@@ -52,7 +54,7 @@ export default class UserDto {
             key: this.key,
             swearlevel: this.swearlevel,
             everyoneping: this.everyoneping,
-            offences: this.offences,
+            offences: this.offences.map((o) => o.toJSON()),
         };
     }
 
@@ -69,7 +71,7 @@ export default class UserDto {
             object.key,
             object.swearlevel,
             object.everyoneping,
-            object.offences
+            (object.offences || []).map((o) => OffenceDto.fromJSON(o))
         );
     }
 }
