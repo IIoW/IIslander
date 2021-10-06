@@ -12,6 +12,7 @@ const client = new Client({
         Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
         Intents.FLAGS.GUILD_VOICE_STATES,
     ],
+    partials: ['CHANNEL', 'MESSAGE', 'USER', 'REACTION'],
 });
 
 utilSetup(client);

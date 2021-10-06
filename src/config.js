@@ -5,6 +5,18 @@ export default {
     channels: new Map([
         ['notifications', process.env.CHANNEL_NOTIFICATION],
         ['starboard', process.env.CHANNEL_STARBOARD],
-        ['mod-list', process.env.CHANNEL_MOD_LIST],
+        ['log', process.env.CHANNEL_LOG],
+        ['tweets', process.env.CHANNEL_TWEETS],
+        ['welcome', process.env.CHANNEL_WELCOME],
+        ['just-chatting', process.env.CHANNEL_JUST_CHATTING],
+    ]),
+    roles: new Map([
+        ['cooldown_tier1bronze', process.env.ROLE_COOLDOWN_1],
+        ['cooldown_tier2silver', process.env.ROLE_COOLDOWN_2],
+        ['cooldown_tier3gold', process.env.ROLE_COOLDOWN_3],
+        ['cooldown_tier4diamond', process.env.ROLE_COOLDOWN_4],
+        ['cooldown_tier5crystal', process.env.ROLE_COOLDOWN_5],
+        ['timeoutChair', process.env.ROLE_TIMEOUT],
+        ['tweets', process.env.ROLE_TWEETS],
     ]),
 };

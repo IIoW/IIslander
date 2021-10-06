@@ -18,7 +18,7 @@ function ready() {
 
 const subscriptions = new Map();
 subscriptions.set('messageCreate', messageCreate);
-subscriptions.set('messageEdit', messageEdit);
+subscriptions.set('messageUpdate', messageEdit);
 subscriptions.set('ready', ready);
 
 const enabled = true;

@@ -7,13 +7,25 @@ export default class UserDto {
      * @param {string} faction
      * @param {string} key
      * @param {Array} offences
+     * @param {number} swearlevel
+     * @param {number} everyoneping
      */
-    constructor(xp = 0, cooldown = new Map(), faction = '', key = '', offences = []) {
+    constructor(
+        xp = 0,
+        cooldown = new Map(),
+        faction = '',
+        key = '',
+        swearlevel = 0,
+        everyoneping = 0,
+        offences = []
+    ) {
         // Data, which is getting saved across reboots
         this.xp = xp;
         this.cooldown = cooldown;
         this.faction = faction;
         this.key = key;
+        this.swearlevel = swearlevel;
+        this.everyoneping = everyoneping;
         this.offences = offences;
 
         // Data which is not necessary to be saved
@@ -38,6 +50,8 @@ export default class UserDto {
             cooldown: this.cooldown,
             faction: this.faction,
             key: this.key,
+            swearlevel: this.swearlevel,
+            everyoneping: this.everyoneping,
             offences: this.offences,
         };
     }
@@ -48,6 +62,14 @@ export default class UserDto {
      * @returns {UserDto} The user object from the JSON.
      */
     static fromJSON(object) {
-        return new UserDto(object.xp, object.cooldown, object.faction, object.key, object.offences);
+        return new UserDto(
+            object.xp,
+            object.cooldown,
+            object.faction,
+            object.key,
+            object.swearlevel,
+            object.everyoneping,
+            object.offences
+        );
     }
 }
