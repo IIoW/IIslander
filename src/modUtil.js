@@ -56,7 +56,7 @@ async function modActionCore({ user, type, reason, actionType } = {}) {
         dmFailed = true;
     }
     try {
-        await getChannel('mod-list').send(
+        await getChannel('log').send(
             `${user} offense #${userDto.offences.length}(${recentOffences}) ${
                 action.display
             } for:\n${OffenseDescriptions[type]}${
