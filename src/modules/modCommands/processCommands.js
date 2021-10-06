@@ -56,4 +56,4 @@ async function processCommandsNewMessage(client, message) {
     }
 }
 
-export { loadCommands, processCommandsNewMessage };
+export { loadCommands, processCommandsNewMessage, commands };

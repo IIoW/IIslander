@@ -8,6 +8,5 @@ export default {
     TOXIC: 1,
     ENGLISH: 1,
     OFFTOPIC: 0.5,
-    // TODO: See jwiggs response to this.
     INTERRUPTING: 0,
 };
