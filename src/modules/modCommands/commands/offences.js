@@ -6,7 +6,7 @@ const info = {
     desc:
         'Get a list of past user actions' +
         '\noffences <@member> - See past 25 offences for a member' +
-        '\noffences <@member> <number>- See a certain offence for a member',
+        '\noffences <@member> <number> - See a certain offence for a member',
     level: 2,
 };
 

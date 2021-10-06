@@ -3,6 +3,9 @@ import config from './config';
 import UserDto from './dto/UserDto';
 import ResponseDto from './dto/ResponseDto';
 
+/**
+ * @type {import('discord.js').Client}
+ */
 let client;
 
 /**
@@ -31,6 +34,11 @@ function getChannel(name) {
     return client.channels.cache.get(config.channels.get(name));
 }
 
+/**
+ *
+ * @param {string} query - The user id or ping of the user.
+ * @returns {Promise<import('discord.js').User | null>} The user.
+ */
 const fetchUser = async (query) => {
     const mention = new RegExp(/<@!?(\d+)>/);
     const match = query.match(mention);
