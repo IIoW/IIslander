@@ -6,13 +6,15 @@ export default class UserDto {
      * @param {Map<string, number>} cooldown
      * @param {string} faction
      * @param {string} key
+     * @param {Array} offences
      */
-    constructor(xp = 0, cooldown = new Map(), faction = '', key = '') {
+    constructor(xp = 0, cooldown = new Map(), faction = '', key = '', offences = []) {
         // Data, which is getting saved across reboots
         this.xp = xp;
         this.cooldown = cooldown;
         this.faction = faction;
         this.key = key;
+        this.offences = offences;
 
         // Data which is not necessary to be saved
         this.voiceTimeStampJoin = -1;
@@ -36,6 +38,7 @@ export default class UserDto {
             cooldown: this.cooldown,
             faction: this.faction,
             key: this.key,
+            offences: this.offences,
         };
     }
 
@@ -45,6 +48,6 @@ export default class UserDto {
      * @returns {UserDto} The user object from the JSON.
      */
     static fromJSON(object) {
-        return new UserDto(object.xp, object.cooldown, object.faction, object.key);
+        return new UserDto(object.xp, object.cooldown, object.faction, object.key, object.offences);
     }
 }

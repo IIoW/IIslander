@@ -4,7 +4,7 @@ import sendLevelNotification from './notifications';
 /**
  * @return {Promise<void>}
  */
-async function addXp(member, xp) {
+async function addXp(member, xp, silent = false) {
     const userDto = userDb.get(member.id);
 
     let oldLevel = userDto.level;
@@ -13,7 +13,7 @@ async function addXp(member, xp) {
 
     const newLevel = userDto.level;
 
-    if (newLevel !== oldLevel) {
+    if (newLevel !== oldLevel && !silent) {
         if (xp > 0) {
             while (oldLevel !== newLevel) {
                 // Disabled to keep the notifications in the correct order.
@@ -30,9 +30,13 @@ async function addXp(member, xp) {
     userDb.set(member.id, userDto);
 }
 
-async function removeXp(member, xp) {
+async function removeXp(member, xp, silent) {
     // potentially add more functionality here
-    return addXp(member, -xp);
+    return addXp(member, -xp, silent);
 }
 
-export { addXp, removeXp };
+function getXpFromLevel(level) {
+    return Math.floor((100 / 2.2) * level ** 2.2);
+}
+
+export { addXp, removeXp, getXpFromLevel };

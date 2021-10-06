@@ -5,5 +5,6 @@ export default {
     channels: new Map([
         ['notifications', process.env.CHANNEL_NOTIFICATION],
         ['starboard', process.env.CHANNEL_STARBOARD],
+        ['mod-list', process.env.CHANNEL_MOD_LIST],
     ]),
 };

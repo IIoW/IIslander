@@ -31,6 +31,19 @@ function getChannel(name) {
     return client.channels.cache.get(config.channels.get(name));
 }
 
+const fetchUser = async (query) => {
+    const mention = new RegExp(/<@!?(\d+)>/);
+    const match = query.match(mention);
+    const user = match ? match[1] : query;
+    let result;
+    try {
+        result = await client.users.fetch(user);
+    } catch (e) {
+        // ignore errors
+    }
+    return result;
+};
+
 // Databases
 
 /**
@@ -76,4 +89,4 @@ const responseDb = new Enmap({
     autoEnsure: new ResponseDto(),
 });
 
-export { setup, getEmoji, userDb, responseDb, getChannel };
+export { setup, getEmoji, userDb, responseDb, getChannel, fetchUser };
