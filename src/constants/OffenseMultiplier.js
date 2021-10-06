@@ -1,4 +1,4 @@
-/** Descriptions for different offenses. */
+/** Multipliers for different offenses. */
 export default {
     NSFW: 2,
     SWEARING: 2,
