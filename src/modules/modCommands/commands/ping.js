@@ -1,7 +1,7 @@
 const info = {
     name: 'ping',
     desc: 'Ping pong!',
-    level: 0,
+    level: 1,
 };
 
 /**
