@@ -1,3 +1,5 @@
+import OffenceDto from './OffenceDto';
+
 /** Class representing user data. */
 export default class UserDto {
     /**
@@ -6,13 +8,27 @@ export default class UserDto {
      * @param {Map<string, number>} cooldown
      * @param {string} faction
      * @param {string} key
+     * @param {OffenceDto[]} offences
+     * @param {number} swearlevel
+     * @param {number} everyoneping
      */
-    constructor(xp = 0, cooldown = new Map(), faction = '', key = '') {
+    constructor(
+        xp = 0,
+        cooldown = new Map(),
+        faction = '',
+        key = '',
+        swearlevel = 0,
+        everyoneping = 0,
+        offences = []
+    ) {
         // Data, which is getting saved across reboots
         this.xp = xp;
         this.cooldown = cooldown;
         this.faction = faction;
         this.key = key;
+        this.swearlevel = swearlevel;
+        this.everyoneping = everyoneping;
+        this.offences = offences;
 
         // Data which is not necessary to be saved
         this.voiceTimeStampJoin = -1;
@@ -36,6 +52,9 @@ export default class UserDto {
             cooldown: this.cooldown,
             faction: this.faction,
             key: this.key,
+            swearlevel: this.swearlevel,
+            everyoneping: this.everyoneping,
+            offences: this.offences.map((o) => o.toJSON()),
         };
     }
 
@@ -45,6 +64,14 @@ export default class UserDto {
      * @returns {UserDto} The user object from the JSON.
      */
     static fromJSON(object) {
-        return new UserDto(object.xp, object.cooldown, object.faction, object.key);
+        return new UserDto(
+            object.xp,
+            object.cooldown,
+            object.faction,
+            object.key,
+            object.swearlevel,
+            object.everyoneping,
+            (object.offences || []).map((o) => OffenceDto.fromJSON(o))
+        );
     }
 }

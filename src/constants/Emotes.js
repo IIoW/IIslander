@@ -5,6 +5,7 @@ export default {
     thumbDown: '👎',
     upvote: 'upvote',
     downvote: 'downvote',
+    boom: '💥',
     star: '⭐',
     awards: {
         1: 'tier1bronze',
