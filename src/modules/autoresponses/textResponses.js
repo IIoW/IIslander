@@ -1,4 +1,4 @@
-import { responseDb } from '../../util';
+import { getChannel, responseDb } from '../../util';
 import Emotes from '../../constants/Emotes';
 
 /**
@@ -16,6 +16,11 @@ export async function messageCreate(client, message) {
                     : message.content.toLowerCase().includes(trigger)
             );
             if (triggers) {
+                if (
+                    message.channel.id !== getChannel('help').id &&
+                    !message.mentions.has(client.user)
+                )
+                    return;
                 const msg = await message.channel.send(responseDto.response);
                 await msg.react(Emotes.thumbUp);
                 await msg.react(Emotes.boom);

@@ -8,6 +8,7 @@ export default {
         ['tweets', process.env.CHANNEL_TWEETS],
         ['welcome', process.env.CHANNEL_WELCOME],
         ['just-chatting', process.env.CHANNEL_JUST_CHATTING],
+        ['help', process.env.CHANNEL_HELP],
     ]),
     roles: new Map([
         ['cooldown_tier1bronze', process.env.ROLE_COOLDOWN_1],
