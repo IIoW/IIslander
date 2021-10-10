@@ -18,5 +18,6 @@ export default {
         ['cooldown_tier5crystal', process.env.ROLE_COOLDOWN_5],
         ['timeoutChair', process.env.ROLE_TIMEOUT],
         ['tweets', process.env.ROLE_TWEETS],
+        ['spoilores', process.env.ROLE_SPOILORES],
     ]),
 };

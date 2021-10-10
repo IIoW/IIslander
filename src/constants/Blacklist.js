@@ -38,7 +38,7 @@ export default {
         'se(x|c?ks)',
         'shag',
         'slut',
-        'ti+t',
+        'ti+t+s',
         'vagina',
         'viagra',
         'b=+d', // for things like B====D
