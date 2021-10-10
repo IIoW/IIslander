@@ -8,9 +8,9 @@ export default class UserDto {
      * @param {Map<string, number>} cooldown
      * @param {string} faction
      * @param {string} key
-     * @param {OffenceDto[]} offences
      * @param {number} swearlevel
      * @param {number} everyoneping
+     * @param {OffenceDto} offences
      */
     constructor(
         xp = 0,

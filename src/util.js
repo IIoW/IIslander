@@ -70,6 +70,7 @@ function getRole(name) {
 function stringifyTimestamp(time, format = 'f') {
     return `<t:${Math.round(time / 1000)}:${format}>`;
 }
+
 // Databases
 
 /**
