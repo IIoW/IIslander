@@ -13,13 +13,15 @@ export default class OffenceDto {
      * @param {string} modReason - The reason the mod did the action.
      * @param {number} [xpDeduction] - How much xp was deduced. Null if not applicable.
      * @param {number} time - The timestamp this happened.
+     * @param {number} [endTime] - When the action ends. Null if not applicable.
      */
-    constructor(type, offence, modReason, xpDeduction, time = Date.now()) {
+    constructor(type, offence, modReason, xpDeduction, time = Date.now(), endTime) {
         this.type = type;
         this.offence = offence;
         this.modReason = modReason;
         this.xpDeduction = xpDeduction;
         this.time = time;
+        this.endTime = endTime;
     }
 
     get isRecent() {
@@ -38,6 +40,7 @@ export default class OffenceDto {
             modReason: this.modReason,
             xpDeduction: this.xpDeduction,
             time: this.time,
+            endTime: this.endTime,
         };
     }
 
@@ -52,7 +55,8 @@ export default class OffenceDto {
             object.offence,
             object.modReason,
             object.xpDeduction,
-            object.time
+            object.time,
+            object.endTime
         );
     }
 }

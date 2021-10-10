@@ -60,6 +60,16 @@ function getRole(name) {
     return config.roles.get(name);
 }
 
+/**
+ * Converts a js timestamp to a discord markdown timestamp.
+ * @param {number} time - The js timestamp to convert.
+ * @param {'t'|'T'|'d'|'D'|'f'|'F'|'R'} format - The format to display the timestamp in.
+ * @see {@link https://discord.com/developers/docs/reference#message-formatting-timestamp-styles The Discord Docs on Timestamp Markdown}
+ * @returns {string} The timestamp stringified.
+ */
+function stringifyTimestamp(time, format = 'f') {
+    return `<t:${Math.round(time / 1000)}:${format}>`;
+}
 // Databases
 
 /**
@@ -105,4 +115,4 @@ const responseDb = new Enmap({
     autoEnsure: new ResponseDto(),
 });
 
-export { setup, getEmoji, userDb, responseDb, getChannel, fetchUser, getRole };
+export { setup, getEmoji, userDb, responseDb, getChannel, fetchUser, getRole, stringifyTimestamp };
