@@ -30,13 +30,17 @@ function getUserRoles(member) {
  * @returns {number} The user's numeric mod level.
  */
 export function getUserMod(member) {
-    const userRoles = getUserRoles(member);
-    return Object.entries(Mod).reduce((p, c) => {
-        const roleName = Roles[c[0]];
-        if (!roleName) return p;
-        if (userRoles.includes(roleName)) return Math.max(p, c[1]);
-        return p;
-    }, 0);
+    try {
+        const userRoles = getUserRoles(member);
+        return Object.entries(Mod).reduce((p, c) => {
+            const roleName = Roles[c[0]];
+            if (!roleName) return p;
+            if (userRoles.includes(roleName)) return Math.max(p, c[1]);
+            return p;
+        }, 0);
+    } catch (e) {
+        return 0;
+    }
 }
 
 /**
