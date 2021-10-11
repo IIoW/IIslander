@@ -15,7 +15,14 @@ export default class OffenceDto {
      * @param {number} time - The timestamp this happened.
      * @param {number} [endTime] - When the action ends. Null if not applicable.
      */
-    constructor(type, offence, modReason, xpDeduction, time = Date.now(), endTime = Date.now()+1) {
+    constructor(
+        type,
+        offence,
+        modReason,
+        xpDeduction,
+        time = Date.now(),
+        endTime = Date.now() + 1
+    ) {
         this.type = type;
         this.offence = offence;
         this.modReason = modReason;
