@@ -32,6 +32,8 @@ async function loadCommands() {
 async function processCommandsNewMessage(client, message) {
     // Avoid botception
     if (message.author.bot) return;
+    // No inline commands in DM's
+    if (!message.guild) return;
     await Promise.all(
         commands.map((fun, command) => {
             if (message.content.match(command) !== null) {
