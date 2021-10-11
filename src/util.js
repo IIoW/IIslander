@@ -36,15 +36,6 @@ function getChannel(name) {
 
 /**
  *
- * @param {string} name
- * @return {import('discord.js').RoleResolvable}
- */
-function getRole(name) {
-    return config.roles.get(name);
-}
-
-/**
- *
  * @param {string} query - The user id or ping of the user.
  * @returns {Promise<import('discord.js').User | null>} The user.
  */
@@ -62,6 +53,14 @@ const fetchUser = async (query) => {
 };
 
 /**
+ * @param {string} name
+ * @return {import('discord.js').RoleResolvable}
+ */
+function getRole(name) {
+    return config.roles.get(name);
+}
+
+/**
  * Converts a js timestamp to a discord markdown timestamp.
  * @param {number} time - The js timestamp to convert.
  * @param {'t'|'T'|'d'|'D'|'f'|'F'|'R'} format - The format to display the timestamp in.
@@ -71,6 +70,7 @@ const fetchUser = async (query) => {
 function stringifyTimestamp(time, format = 'f') {
     return `<t:${Math.round(time / 1000)}:${format}>`;
 }
+
 // Databases
 
 /**

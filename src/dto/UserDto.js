@@ -11,6 +11,7 @@ export default class UserDto {
      * @param {OffenceDto[]} offences
      * @param {number} swearlevel
      * @param {number} everyoneping
+     * @param {OffenceDto} offences
      */
     constructor(
         xp = 0,

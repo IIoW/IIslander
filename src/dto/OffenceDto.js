@@ -15,7 +15,7 @@ export default class OffenceDto {
      * @param {number} time - The timestamp this happened.
      * @param {number} [endTime] - When the action ends. Null if not applicable.
      */
-    constructor(type, offence, modReason, xpDeduction, time = Date.now(), endTime) {
+    constructor(type, offence, modReason, xpDeduction, time = Date.now(), endTime = Date.now()+1) {
         this.type = type;
         this.offence = offence;
         this.modReason = modReason;
@@ -26,7 +26,7 @@ export default class OffenceDto {
 
     get isRecent() {
         // If the offence happened in the last 24 hours
-        return Date.now() - this.time < 8.64e7;
+        return Date.now() - this.time < 24 * 60 * 60 * 1000;
     }
 
     /**
