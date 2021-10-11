@@ -1,5 +1,5 @@
 import { MessageEmbed } from 'discord.js';
-import { fetchUser, userDb } from '../../../util';
+import { fetchUser, stringifyTimestamp, userDb } from '../../../util';
 
 const info = {
     name: 'offences',
@@ -29,11 +29,19 @@ async function fun(client, message, args) {
         if (!offence) return message.reply('Invalid offence!');
         const embed = new MessageEmbed()
             .setDescription(
-                `Offence #${num} for ${user}.\n${offence.type}\n${offence.offence}\n<t:${Math.round(
-                    offence.time / 1000
-                )}:f>\n${offence.xpDeduction ? `XP Deducted: ${offence.xpDeduction}\n` : ''}${
-                    offence.isRecent ? 'Recent Offence!\n' : ''
-                }${offence.modReason || 'Error Getting reason'}`
+                `Offence #${num} for ${user}.\n${
+                    offence.type
+                }\n${offence.offence.toLowerCase()}\n${stringifyTimestamp(offence.time)}\n${
+                    offence.xpDeduction ? `XP Deducted: ${offence.xpDeduction}\n` : ''
+                }${
+                    offence.endTime
+                        ? `${offence.endTime > Date.now() ? 'Ends' : 'Ended'}: ${stringifyTimestamp(
+                              offence.endTime
+                          )} (${stringifyTimestamp(offence.endTime, 'R')})\n`
+                        : ''
+                }${offence.isRecent ? 'Recent Offence!\n' : ''}${
+                    offence.modReason || 'Error Getting reason'
+                }`
             )
             .setColor('RED');
         return message.reply({ embeds: [embed] });
@@ -47,8 +55,14 @@ async function fun(client, message, args) {
             if (offences.length - i < 26)
                 embedFields.push({
                     name: `#${i + 1}:`,
-                    value: `${o.type}\n${o.offence}\n<t:${Math.round(o.time / 1000)}:f>\n${
+                    value: `${o.type}\n${o.offence}\n${stringifyTimestamp(o.time)}\n${
                         o.xpDeduction ? `XP Deducted: ${o.xpDeduction}\n` : ''
+                    }${
+                        o.endTime
+                            ? `${o.endTime > Date.now() ? 'Ends' : 'Ended'}: ${stringifyTimestamp(
+                                  o.endTime
+                              )} (${stringifyTimestamp(o.endTime, 'R')})\n`
+                            : ''
                     }${o.modReason || 'Error Getting reason'}`,
                     inline: true,
                 });

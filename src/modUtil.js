@@ -1,7 +1,8 @@
+import config from './config';
 import OffenseDescriptions from './constants/OffenseDescriptions';
 import OffenseMultiplier from './constants/OffenseMultiplier';
 import OffenceDto from './dto/OffenceDto';
-import { getChannel, userDb } from './util';
+import { getChannel, getRole, stringifyTimestamp, userDb } from './util';
 import { getXpFromLevel, removeXp } from './xpHandling';
 
 /**
@@ -11,16 +12,32 @@ const actionTypes = {
     penalize: {
         display: 'penalized',
         xpDeduction: true,
+        timeout: false,
+        message: (desc) =>
+            `You have been penalized for ${desc}. You have lost some XP and may have even dropped levels based on the severity and occurrence.`,
     },
     warn: {
         display: 'warned',
         xpDeduction: false,
+        timeout: false,
+        message: (desc) =>
+            `You have received a warning for ${desc}. You have not been penalized, however future violations may result in penalties.`,
+    },
+    timeout: {
+        display: 'timed out',
+        xpDeduction: true,
+        timeout: true,
+        message: (desc, time) =>
+            `You have been placed on timeout that will end in approximately ${stringifyTimestamp(
+                time,
+                'R'
+            )} for ${desc}. You will be unable to interact with the server during this time.`,
     },
 };
 /**
  * Internal function for shared code between mod actions.
  */
-async function modActionCore({ user, type, reason, actionType } = {}) {
+async function modActionCore({ user, type, reason, actionType, timeoutDuration = 3.6e6 } = {}) {
     const action = actionTypes[actionType];
     if (!action) throw new Error(`Unknown action type "${actionType}"`);
     const userDto = userDb.get(user.id);
@@ -36,16 +53,29 @@ async function modActionCore({ user, type, reason, actionType } = {}) {
                   recentOffences
           )
         : null;
-    userDto.offences.push(new OffenceDto(actionType, type, reason, xpDeduction, Date.now()));
-    let dmFailed = false;
+    const endTime = action.timeout ? Date.now() + timeoutDuration : null;
+    userDto.offences.push(
+        new OffenceDto(actionType, type, reason, xpDeduction, Date.now(), endTime)
+    );
+    // Timeout handling
+    if (action.timeout) {
+        // Maybe make this a function thats shared
+        // between awards and this later
+        userDto.cooldown.set('timeout', endTime);
+        const member = await user.client.guilds.cache
+            .get(config.defaultGuild)
+            .members.fetch(user.id);
+        await member.roles.add(getRole('cooldown_timeout'));
+        setTimeout(() => user.client.emit('cooldownEnd', 'timeout', user.id), timeoutDuration);
+    }
     // Have to set the thing before removing xp or
     // else it overwrites with the old numbers.
     userDb.set(user.id, userDto);
+    // XP handling
     if (action.xpDeduction) await removeXp(user, xpDeduction, true);
+    let dmFailed = false;
     try {
-        await user.send(
-            `You have been ${action.display} for ${OffenseDescriptions[type]}. You have lost some XP and may have even dropped levels based on the severity and occurrence.`
-        );
+        await user.send(action.message(OffenseDescriptions[type], endTime));
     } catch (e) {
         dmFailed = true;
     }
@@ -58,8 +88,12 @@ async function modActionCore({ user, type, reason, actionType } = {}) {
             }${
                 action.xpDeduction
                     ? `\nXP: ${userDto.xp} > ${
-                          userDto.xp - xpDeduction < 0 ? 0 : userDto.xp - xpDeduction < 0
+                          userDto.xp - xpDeduction < 0 ? 0 : userDto.xp - xpDeduction
                       } [${xpDeduction}]`
+                    : ''
+            }${
+                action.timeout
+                    ? `\nEnds: ${stringifyTimestamp(endTime)} (${stringifyTimestamp(endTime, 'R')})`
                     : ''
             }\n${reason}`,
             { allowedMentions: { users: [] } }
@@ -88,4 +122,21 @@ async function warn(user, type, reason) {
     return modActionCore({ user, type, reason, actionType: 'warn' });
 }
 
-export { penalize, warn };
+/**
+ *
+ * @param {import('discord.js').User} user - The user to penalize.
+ * @param {string} type - The type of infraction.
+ * @param {string} reason - The mod reason.
+ * @param {number} time - The duration of the timeout, in minutes.
+ */
+async function timeout(user, type, reason, time) {
+    return modActionCore({
+        user,
+        type,
+        reason,
+        actionType: 'timeout',
+        timeoutDuration: time * 60000,
+    });
+}
+
+export { penalize, warn, timeout };
