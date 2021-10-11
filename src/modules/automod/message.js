@@ -105,6 +105,8 @@ async function handlePings(client, message) {
  */
 export async function messageCreate(client, message) {
     if (message.author.bot) return;
+    // If this is a DM we can ignore these
+    if (!message.guild) return;
     await handleSwearing(client, message);
     await handlePings(client, message);
 }
