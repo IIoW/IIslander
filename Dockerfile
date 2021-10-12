@@ -23,7 +23,7 @@ ENV NODE_ENV="production"
 
 RUN apk update && \
     apk upgrade && \
-    apk add dumb-init
+    apk add --no-cache dumb-init
 
 RUN mkdir /app/data && \
     chown -R node:node /app
