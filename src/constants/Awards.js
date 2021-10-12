@@ -26,7 +26,7 @@ export const xpMultiplier = {
 };
 
 export const xpCooldown = {
-    tier1bronze: 4 * 60 * 60 * 1000,
+    tier1bronze: 1000,
     tier2silver: 12 * 60 * 60 * 1000,
     tier3gold: 24 * 60 * 60 * 1000,
     tier4diamond: 2 * 24 * 60 * 60 * 1000,

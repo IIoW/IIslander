@@ -25,13 +25,21 @@ const getEmoji = (search) =>
 
 /**
  * Gets a member by their id
- * @param id
+ * @param query
  * @returns {import('discord.js').GuildMember}
  */
-const getMember = (id) =>
-    client.guilds.cache
-        .get(config.defaultGuild)
-        .members.cache.get(id)
+const getMember = async (query) => {
+    const mention = new RegExp(/<@!?(\d+)>/);
+    const match = query.match(mention);
+    const user = match ? match[1] : query;
+    let result;
+    try {
+        result = await (await client.guilds.fetch(config.defaultGuild)).members.fetch(user);
+    } catch (e) {
+        // ignore errors
+    }
+    return result;
+};
 
 /**
  * @param {string} name

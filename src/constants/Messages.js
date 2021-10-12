@@ -182,6 +182,14 @@ const welcomeQuestions = [
     'What is your favorite holiday?',
 ];
 
+const cooldownEndMessages = [
+    'Your [role] cooldown ran out. Now you can give it away to one amazing living being :D',
+    'Hey, it seems like you found another [role].',
+    "I found something laying around, here, I'll give it to you. [role]",
+    '[role] is that yours? Here, have it back',
+    'Hey, your [role] is off cooldown.',
+];
+
 export {
     levelMessages,
     roleMessages,
@@ -191,4 +199,5 @@ export {
     welcomeMessage,
     welcomeMessages,
     welcomeQuestions,
+    cooldownEndMessages,
 };

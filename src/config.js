@@ -19,5 +19,7 @@ export default {
         ['timeoutChair', process.env.ROLE_TIMEOUT],
         ['tweets', process.env.ROLE_TWEETS],
         ['spoilores', process.env.ROLE_SPOILORES],
+        ['notifications_cooldown', process.env.ROLE_NOTIFICATIONS_COOLDOWN],
+        ['steamowner', process.env.ROLE_STEAMOWNER],
     ]),
 };
