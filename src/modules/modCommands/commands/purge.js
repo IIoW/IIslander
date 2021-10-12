@@ -12,6 +12,7 @@ const info = {
 };
 
 const purge = async (message, limit, after = null) => {
+    await message.delete();
     let msg;
     try {
         msg = await message.channel.messages.fetch({ limit, after });
