@@ -7,7 +7,7 @@ RUN apk update && \
     apk add \
     make \
     g++ \
-    python2
+    python3
 
 COPY yarn.lock package.json ./
 
