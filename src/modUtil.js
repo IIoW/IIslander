@@ -139,4 +139,11 @@ async function timeout(user, type, reason, time) {
     });
 }
 
-export { penalize, warn, timeout };
+/**
+ * Clean up a user's nickname.
+ * @param {string} nick - The nick to clean.
+ * @returns {string} A cleaned nickname.
+ */
+const cleanNickname = (nick) => nick.replace(/[^a-zA-Z0-9_ .]/g, '').slice(0, 32);
+
+export { penalize, warn, timeout, cleanNickname };
