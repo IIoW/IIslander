@@ -41,12 +41,20 @@ async function processInteractions(client, interaction) {
         await cmd(client, interaction, args);
     } catch (e) {
         console.error(`Error running button "${name}":\n${e?.stack || e}`);
-        interaction
-            .reply({
-                content: `Something went wrong processing that command! Please try again later.`,
-                ephemeral: true,
-            })
-            .catch((err) => console.error('Error sending error!\n', err));
+        if (interaction.deferred || interaction.replied)
+            interaction
+                .followUp({
+                    content: `Something went wrong processing that button! Please try again later.`,
+                    ephemeral: true,
+                })
+                .catch((err) => console.error('Error sending error!\n', err));
+        else
+            interaction
+                .reply({
+                    content: `Something went wrong processing that button! Please try again later.`,
+                    ephemeral: true,
+                })
+                .catch((err) => console.error('Error sending error!\n', err));
     }
     return null;
 }
