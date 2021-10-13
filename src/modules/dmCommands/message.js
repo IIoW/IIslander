@@ -11,10 +11,8 @@ const commands = new Collection();
  */
 
 export async function messageCreate(client, message) {
-    console.log(message.member);
     if (message.guild !== null || message.author.bot) return; // DM Only
     const member = await getMember(message.author.id);
-    console.log(member); // this has no id attribute for some reason
     if (member == null) return; // Ensures being a discord member
 
     const { content } = message;

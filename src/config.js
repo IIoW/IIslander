@@ -9,6 +9,8 @@ export default {
         ['welcome', process.env.CHANNEL_WELCOME],
         ['just-chatting', process.env.CHANNEL_JUST_CHATTING],
         ['help', process.env.CHANNEL_HELP],
+        ['faction-chat', process.env.CHANNEL_FACTION_CHAT],
+        ['steam-owner', process.env.CHANNEL_STEAM_OWNER],
     ]),
     roles: new Map([
         ['cooldown_tier1bronze', process.env.ROLE_COOLDOWN_1],
@@ -21,5 +23,8 @@ export default {
         ['spoilores', process.env.ROLE_SPOILORES],
         ['notifications_cooldown', process.env.ROLE_NOTIFICATIONS_COOLDOWN],
         ['steamowner', process.env.ROLE_STEAMOWNER],
+        ['faction_strike', process.env.ROLE_FACTION_STRIKE],
+        ['faction_nova', process.env.ROLE_FACTION_NOVA],
+        ['faction_strike', process.env.ROLE_FACTION_PRIME],
     ]),
 };
