@@ -18,18 +18,18 @@ export async function fun(client, message) {
         return;
     }
     await message.author.send({
-        content: `There are the following factions:\n${Object.keys(Factions).join(
+        content: `There are the following factions:\n${Object.values(Factions).map(f => f.fullName).join(
             ', '
         )}\nTo join one of them, in case you aren't in a faction already, click the buttons below`,
         components: [
             new MessageActionRow().addComponents(
                 Object.entries(Factions).map(
-                    (faction) =>
+                    ([name, faction]) =>
                         new MessageButton({
-                            customId: `faction.${message.author.id}.${faction[0]}`,
+                            customId: `faction.${message.author.id}.${name}`,
                             style: 'PRIMARY',
-                            emoji: getEmoji(faction[1].emote),
-                            label: faction[0],
+                            emoji: getEmoji(faction.emote),
+                            label: faction.fullName,
                         })
                 )
             ),
