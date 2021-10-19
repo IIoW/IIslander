@@ -81,7 +81,8 @@ export default class UserDto {
             object.swearlevel,
             object.everyoneping,
             object.steamVia,
-            object.notifications(object.offences || []).map((o) => OffenceDto.fromJSON(o))
+            object.notifications,
+            (object.offences || []).map((o) => OffenceDto.fromJSON(o))
         );
     }
 }
