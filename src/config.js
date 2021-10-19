@@ -25,7 +25,7 @@ export default {
         ['cooldown_tier3gold', process.env.ROLE_COOLDOWN_3],
         ['cooldown_tier4diamond', process.env.ROLE_COOLDOWN_4],
         ['cooldown_tier5crystal', process.env.ROLE_COOLDOWN_5],
-        ['timeoutChair', process.env.ROLE_TIMEOUT],
+        ['cooldown_timeout', process.env.ROLE_COOLDOWN_TIMEOUT],
         ['tweets', process.env.ROLE_TWEETS],
         ['spoilores', process.env.ROLE_SPOILORES],
         ['steamowner', process.env.ROLE_STEAMOWNER],

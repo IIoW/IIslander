@@ -54,15 +54,6 @@ function getChannel(name) {
 
 /**
  *
- * @param {string} name
- * @return {import('discord.js').RoleResolvable}
- */
-function getRole(name) {
-    return config.roles.get(name);
-}
-
-/**
- *
  * @param {string} query - The user id or ping of the user.
  * @returns {Promise<import('discord.js').User | null>} The user.
  */
@@ -78,6 +69,25 @@ const fetchUser = async (query) => {
     }
     return result;
 };
+
+/**
+ * @param {string} name
+ * @return {import('discord.js').RoleResolvable}
+ */
+function getRole(name) {
+    return config.roles.get(name);
+}
+
+/**
+ * Converts a js timestamp to a discord markdown timestamp.
+ * @param {number} time - The js timestamp to convert.
+ * @param {'t'|'T'|'d'|'D'|'f'|'F'|'R'} format - The format to display the timestamp in.
+ * @see {@link https://discord.com/developers/docs/reference#message-formatting-timestamp-styles The Discord Docs on Timestamp Markdown}
+ * @returns {string} The timestamp stringified.
+ */
+function stringifyTimestamp(time, format = 'f') {
+    return `<t:${Math.round(time / 1000)}:${format}>`;
+}
 
 // Databases
 
@@ -124,4 +134,14 @@ const responseDb = new Enmap({
     autoEnsure: new ResponseDto(),
 });
 
-export { setup, getEmoji, userDb, responseDb, getChannel, getRole, getMember, fetchUser };
+export {
+    setup,
+    getEmoji,
+    userDb,
+    responseDb,
+    getChannel,
+    getRole,
+    getMember,
+    fetchUser,
+    stringifyTimestamp,
+};

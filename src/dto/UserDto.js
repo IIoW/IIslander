@@ -11,8 +11,12 @@ export default class UserDto {
      * @param {OffenceDto[]} offences
      * @param {number} swearlevel
      * @param {number} everyoneping
+<<<<<<< HEAD
      * @param {string|null} steamVia
      * @param {Map<string, boolean>} notifications
+=======
+     * @param {OffenceDto} offences
+>>>>>>> 8e0fb3b (Timeout (#51))
      */
     constructor(
         xp = 0,
