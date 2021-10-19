@@ -1,4 +1,4 @@
-import { getEmoji, getMember, getRole } from '../../util';
+import { getEmoji, userDb } from '../../util';
 import { cooldownEndMessages } from '../../constants/Messages';
 
 const enabled = true;
@@ -6,7 +6,8 @@ const enabled = true;
 const subscriptions = new Map();
 
 subscriptions.set('cooldownEnd', async (client, reactionName, userid) => {
-    if (!(await getMember(userid)).roles.cache.has(getRole('notifications_cooldown'))) return;
+    const userDto = userDb.get(userid);
+    if (!userDto.notifications.get('cooldownEnd')) return;
     await (
         await client.users.fetch(userid)
     ).send(

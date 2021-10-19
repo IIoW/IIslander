@@ -9,6 +9,7 @@ export default class UserDto {
      * @param {number} swearlevel
      * @param {number} everyoneping
      * @param {string|null} steamVia
+     * @param {Map<string, boolean>} notifications
      */
     constructor(
         xp = 0,
@@ -17,7 +18,8 @@ export default class UserDto {
         key = '',
         swearlevel = 0,
         everyoneping = 0,
-        steamVia = null
+        steamVia = null,
+        notifications = new Map()
     ) {
         // Data, which is getting saved across reboots
         this.xp = xp;
@@ -27,6 +29,7 @@ export default class UserDto {
         this.swearlevel = swearlevel;
         this.everyoneping = everyoneping;
         this.steamVia = steamVia;
+        this.notifications = notifications;
 
         // Data which is not necessary to be saved
         this.voiceTimeStampJoin = -1;
@@ -53,6 +56,7 @@ export default class UserDto {
             swearlevel: this.swearlevel,
             everyoneping: this.everyoneping,
             steamVia: this.steamVia,
+            notifications: this.notifications,
         };
     }
 
@@ -69,7 +73,8 @@ export default class UserDto {
             object.key,
             object.swearlevel,
             object.everyoneping,
-            object.steamVia
+            object.steamVia,
+            object.notifications
         );
     }
 }

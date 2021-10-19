@@ -11,6 +11,12 @@ export default {
         ['help', process.env.CHANNEL_HELP],
         ['faction-chat', process.env.CHANNEL_FACTION_CHAT],
         ['steam-owner', process.env.CHANNEL_STEAM_OWNER],
+        ['faction-strike-chat', process.env.CHANNEL_CHAT_STRIKE],
+        ['faction-nova-chat', process.env.CHANNEL_CHAT_NOVA],
+        ['faction-prime-chat', process.env.CHANNEL_CHAT_PRIME],
+        ['faction-strike-submission', process.env.CHANNEL_CHAT_STRIKE],
+        ['faction-nova-submission', process.env.CHANNEL_CHAT_NOVA],
+        ['faction-prime-submission', process.env.CHANNEL_CHAT_PRIME],
     ]),
     roles: new Map([
         ['cooldown_tier1bronze', process.env.ROLE_COOLDOWN_1],
@@ -26,5 +32,8 @@ export default {
         ['faction_strike', process.env.ROLE_FACTION_STRIKE],
         ['faction_nova', process.env.ROLE_FACTION_NOVA],
         ['faction_strike', process.env.ROLE_FACTION_PRIME],
+        ['windows', process.env.ROLE_WINDOWS],
+        ['linux', process.env.ROLE_LINUX],
+        ['mac', process.env.ROLE_MAC],
     ]),
 };

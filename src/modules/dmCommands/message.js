@@ -2,7 +2,7 @@ import { Collection } from 'discord.js';
 import fs from 'fs/promises';
 import { getMember } from '../../util';
 
-const commands = new Collection();
+export const commands = new Collection();
 
 /**
  *
@@ -15,11 +15,9 @@ export async function messageCreate(client, message) {
     const member = await getMember(message.author.id);
     if (member == null) return; // Ensures being a discord member
 
-    const { content } = message;
-    const command = content.split(' ')[0];
-    const cmd = commands.get(command);
+    const cmd = commands.get(message.content);
     if (!cmd) return;
-    await cmd(client, message, member);
+    await cmd.fun(client, message, member);
 }
 
 export async function ready() {
@@ -31,7 +29,7 @@ export async function ready() {
         commandModules.map(async (moduleName) => {
             if (moduleName.endsWith('.js')) {
                 const module = await import(`./commands/${moduleName}`);
-                commands.set(module.command, module.fun);
+                commands.set(module.command, module);
             }
         })
     );

@@ -2,6 +2,7 @@ import { MessageActionRow, MessageButton } from 'discord.js';
 import { userDb } from '../../../util';
 
 export const command = 'steamowner';
+export const desc = 'Show that you bought the game.';
 
 /**
  *
@@ -18,7 +19,7 @@ export async function fun(client, message) {
     }
     await message.author.send({
         content:
-            'By becoming steam owner, you state, that you **bought** the game.\n' +
+            'By becoming a steam owner, you state, that you **bought** the game.\n' +
             "Therefore you won't be able to participate in giveaways.",
         components: [
             new MessageActionRow().addComponents(
@@ -30,7 +31,7 @@ export async function fun(client, message) {
                 new MessageButton({
                     customId: `steam.${message.author.id}.n`,
                     style: 'PRIMARY',
-                    label: "Ok, i don't want it",
+                    label: "Ok, I don't want it",
                 })
             ),
         ],

@@ -1,6 +1,7 @@
 import { getRole } from '../../../util';
 
 export const command = 'tweets';
+export const desc = 'Subscribe to Twitter notifications';
 
 /**
  *
@@ -14,9 +15,9 @@ export async function fun(client, message, member) {
     const role = getRole('tweets');
     if (m.roles.cache.has(role)) {
         await m.roles.remove(role);
-        await message.reply('Thanks for subscribing to the twitter notifications');
+        await message.reply("It's sad to see you unsubscribing, but here you go.");
     } else {
         await m.roles.add(role);
-        await message.reply('Its sad to see you unsubscribing, but here you go.');
+        await message.reply('Thanks for subscribing to the twitter notifications');
     }
 }

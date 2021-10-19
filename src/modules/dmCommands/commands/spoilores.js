@@ -3,6 +3,7 @@ import { getRole } from '../../../util';
 import Levels from '../../../constants/Levels';
 
 export const command = 'spoilores';
+export const desc = '';
 
 /**
  *

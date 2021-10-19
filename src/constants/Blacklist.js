@@ -29,7 +29,7 @@ export default {
         'jackoff',
         'jerkoff',
         'mof(o|u)',
-        'mast(u|e)rb(at|8)',
+        'mast(r|u|e){2}b(at|8)',
         'nigg(a|er)',
         'orgasi?m',
         'porn',
@@ -38,7 +38,7 @@ export default {
         'se(x|c?ks)',
         'shag',
         'slut',
-        'ti+t+s',
+        'ti+t+(ie|s)',
         'vagina',
         'viagra',
         'b=+d', // for things like B====D

@@ -3,6 +3,7 @@ import { getEmoji, userDb } from '../../../util';
 import Factions from '../../../constants/Factions';
 
 export const command = 'factions';
+export const desc = 'Shows an overview over the factions and lets you join them.';
 
 /**
  *
@@ -18,9 +19,11 @@ export async function fun(client, message) {
         return;
     }
     await message.author.send({
-        content: `There are the following factions:\n${Object.values(Factions).map(f => f.fullName).join(
-            ', '
-        )}\nTo join one of them, in case you aren't in a faction already, click the buttons below`,
+        content: `There are the following factions:\n${Object.values(Factions)
+            .map((f) => f.fullName)
+            .join(
+                ', '
+            )}\nTo join one of them, in case you aren't in a faction already, click the buttons below`,
         components: [
             new MessageActionRow().addComponents(
                 Object.entries(Factions).map(
