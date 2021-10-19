@@ -1,4 +1,4 @@
-import { getChannel, responseDb } from '../../util';
+import { getChannel, makeTitle, responseDb } from '../../util';
 import Emotes from '../../constants/Emotes';
 
 /**
@@ -23,7 +23,9 @@ export async function messageCreate(client, message) {
                     !message.mentions.has(client.user)
                 )
                     return;
-                const msg = await message.channel.send(responseDto.response);
+                const msg = await message.channel.send(
+                    `${makeTitle(responseDto.title)}\n\n${responseDto.response}`
+                );
                 await msg.react(Emotes.thumbUp);
                 await msg.react(Emotes.boom);
             }

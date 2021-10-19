@@ -2,6 +2,7 @@ import Enmap from 'enmap';
 import config from './config';
 import UserDto from './dto/UserDto';
 import ResponseDto from './dto/ResponseDto';
+import Emotes from './constants/Emotes';
 
 /**
  * @type {import('discord.js').Client}
@@ -107,6 +108,21 @@ function stringifyTimestamp(time, format = 'f') {
     return `<t:${Math.round(time / 1000)}:${format}>`;
 }
 
+/**
+ * Transforms a string to an emojified representation of itself.
+ * NOTE: This will remove any non-alphanumeric characters.
+ * @param {String} String - The string to transform.
+ * @returns {String} The finished string.
+ */
+function makeTitle(string) {
+    let res = '';
+    for (const char of string) {
+        if (/[a-zA-Z0-9 ]/.test(char))
+            res += char === ' ' ? '     ' : getEmoji(Emotes.font[char.toLowerCase()]).toString();
+    }
+    return res;
+}
+
 // Databases
 
 /**
@@ -163,4 +179,5 @@ export {
     fetchUser,
     fetchChannel,
     stringifyTimestamp,
+    makeTitle,
 };
