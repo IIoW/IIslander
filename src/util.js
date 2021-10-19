@@ -55,7 +55,7 @@ function getChannel(name) {
 }
 
 /**
- *
+ * Fetch a user by id or mention string.
  * @param {string} query - The user id or ping of the user.
  * @returns {Promise<import('discord.js').User | null>} The user.
  */
@@ -66,6 +66,24 @@ const fetchUser = async (query) => {
     let result;
     try {
         result = await client.users.fetch(user);
+    } catch (e) {
+        // ignore errors
+    }
+    return result;
+};
+
+/**
+ * Fetch a channel by id or mention string.
+ * @param {string} query - The channel id or ping of the channel.
+ * @returns {import('discord.js').Channel | null} The channel.
+ */
+const fetchChannel = (query) => {
+    const mention = new RegExp(/<#(\d+)>/);
+    const match = query.match(mention);
+    const channel = match ? match[1] : query;
+    let result;
+    try {
+        result = client.channels.cache.get(channel);
     } catch (e) {
         // ignore errors
     }
@@ -146,5 +164,6 @@ export {
     getMember,
     getClient,
     fetchUser,
+    fetchChannel,
     stringifyTimestamp,
 };
