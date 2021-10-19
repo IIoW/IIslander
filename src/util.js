@@ -3,6 +3,9 @@ import config from './config';
 import UserDto from './dto/UserDto';
 import ResponseDto from './dto/ResponseDto';
 
+/**
+ * @type {import('discord.js').Client}
+ */
 let client;
 
 /**
@@ -60,6 +63,24 @@ function getRole(name) {
     return config.roles.get(name);
 }
 
+/**
+ *
+ * @param {string} query - The user id or ping of the user.
+ * @returns {Promise<import('discord.js').User | null>} The user.
+ */
+const fetchUser = async (query) => {
+    const mention = new RegExp(/<@!?(\d+)>/);
+    const match = query.match(mention);
+    const user = match ? match[1] : query;
+    let result;
+    try {
+        result = await client.users.fetch(user);
+    } catch (e) {
+        // ignore errors
+    }
+    return result;
+};
+
 // Databases
 
 /**
@@ -105,4 +126,4 @@ const responseDb = new Enmap({
     autoEnsure: new ResponseDto(),
 });
 
-export { setup, getEmoji, userDb, responseDb, getChannel, getRole, getMember, getClient };
+export { setup, getEmoji, userDb, responseDb, getChannel, getRole, getMember, getClient, fetchUser };

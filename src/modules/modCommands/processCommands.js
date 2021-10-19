@@ -1,6 +1,7 @@
 import { Collection } from 'discord.js';
 import fs from 'fs/promises';
 import config from '../../config';
+import { getUserMod } from '../../permissions';
 
 const commands = new Collection();
 
@@ -29,6 +30,8 @@ async function loadCommands() {
 async function processCommandsNewMessage(client, message) {
     // Avoid botception
     if (message.author.bot) return;
+    // Mod commands don't run in dm's.
+    if (!message.guild) return;
 
     // This block of code ensures the command is valid and gets it.
     if (!message.content.startsWith(config.prefix)) return;
@@ -38,9 +41,13 @@ async function processCommandsNewMessage(client, message) {
     if (!cmd) return;
 
     // Ensure the member is cached
-    if (message.guild && !message.member) await message.guild.members.fetch(message.author);
+    if (!message.member) await message.guild.members.fetch(message.author);
+    const level = getUserMod(message.member);
+    // Only users with the right perms can run it.
+    if (cmd.info.level > level) return;
+
     try {
-        await cmd.fun(client, message, args);
+        await cmd.fun(client, message, args, level);
     } catch (e) {
         console.error(`Error running command "${command}":\n${e?.stack || e}`);
         message
@@ -49,4 +56,4 @@ async function processCommandsNewMessage(client, message) {
     }
 }
 
-export { loadCommands, processCommandsNewMessage };
+export { loadCommands, processCommandsNewMessage, commands };
