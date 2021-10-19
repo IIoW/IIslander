@@ -24,6 +24,24 @@ const getEmoji = (search) =>
         .emojis.cache.find((emote) => emote.name === search) || search;
 
 /**
+ * Gets a member by their id
+ * @param query
+ * @returns {import('discord.js').GuildMember}
+ */
+const getMember = async (query) => {
+    const mention = new RegExp(/<@!?(\d+)>/);
+    const match = query.match(mention);
+    const user = match ? match[1] : query;
+    let result;
+    try {
+        result = await (await client.guilds.fetch(config.defaultGuild)).members.fetch(user);
+    } catch (e) {
+        // ignore errors
+    }
+    return result;
+};
+
+/**
  * @param {string} name
  * @returns {import('discord.js').Channel}
  */
@@ -85,4 +103,4 @@ const responseDb = new Enmap({
     autoEnsure: new ResponseDto(),
 });
 
-export { setup, getEmoji, userDb, responseDb, getChannel, getRole };
+export { setup, getEmoji, userDb, responseDb, getChannel, getRole, getMember };
