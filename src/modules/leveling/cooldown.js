@@ -5,9 +5,15 @@ function emit(client, reactionName, userid) {
     client.emit('cooldownEnd', reactionName, userid);
 }
 
-export async function cooldownEnd(client, reactionName, userid) {
-    const member = await (await client.guilds.fetch(config.defaultGuild)).members.fetch(userid);
-    await member.roles.remove(getRole(`cooldown_${reactionName}`));
+export async function cooldownEnd(client, reactionName, userId) {
+    const member = await (await client.guilds.fetch(config.defaultGuild)).members.fetch(userId);
+    const role = getRole(`cooldown_${reactionName}`);
+    // In cases where there is no role (swearing) or
+    // you forgot a role in the .env.
+    if (role) await member.roles.remove(role);
+    const userDto = userDb.get(userId);
+    userDto.cooldown.delete(reactionName);
+    userDb.set(userId, userDto);
 }
 
 export async function restartCooldown(client) {
