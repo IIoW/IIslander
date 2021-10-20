@@ -17,7 +17,7 @@
         "format": "yarn prettier --write .",
         "update": "yarn upgrade-interactive --latest",
         "prepare": "husky install",
-        "build": "docker build -t iiow/iislander ."
+        "build": "docker build -t docker.antti.codes/iiow/iislander ."
     },
     "dependencies": {
         "discord.js": "^13.2.0",
