@@ -80,27 +80,5 @@ IIslander has a wide range of features for the IIslands of War Discord server. S
 
 ## Self Hosting
 
-This bot was not really designed to be used outside of the IIsland of War server, but we are not stopping you from trying.
-
-To run the bot your going to need [git](https://git-scm.com/), [node.js v16.x](https://nodejs.org/en/) and [yarn](https://yarnpkg.com/).
-
-### First Time Setup
-
-First clone the repo from github and cd into the folder.
-
-```sh
-git clone https://github.com/IIoW/IIslander
-cd IIslander
-```
-
-Next install the dependencies using yarn.
-
-```sh
-yarn
-```
-
-Next copy the file `.env.example` to a new file called `.env`. Fill out the values.
-
-### Running the Bot
-
-Now the bot is setup, simply run `yarn start` to run it.
+This bot is not really designed to be used outside of the IIsland of War server, but we are not stopping you from trying.  
+Some knowledge is required. See [`.github/CONTRIBUTING.md`](.github/CONTRIBUTING.md>) for instructions on running the bot.
