@@ -12,7 +12,7 @@ const startEval = async (startBot = false, context = {}) => {
     if (startBot) {
         await import('../index');
         await setTimeout(5000);
-        context.client = util.client;
+        context.client = util.getClient();
         console.log('The bot has been started and you now have eval permissions!');
     }
     context = { ...defaultContext, ...context };

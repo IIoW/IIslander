@@ -3,7 +3,6 @@ import config from './config';
 import UserDto from './dto/UserDto';
 import ResponseDto from './dto/ResponseDto';
 
-// eslint-disable-next-line import/no-mutable-exports
 let client;
 
 /**
@@ -13,6 +12,8 @@ let client;
 const setup = (newClient) => {
     client = newClient;
 };
+
+const getClient = () => client;
 
 /**
  * Get an emoji from name from the default guild.
@@ -104,4 +105,4 @@ const responseDb = new Enmap({
     autoEnsure: new ResponseDto(),
 });
 
-export { setup, getEmoji, userDb, responseDb, getChannel, getRole, getMember, client };
+export { setup, getEmoji, userDb, responseDb, getChannel, getRole, getMember, getClient };
