@@ -13,7 +13,7 @@ export async function messageCreate(client, message) {
     await Promise.all(
         responseDb.map(async (responseDto) => {
             const triggers = responseDto.trigger.some((trigger) =>
-                responseDto.isRegex
+                trigger instanceof RegExp
                     ? message.content.toLowerCase().match(trigger)
                     : message.content.toLowerCase().includes(trigger)
             );

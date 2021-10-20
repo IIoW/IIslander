@@ -6,13 +6,14 @@ const info = {
     name: 'ar',
     desc:
         'Manage auto responses!' +
-        '\nar create <name> - Create an auto response with the given name.' +
+        '\nar create <name> [title] | [response] - Create an auto response with the given name, and optionally title and response.' +
         '\nar delete <name> - Delete an auto response with the given name.' +
         '\nar list - List all auto responses.' +
         '\nar view <name> - View an existing auto response.' +
         '\nar edit title <name> <new title> - Edits the title of an existing auto response.' +
         '\nar edit response <name> <new response> - Edits the response of an existing auto response.' +
         '\nar trigger add <name> <new trigger> - Adds a new trigger to an existing auto response.' +
+        '\nar trigger add <name> regex <new trigger> - Adds a new regex trigger to an existing auto response.' +
         '\nar trigger remove <name> <old trigger> - Removes an old trigger from an existing auto response.' +
         '',
     level: 1,
@@ -36,11 +37,12 @@ async function fun(client, message, args) {
             const name = args.shift().toLowerCase();
             if (responseDb.has(name))
                 return message.reply(`Auto response \`${name}\` already exists.`);
+            const [, title, content] = args.join(' ').match(/^(.*?) ?(?:\| ?(.*?))?$/);
             const responseDto = new ResponseDto(
                 [],
                 false,
-                'This is a default response.',
-                'Default Title'
+                content || 'This is a default response.',
+                title || name
             );
             responseDb.set(name, responseDto);
             await message.reply(`Ok created the auto response \`${name}\`!`);
@@ -83,7 +85,11 @@ async function fun(client, message, args) {
             if (!responseDb.has(name))
                 return message.reply(`Auto response \`${name}\` does not exist.`);
             const responseDto = responseDb.get(name);
-            await message.reply(`${makeTitle(responseDto.title)}\n\n${responseDto.response}`);
+            await message.reply(
+                `${makeTitle(responseDto.title)}\n\n${responseDto.response}\n\n**Triggers:**\n${
+                    responseDto.trigger.join('\n') || 'None!'
+                }`
+            );
             break;
         }
 
@@ -113,7 +119,7 @@ async function fun(client, message, args) {
                 case 'msg': {
                     if (!newArg) return message.reply('Please provide a valid response.');
                     responseDto.response = newArg;
-                    await message.reply(`Got it! New title set to: \n${newArg}`);
+                    await message.reply(`Got it! New response set to: \n${newArg}`);
                     responseDb.set(name, responseDto);
                     break;
                 }
@@ -137,17 +143,17 @@ async function fun(client, message, args) {
             const responseDto = responseDb.get(name);
             const trigger = args.join(' ').toLowerCase();
             if (!trigger) return message.reply('Please provide a valid trigger.');
-            if (responseDto.isRegex)
-                return message.reply("This auto response's triggers can't be modified.");
             switch (addOrRemove.toLowerCase()) {
                 case 'add':
                 case 'create':
                 case 'make':
                 case '+': {
-                    if (responseDto.trigger.includes(trigger))
+                    const [, regex] = trigger.match(/^regex \/?(.+?)\/?$/) ?? [];
+                    const toAdd = new RegExp(regex, 'i') ?? trigger;
+                    if (responseDto.trigger.includes(toAdd))
                         return message.reply('This trigger already exists!');
-                    await message.reply(`Got it! Added trigger: ${trigger}`);
-                    responseDto.trigger.push(trigger);
+                    await message.reply(`Got it! Added trigger: ${toAdd}`);
+                    responseDto.trigger.push(toAdd);
                     responseDb.set(name, responseDto);
                     break;
                 }
@@ -156,7 +162,12 @@ async function fun(client, message, args) {
                 case 'delete':
                 case 'destroy':
                 case '-': {
-                    const index = responseDto.trigger.indexOf(trigger);
+                    const index = responseDto.trigger.findIndex((v) =>
+                        v instanceof RegExp
+                            ? v.toString().replace(/^\/?(.+?)\/?i?$/, '$1') ===
+                              trigger.replace(/^\/?(.+?)\/?$/, '$1')
+                            : v === trigger
+                    );
                     if (index < 0) return message.reply('This trigger does not exist!');
                     await message.reply(`Got it! Removed trigger: ${trigger}`);
                     responseDto.trigger.splice(index, 1);
