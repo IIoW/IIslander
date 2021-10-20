@@ -4,7 +4,7 @@
 
 To suggest features for the bot use the GitHub issue tracker.
 
-If you believe to have found a bug in the code and think it's harmless, report it through the GitHub issue tracker.   
+If you believe to have found a bug in the code and think it's harmless, report it through the GitHub issue tracker.  
 If you think that this bug might be harmful or exploitable, follow the instructions of the security file.
 
 ## Pull requests
@@ -22,21 +22,21 @@ Contributors are welcome. Feel free to fork and submit a pull request for review
 ## Guidelines
 
 To make sure that your pull request gets accepted you need to follow some guidelines.  
-This is not everything but a list of basic things. Think before you do.  
+This is not everything but a list of basic things. Think before you do.
 
-* Follow to modular style of the project
-* Follow "best practices" for javascript which are enforced by eslint
-* Write understandable code
-* Make features easy to use
-* Make bugfixes simple and effective
+-   Follow to modular style of the project
+-   Follow "best practices" for javascript which are enforced by eslint
+-   Write understandable code
+-   Make features easy to use
+-   Make bugfixes simple and effective
 
 ## Running the bot
 
 ### Production
 
 Either download or build the docker image and run it with docker-compose or docker.  
-Available environmental variables listed in the `.env.example` file in project root.  
-Mount `/app/data` as a volume. Example `docker-compose.yml` can be found in the project root.
+Available environmental variables listed in the [`.env.example`](../.env.example) file in project root.  
+Mount `/app/data` as a volume. Example [`docker-compose.yml`](../docker-compose.yml) can be found in the project root.
 
 ### Development
 
