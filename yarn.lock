@@ -559,10 +559,9 @@ end-of-stream@^1.1.0, end-of-stream@^1.4.1:
   dependencies:
     once "^1.4.0"
 
-enmap@^5.8.7:
+enmap@wilsonthewolf/enmap:
   version "5.8.7"
-  resolved "https://registry.yarnpkg.com/enmap/-/enmap-5.8.7.tgz#1b9a8fa13f91c670a0ef2e605a2b219665cd9fc0"
-  integrity sha512-JmTRK0hFjatxz6tWN+E4IzuMz5rxKjQvweRXzlmhrgAa66b96DAySW3YRb5p0drpJ7ZLt1WX+PWIpnHDH134jQ==
+  resolved "https://codeload.github.com/wilsonthewolf/enmap/tar.gz/6a114c28b0eaf09253d3c7729d15238346582fa5"
   dependencies:
     better-sqlite3 "^7.1.0"
     lodash "^4.17.20"

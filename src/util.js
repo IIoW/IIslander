@@ -3,6 +3,7 @@ import config from './config';
 import UserDto from './dto/UserDto';
 import ResponseDto from './dto/ResponseDto';
 
+// eslint-disable-next-line import/no-mutable-exports
 let client;
 
 /**
@@ -103,4 +104,4 @@ const responseDb = new Enmap({
     autoEnsure: new ResponseDto(),
 });
 
-export { setup, getEmoji, userDb, responseDb, getChannel, getRole, getMember };
+export { setup, getEmoji, userDb, responseDb, getChannel, getRole, getMember, client };
