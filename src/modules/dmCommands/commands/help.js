@@ -14,7 +14,6 @@ export const desc = 'Shows you this message';
 export async function fun(client, message) {
     const embed = new MessageEmbed();
     commands.forEach((cmd, name) => {
-        console.log(cmd);
         if (cmd.desc) embed.addField(name, cmd.desc);
     });
     embed.setTitle('DM Commands Help');
