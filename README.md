@@ -81,4 +81,4 @@ IIslander has a wide range of features for the IIslands of War Discord server. S
 ## Self Hosting
 
 This bot is not really designed to be used outside of the IIsland of War server, but we are not stopping you from trying.  
-Some knowledge is required. See [`.github/CONTRIBUTING.md`](.github/CONTRIBUTING.md>) for instructions on running the bot.
+Some knowledge is required. See [`.github/CONTRIBUTING.md`](.github/CONTRIBUTING.md) for instructions on running the bot.
