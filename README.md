@@ -13,8 +13,6 @@ The IIslander Discord bot for the IIslands of War Discord server
     -   [Server Management](#server-management)
     -   [DM Commands](#dm-commands)
 -   [Self Hosting](#self-hosting)
-    -   [First Time Setup](#first-time-setup)
-    -   [Running the Bot](#running-the-bot)
 
 ## Features
 
