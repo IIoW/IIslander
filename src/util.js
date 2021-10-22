@@ -13,6 +13,8 @@ const setup = (newClient) => {
     client = newClient;
 };
 
+const getClient = () => client;
+
 /**
  * Get an emoji from name from the default guild.
  * @param {string} search - The string to search for.
@@ -103,4 +105,4 @@ const responseDb = new Enmap({
     autoEnsure: new ResponseDto(),
 });
 
-export { setup, getEmoji, userDb, responseDb, getChannel, getRole, getMember };
+export { setup, getEmoji, userDb, responseDb, getChannel, getRole, getMember, getClient };
