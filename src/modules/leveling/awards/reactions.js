@@ -36,13 +36,13 @@ export default async function messageReactionAdd(client, messageReaction, user) 
 
     userDb.set(user.id, userDto);
 
-    const member = await message.guild.members.fetch(user.id);
+    const member = await message.guild.members.fetch(message.author);
 
     await member.roles.add(getRole(`cooldown_${reactionName}`));
 
     setTimeout(emit, xpCooldown[reactionName], client, reactionName, user.id);
 
-    await addXp(message.member, xpReward[reactionName]);
+    await addXp(member, xpReward[reactionName]);
     await addXp(user, xpRewardDonor[reactionName]);
 
     await getChannel('notifications').send(
