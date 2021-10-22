@@ -3,10 +3,10 @@ import { userDb, responseDb } from '../util';
 /**
  * Constant with database info.
  */
-const databases = [
-    { name: 'user', db: userDb },
-    { name: 'response', db: responseDb },
-];
+const databases = {
+    user: userDb,
+    response: responseDb,
+};
 
 /**
  * Constant for help.
