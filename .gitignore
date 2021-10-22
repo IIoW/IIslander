@@ -1,5 +1,27 @@
-node_modules
+# Logs and diagnostics
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Dependencies
+node_modules/
+
+# Environment
 .env
+.node_repl_history
+
+# Package managers
+.yarn
+.pnp.*
+.yarn-integrity
+.npm
+
+# Editors
 .idea
 .vscode
-data
+
+# Data
+data/

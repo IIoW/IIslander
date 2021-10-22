@@ -37,4 +37,4 @@ jobs:
         run: yarn eslint src --ext js
 
       - name: Run Prettier
-        run: yarn prettier --check src
+        run: yarn prettier --check .

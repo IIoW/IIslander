@@ -1,8 +1,8 @@
-version: "3.5"
+version: '3.5'
 
 services:
   bot:
-    image: ghcr.io/iiow/iislander
+    image: docker.antti.codes/iiow/iislander
     env_file:
       - .env
     volumes:

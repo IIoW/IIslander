@@ -1,7 +1,7 @@
 import { Client, Intents } from 'discord.js';
 import config from './config';
 import loadModules from './loadModules';
-import { setup as utilSetup } from './util';
+import { setup as utilSetup, userDb, responseDb } from './util';
 
 const client = new Client({
     intents: [
@@ -19,3 +19,13 @@ utilSetup(client);
 loadModules(client);
 
 client.login(config.token);
+
+function shutdown() {
+    client.destroy();
+    userDb.close();
+    responseDb.close();
+    process.exit(0);
+}
+
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
