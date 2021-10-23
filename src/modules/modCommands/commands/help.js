@@ -1,3 +1,4 @@
+import { MessageEmbed } from 'discord.js';
 import { commands } from '../processCommands';
 
 const info = {
@@ -17,11 +18,14 @@ async function fun(client, message, args, level) {
     const cmds = commands.filter((c) => c.info.level <= level);
     // If they can only run the help command just ignore them.
     if (cmds.size <= 1) return;
-    await message.reply(
-        `**Moderator Commands**\n${cmds
-            .map((c) => `**${c.info.name}**: ${c.info.desc}`)
-            .join('\n')}`
-    );
+    const embed = new MessageEmbed()
+        .setTitle('Moderator Commands')
+        .addFields(
+            cmds.map((c) => ({ name: `${c.info.name}:`, value: c.info.desc || 'No description.' }))
+        );
+    await message.reply({
+        embeds: [embed],
+    });
 }
 
 export { info, fun };
