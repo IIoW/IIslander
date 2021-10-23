@@ -38,6 +38,8 @@ export default async function messageReactionAdd(client, messageReaction, user) 
 
     const member = await message.guild.members.fetch(user.id);
 
+    if (!message.member) await message.guild.members.fetch(message.author);
+
     await member.roles.add(getRole(`cooldown_${reactionName}`));
 
     setTimeout(emit, xpCooldown[reactionName], client, reactionName, user.id);
