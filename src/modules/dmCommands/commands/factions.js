@@ -15,7 +15,7 @@ export const desc = 'Shows an overview over the factions and lets you join them.
 export async function fun(client, message) {
     const userDto = userDb.get(message.author.id);
     if (userDto.faction) {
-        await message.author.send('Are already in a faction. Switching is not allowed');
+        await message.author.send('You are already in a faction. Switching is not allowed.');
         return;
     }
     await message.author.send({
@@ -23,7 +23,7 @@ export async function fun(client, message) {
             .map((f) => f.fullName)
             .join(
                 ', '
-            )}\nTo join one of them, in case you aren't in a faction already, click the buttons below`,
+            )}\nTo join one of them, in case you aren't in a faction already, click the buttons below.`,
         components: [
             new MessageActionRow().addComponents(
                 Object.entries(Factions).map(

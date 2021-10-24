@@ -2,7 +2,7 @@ import { MessageEmbed } from 'discord.js';
 import { commands } from '../message';
 
 export const command = 'help';
-export const desc = 'Shows you this message';
+export const desc = 'Shows you this message.';
 
 /**
  *
