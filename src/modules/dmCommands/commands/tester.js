@@ -11,7 +11,7 @@ export const desc = 'Testing the test, to test if testing the testing test, test
  * @return {Promise<void>}
  */
 export async function fun(client, message, member) {
-    const m = await member.fetch(true);
+    const m = await member.fetch();
     const role = getRole('tester');
     if (m.roles.cache.has(role)) {
         await m.roles.remove(role);
