@@ -13,7 +13,7 @@ export const desc = 'Tell us which operating system you are using';
 export async function fun(client, message) {
     await message.author.send({
         content:
-            'People play on different operating systems. To show us which one you are using select the most fitting one down below.',
+            'People play on different operating systems. To show us which one you are using, select the most fitting one down below.',
         components: [
             new MessageActionRow().addComponents(
                 new MessageButton({
