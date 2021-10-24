@@ -14,8 +14,7 @@ const info = {
         '\nar edit response <name> <new response> - Edits the response of an existing auto response.' +
         '\nar trigger add <name> <new trigger> - Adds a new trigger to an existing auto response.' +
         '\nar trigger add <name> regex <new trigger> - Adds a new regex trigger to an existing auto response.' +
-        '\nar trigger remove <name> <old trigger> - Removes an old trigger from an existing auto response.' +
-        '',
+        '\nar trigger remove <name> <old trigger> - Removes an old trigger from an existing auto response.',
     level: 1,
 };
 
@@ -28,7 +27,7 @@ const info = {
 // eslint-disable-next-line no-unused-vars
 async function fun(client, message, args) {
     const subCommand = args.shift();
-    if (!subCommand) return message.reply('Choose a valid sub-command.');
+    if (!subCommand) return message.reply('Please choose a valid sub-command.');
     switch (subCommand.toLowerCase()) {
         case 'create':
         case 'make':
@@ -97,7 +96,7 @@ async function fun(client, message, args) {
         case 'modify':
         case 'set': {
             const editCommand = args.shift();
-            if (!editCommand) return message.reply('Choose a valid edit action.');
+            if (!editCommand) return message.reply('Please choose a valid edit action.');
             const name = args.shift().toLowerCase();
             if (!responseDb.has(name))
                 return message.reply(`Auto response \`${name}\` does not exist.`);
@@ -136,7 +135,9 @@ async function fun(client, message, args) {
         case 'event': {
             const addOrRemove = args.shift();
             if (!addOrRemove)
-                return message.reply('Specify if you would like to add or remove a trigger.');
+                return message.reply(
+                    'Please specify if you would like to add or remove a trigger.'
+                );
             const name = args.shift().toLowerCase();
             if (!responseDb.has(name))
                 return message.reply(`Auto response \`${name}\` does not exist.`);
@@ -160,7 +161,6 @@ async function fun(client, message, args) {
                 case 'remove':
                 case 'rm':
                 case 'delete':
-                case 'destroy':
                 case '-': {
                     const index = responseDto.trigger.findIndex((v) =>
                         v instanceof RegExp

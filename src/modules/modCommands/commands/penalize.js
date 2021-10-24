@@ -28,10 +28,11 @@ async function fun(client, message, args) {
         );
     user = await fetchUser(user);
     if (!user) return message.reply("I'm sorry I couldn't find that user!");
-    explanation = explanation.join(' ');
-    if (!explanation) explanation = 'No further info.';
+    explanation = explanation.join(' ') || 'No further info.';
     await penalize(user, type, explanation);
-    return message.reply(`Got it`);
+    return message.reply(
+        `Penalized \`${user.tag}\` for \`${type.toLowerCase()}\` "${explanation}"`
+    );
 }
 
 export { info, fun };

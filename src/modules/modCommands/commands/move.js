@@ -5,8 +5,8 @@ const info = {
     name: 'move',
     desc:
         'Move a bunch of messages!' +
-        '\npurge <messageID> <#channel> - Move up to 100 messages **after** the provided message to the provided channel.' +
-        "\npurge <number> <#channel> - Moves the last `number` messages to the provided channel. Number can't be higher than 100 .",
+        '\nmove <messageID> <#channel> - Move up to 100 messages **after** the provided message to the provided channel.' +
+        "\nmove <number> <#channel> - Moves the last `number` messages to the provided channel. Number can't be higher than 100 .",
     level: 1,
 };
 
@@ -73,11 +73,7 @@ const move = async (message, limit, channel, after = null) => {
         new MessageEmbed()
             .setTitle('Moved Messages')
             .setDescription(`\`${msg.size}\` messages moved from ${message.channel}!`),
-        ...(await msg.reduce(async (p, m) => {
-            p = await p;
-            p.unshift(await genEmbed(m));
-            return p;
-        }, [])),
+        ...(await Promise.all(msg.map(genEmbed).reverse())),
     ].flat(2);
     const toSend = toMove.reduce((p, embed) => {
         const size = countEmbed(embed);
@@ -109,6 +105,7 @@ const move = async (message, limit, channel, after = null) => {
     await message.channel.bulkDelete(msg);
     return message.channel.send(`Successfully moved \`${msg.size}\` messages to ${channel}!`);
 };
+
 /**
  *
  * @param {import('discord.js').Client} client

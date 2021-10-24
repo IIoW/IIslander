@@ -36,6 +36,13 @@ const actionTypes = {
 };
 /**
  * Internal function for shared code between mod actions.
+ * @param {object} options - The options for the mod action.
+ * @param {import('discord.js').User} options.user - The user to penalize.
+ * @param {string} options.type - The type of mod action.
+ * @param {string} options.reason - The mod reason.
+ * @param {string} options.actionType - The type of mod action.
+ * @param {number} [options.timeoutDuration] - The duration of the timeout, in milliseconds. Defaults to 24 hours.
+ * @returns {Promise<void>}
  */
 async function modActionCore({ user, type, reason, actionType, timeoutDuration = 3.6e6 } = {}) {
     const action = actionTypes[actionType];

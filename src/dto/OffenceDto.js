@@ -1,12 +1,6 @@
 /** Class representing offence data. */
 export default class OffenceDto {
     /**
-     * Create new offence data.
-     * @param {String[]} trigger - The regex to trigger.
-     * @param {boolean} isRegex - If the trigger is a regular expression
-     * @param {String} offence - What to respond with or the image location.
-     */
-    /**
      * Represents an offence a user had.
      * @param {string} type - The type of mod action (E.G. penalize, warn, etc.)
      * @param {string} offence - The type of offence. Should be one of the ones in the offenceDescriptions constants.

@@ -31,10 +31,14 @@ async function fun(client, message, args) {
     minutes = parseFloat(minutes);
     if (!minutes || Number.isNaN(minutes) || minutes < 0)
         return message.reply('That is an invalid time.');
-    explanation = explanation.join(' ');
-    if (!explanation) explanation = 'No further info.';
+    if (minutes > 34560) return message.reply('Maximum timeout is 2 weeks (34560 minutes)');
+    explanation = explanation.join(' ') || 'No further info.';
     await timeout(user, type, explanation, minutes);
-    return message.reply(`Got it`);
+    return message.reply(
+        `Timed out \`${
+            user.tag
+        }\` for \`${type.toLowerCase()}\` for ${minutes} minutes for "${explanation}"`
+    );
 }
 
 export { info, fun };
