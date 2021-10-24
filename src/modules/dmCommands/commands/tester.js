@@ -1,7 +1,7 @@
 import { getRole } from '../../../util';
 
 export const command = 'tester';
-export const desc = 'testing the test, to test if testing the testing test, tests the test game';
+export const desc = 'Testing the test, to test if testing the testing test, tests the test game.';
 
 /**
  *
