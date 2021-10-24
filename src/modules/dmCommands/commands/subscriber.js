@@ -18,6 +18,6 @@ export async function fun(client, message, member) {
         await message.reply("It's sad to see you unsubscribing, but here you go.");
     } else {
         await m.roles.add(role);
-        await message.reply('Thanks for subscribing to all important news');
+        await message.reply('Thanks for subscribing to all important news.');
     }
 }
