@@ -11,7 +11,7 @@ export const desc = 'Subscribe to game updates.';
  * @return {Promise<void>}
  */
 export async function fun(client, message, member) {
-    const m = await member.fetch(true);
+    const m = await member.fetch();
     const role = getRole('subscriber');
     if (m.roles.cache.has(role)) {
         await m.roles.remove(role);
