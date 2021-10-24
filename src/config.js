@@ -34,5 +34,7 @@ export default {
         ['windows', process.env.ROLE_WINDOWS],
         ['linux', process.env.ROLE_LINUX],
         ['mac', process.env.ROLE_MAC],
+        ['subscriber', process.env.ROLE_SUBSCRIBER],
+        ['tester', process.env.ROLE_TESTER],
     ]),
 };
