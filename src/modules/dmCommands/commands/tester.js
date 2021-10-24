@@ -16,7 +16,7 @@ export async function fun(client, message, member) {
     if (m.roles.cache.has(role)) {
         await m.roles.remove(role);
         await message.reply(
-            "It's sad that you won't continue on testing test versions of the game"
+            "It's sad that you won't continue on testing the test versions of the game"
         );
     } else {
         await m.roles.add(role);
