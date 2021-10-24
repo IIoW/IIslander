@@ -1,7 +1,7 @@
 import { getRole } from '../../../util';
 
 export const command = 'subscriber';
-export const desc = 'subscribe to game updates';
+export const desc = 'Subscribe to game updates.';
 
 /**
  *
