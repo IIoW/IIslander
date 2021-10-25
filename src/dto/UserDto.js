@@ -23,7 +23,7 @@ export default class UserDto {
         everyoneping = 0,
         steamVia = null,
         notifications = new Map(),
-        offences = [],
+        offences = []
     ) {
         // Data, which is getting saved across reboots
         this.xp = xp;
