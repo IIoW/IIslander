@@ -63,17 +63,39 @@ async function fun(client, message, args) {
         case 'ls': {
             const embed = new MessageEmbed()
                 .setTitle('Auto Responses')
-                .setDescription(`Total auto responses: ${responseDb.size}`);
-            responseDb.forEach((response, name) => {
-                embed.addField(
-                    name,
-                    `${makeTitle(response.title)}\n\n${response.response}\n\n**Triggers:**\n${
-                        response.trigger.join('\n') || 'None!'
-                    }`,
-                    true
+                .setDescription(
+                    `Total auto responses: ${responseDb.size}${
+                        responseDb.size > 25 && args[0] !== 'all'
+                            ? "\nNote all auto responses couldn't fit on this page. Please run `ar list all` to see all."
+                            : ''
+                    }`
                 );
-            });
-            await message.reply({ embeds: [embed] });
+            const fields = responseDb.map((response, name) => ({
+                name,
+                value: `${makeTitle(response.title)}\n\n${response.response}\n\n**Triggers:**\n${
+                    response.trigger.join('\n') || 'None!'
+                }`,
+                inline: true,
+            }));
+            if (fields.length > 25 && args[0] === 'all') {
+                const embeds = fields.reduce(
+                    (newEmbeds, cur, i) => {
+                        const index = Math.floor(i / 25);
+                        const newEmbed = newEmbeds[index] || new MessageEmbed();
+                        newEmbed.addField(cur.name, cur.value, cur.inline);
+                        newEmbeds[index] = newEmbed;
+                        return newEmbeds;
+                    },
+                    [embed]
+                );
+                for (const toSend of embeds) {
+                    // eslint-disable-next-line no-await-in-loop
+                    await message.channel.send({ embeds: [toSend] });
+                }
+            } else {
+                embed.addFields(fields.slice(-25));
+                await message.reply({ embeds: [embed] });
+            }
             break;
         }
 
