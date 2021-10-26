@@ -5,7 +5,6 @@ import { xpCooldown } from '../../constants/Awards';
 import { getUserMod } from '../../permissions';
 import Mod from '../../constants/Mod';
 import { penalize } from '../../modUtil';
-import OffenseDescriptions from '../../constants/OffenseDescriptions';
 
 /**
  *
@@ -46,11 +45,15 @@ async function handleSwearing(client, message) {
                     .catch((e) => console.error('Error sending dm', e));
                 break;
             default:
-                await penalize(message.author, OffenseDescriptions.SWEARING, `[automod] ${logMessages
-                .get('swearing')
-                .replace('[user]', message.member)
-                .replace('[message]', message.content)
-                .replace('[match]', match[0])}`);
+                await penalize(
+                    message.author,
+                    'SWEARING',
+                    `[automod] ${logMessages
+                        .get('swearing')
+                        .replace('[user]', message.member)
+                        .replace('[message]', message.content)
+                        .replace('[match]', match[0])}`
+                );
         }
         userDto.cooldown.set('swearing', now + xpCooldown.swearing);
         userDb.set(message.author.id, userDto);
