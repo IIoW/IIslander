@@ -1,3 +1,5 @@
+import OffenceDto from './OffenceDto';
+
 /** Class representing user data. */
 export default class UserDto {
     /**
@@ -10,6 +12,7 @@ export default class UserDto {
      * @param {number} everyoneping
      * @param {string|null} steamVia
      * @param {Map<string, boolean>} notifications
+     * @param {OffenceDto[]} offences
      */
     constructor(
         xp = 0,
@@ -19,7 +22,8 @@ export default class UserDto {
         swearlevel = 0,
         everyoneping = 0,
         steamVia = null,
-        notifications = new Map()
+        notifications = new Map(),
+        offences = []
     ) {
         // Data, which is getting saved across reboots
         this.xp = xp;
@@ -30,6 +34,7 @@ export default class UserDto {
         this.everyoneping = everyoneping;
         this.steamVia = steamVia;
         this.notifications = notifications;
+        this.offences = offences;
 
         // Data which is not necessary to be saved
         this.voiceTimeStampJoin = -1;
@@ -57,6 +62,7 @@ export default class UserDto {
             everyoneping: this.everyoneping,
             steamVia: this.steamVia,
             notifications: this.notifications,
+            offences: this.offences.map((o) => o.toJSON()),
         };
     }
 
@@ -74,7 +80,8 @@ export default class UserDto {
             object.swearlevel,
             object.everyoneping,
             object.steamVia,
-            object.notifications
+            object.notifications,
+            (object.offences || []).map((o) => OffenceDto.fromJSON(o))
         );
     }
 }

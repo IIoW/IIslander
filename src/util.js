@@ -2,7 +2,11 @@ import Enmap from 'enmap';
 import config from './config';
 import UserDto from './dto/UserDto';
 import ResponseDto from './dto/ResponseDto';
+import Emotes from './constants/Emotes';
 
+/**
+ * @type {import('discord.js').Client}
+ */
 let client;
 
 /**
@@ -52,12 +56,73 @@ function getChannel(name) {
 }
 
 /**
- *
+ * Fetch a user by id or mention string.
+ * @param {string} query - The user id or ping of the user.
+ * @returns {Promise<import('discord.js').User | null>} The user.
+ */
+const fetchUser = async (query) => {
+    const mention = new RegExp(/<@!?(\d+)>/);
+    const match = query.match(mention);
+    const user = match ? match[1] : query;
+    let result;
+    try {
+        result = await client.users.fetch(user);
+    } catch (e) {
+        // ignore errors
+    }
+    return result;
+};
+
+/**
+ * Fetch a channel by id or mention string.
+ * @param {string} query - The channel id or ping of the channel.
+ * @returns {import('discord.js').Channel | null} The channel.
+ */
+const fetchChannel = (query) => {
+    const mention = new RegExp(/<#(\d+)>/);
+    const match = query.match(mention);
+    const channel = match ? match[1] : query;
+    let result;
+    try {
+        result = client.channels.cache.get(channel);
+    } catch (e) {
+        // ignore errors
+    }
+    return result;
+};
+
+/**
  * @param {string} name
  * @return {import('discord.js').RoleResolvable}
  */
 function getRole(name) {
     return config.roles.get(name);
+}
+
+/**
+ * Converts a js timestamp to a discord markdown timestamp.
+ * @param {number} time - The js timestamp to convert.
+ * @param {'t'|'T'|'d'|'D'|'f'|'F'|'R'} format - The format to display the timestamp in.
+ * @see {@link https://discord.com/developers/docs/reference#message-formatting-timestamp-styles The Discord Docs on Timestamp Markdown}
+ * @returns {string} The timestamp stringified.
+ */
+function stringifyTimestamp(time, format = 'f') {
+    return `<t:${Math.round(time / 1000)}:${format}>`;
+}
+
+/**
+ * Transforms a string to an emojified representation of itself.
+ * NOTE: This will remove any non-alphanumeric characters.
+ * @param {String} String - The string to transform.
+ * @returns {String} The finished string.
+ */
+function makeTitle(string) {
+    let res = '';
+    for (const char of string) {
+        if (/[a-zA-Z0-9 ]/.test(char))
+            res += char === ' ' ? '     ' : getEmoji(Emotes.font[char.toLowerCase()]).toString();
+    }
+    return res;
 }
 
 // Databases
@@ -105,4 +170,17 @@ const responseDb = new Enmap({
     autoEnsure: new ResponseDto(),
 });
 
-export { setup, getEmoji, userDb, responseDb, getChannel, getRole, getMember, getClient };
+export {
+    setup,
+    getEmoji,
+    userDb,
+    responseDb,
+    getChannel,
+    getRole,
+    getMember,
+    getClient,
+    fetchUser,
+    fetchChannel,
+    stringifyTimestamp,
+    makeTitle,
+};
