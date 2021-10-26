@@ -4,6 +4,8 @@ import { logMessages, swearWarning } from '../../constants/Messages';
 import { xpCooldown } from '../../constants/Awards';
 import { getUserMod } from '../../permissions';
 import Mod from '../../constants/Mod';
+import { penalize } from '../../modUtil';
+import OffenseDescriptions from '../../constants/OffenseDescriptions';
 
 /**
  *
@@ -44,7 +46,7 @@ async function handleSwearing(client, message) {
                     .catch((e) => console.error('Error sending dm', e));
                 break;
             default:
-            // TODO: Call internal function to penalize the user
+                await penalize(message.author, OffenseDescriptions.SWEARING, 'Automated action.');
         }
         userDto.cooldown.set('swearing', now + xpCooldown.swearing);
         userDb.set(message.author.id, userDto);
