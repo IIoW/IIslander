@@ -18,6 +18,10 @@ export default {
         ['faction-nova-submission', process.env.CHANNEL_CHAT_NOVA],
         ['faction-prime-submission', process.env.CHANNEL_CHAT_PRIME],
     ]),
+    channelModes: {
+        reducedXp: process.env.CHANNEL_REDUCED_XP?.split(',') || [],
+        noXp: process.env.CHANNEL_NO_XP?.split(',') || [],
+    },
     roles: new Map([
         ['cooldown_tier1bronze', process.env.ROLE_COOLDOWN_1],
         ['cooldown_tier2silver', process.env.ROLE_COOLDOWN_2],
