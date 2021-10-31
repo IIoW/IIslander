@@ -22,10 +22,11 @@ async function handleSwearing(client, message) {
         .replaceAll('5', 's')
         .replaceAll(/7|\+/g, 't')
         .replaceAll('8', 'b')
-        .replaceAll(/[^a-z]/g, '');
-    const regex = Blacklist.swearwords.join('|');
+        .replaceAll(/[^a-z ]/g, '');
+    const regex = Blacklist.swearRegex;
     const match = content.match(regex);
     if (match) {
+        const word = match[0].trim();
         const userDto = userDb.get(message.author.id);
         const now = Date.now();
         const cooldown = userDto.cooldown.get('swearing');
@@ -33,6 +34,7 @@ async function handleSwearing(client, message) {
             userDto.swearlevel = 0; // resets the swear level, if time ran out
         }
         userDto.swearlevel += 1;
+        message.delete().catch((e) => console.error('Error deleting swear', e));
         switch (userDto.swearlevel) {
             case 1:
                 await message.author
@@ -52,7 +54,7 @@ async function handleSwearing(client, message) {
                         .get('swearing')
                         .replace('[user]', message.member)
                         .replace('[message]', message.content)
-                        .replace('[match]', match[0])}`
+                        .replace('[match]', word)}`
                 );
         }
         userDto.cooldown.set('swearing', now + xpCooldown.swearing);
@@ -62,7 +64,7 @@ async function handleSwearing(client, message) {
                 .get('swearing')
                 .replace('[user]', message.member)
                 .replace('[message]', message.content)
-                .replace('[match]', match[0])
+                .replace('[match]', word)
         );
     }
 }
