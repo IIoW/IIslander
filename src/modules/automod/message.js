@@ -34,7 +34,6 @@ async function handleSwearing(client, message) {
             userDto.swearlevel = 0; // resets the swear level, if time ran out
         }
         userDto.swearlevel += 1;
-        message.delete().catch((e) => console.error('Error deleting swear', e));
         switch (userDto.swearlevel) {
             case 1:
                 await message.author

@@ -57,6 +57,5 @@ const swearRegex = new RegExp(
     )})`
 );
 export default {
-    swearWords,
     swearRegex,
 };
