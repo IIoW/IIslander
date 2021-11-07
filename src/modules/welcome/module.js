@@ -1,4 +1,5 @@
 import { welcomeMessage, welcomeMessages, welcomeQuestions } from '../../constants/Messages';
+import ensureRoles from '../../roles';
 import { getChannel } from '../../util';
 
 const subscriptions = new Map();
@@ -21,6 +22,9 @@ subscriptions.set('guildMemberAdd', async (client, member) => {
             welcomeQuestions[Math.floor(Math.random() * welcomeQuestions.length)]
         }`
     );
+
+    // Ensure the user has the right roles.
+    await ensureRoles(member);
 });
 
 const enabled = true;

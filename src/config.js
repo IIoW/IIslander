@@ -35,7 +35,7 @@ export default {
         ['steamowner', process.env.ROLE_STEAMOWNER],
         ['faction_strike', process.env.ROLE_FACTION_STRIKE],
         ['faction_nova', process.env.ROLE_FACTION_NOVA],
-        ['faction_strike', process.env.ROLE_FACTION_PRIME],
+        ['faction_prime', process.env.ROLE_FACTION_PRIME],
         ['windows', process.env.ROLE_WINDOWS],
         ['linux', process.env.ROLE_LINUX],
         ['mac', process.env.ROLE_MAC],
