@@ -12,12 +12,12 @@ const roleInfo = [
     // Faction roles
     ...Object.entries(Factions).map(([name, faction]) => ({
         id: faction.role,
-        check: (member, userDto) => userDto.faction === name,
+        check: (userDto) => userDto.faction === name,
     })),
     // Level roles
     ...[...Array(81)].map((_, i) => ({
         name: `Level ${i}`,
-        check: (member, userDto) => {
+        check: (userDto) => {
             if (userDto.level >= 80 && i === 80) return true;
             return userDto.level === i;
         },
@@ -27,13 +27,12 @@ const roleInfo = [
         .reverse()
         .map((level, i, arr) => ({
             id: process.env.ROLES_RANKS?.split(',')[i],
-            check: (member, userDto) =>
-                userDto.level >= level && userDto.level < (arr[i + 1] ?? Infinity),
+            check: (userDto) => userDto.level >= level && userDto.level < (arr[i + 1] ?? Infinity),
         })),
     // Steam Owner
     {
         id: getRole('steamowner'),
-        check: (member, userDto) => userDto.steamVia === 'owner',
+        check: (userDto) => userDto.steamVia === 'owner',
     },
 ];
 
@@ -43,6 +42,7 @@ const roleInfo = [
  * @returns {boolean} Whether or not the check succeeded.
  */
 const ensureRoles = async (user) => {
+    console.time('roles');
     if (!user?.id || !user?.client) return false;
     const member = await user.client.guilds.cache.get(config.defaultGuild).members.fetch(user.id);
     if (!member) return false;
@@ -55,7 +55,7 @@ const ensureRoles = async (user) => {
                     member.guild.roles.cache.find((r) => r.name === roleData.name);
                 // This shouldn't happen, but just in case.
                 if (!role) return [add, remove];
-                if (roleData.check(member, userDto)) {
+                if (roleData.check(userDto)) {
                     if (!member.roles.cache.has(role.id)) add.push(role);
                 } else if (member.roles.cache.has(role.id)) remove.push(role);
                 return [add, remove];
@@ -64,6 +64,7 @@ const ensureRoles = async (user) => {
         );
         if (toAdd.length > 0) await member.roles.add(toAdd);
         if (toRemove.length > 0) await member.roles.remove(toRemove);
+        console.timeEnd('roles');
         return true;
     } catch (e) {
         return false;
