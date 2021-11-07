@@ -1,5 +1,6 @@
 import { userDb } from './util';
 import sendLevelNotification from './notifications';
+import ensureRoles from './roles';
 
 /**
  * @return {Promise<void>}
@@ -35,6 +36,9 @@ async function addXp(member, xp, silent = false) {
         }
     }
     userDb.set(member.id, userDto);
+
+    // Ensure the user has the right roles.
+    await ensureRoles(member);
 }
 
 async function removeXp(member, xp, silent) {
