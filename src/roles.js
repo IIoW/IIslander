@@ -42,7 +42,6 @@ const roleInfo = [
  * @returns {boolean} Whether or not the check succeeded.
  */
 const ensureRoles = async (user) => {
-    console.time('roles');
     if (!user?.id || !user?.client) return false;
     const member = await user.client.guilds.cache.get(config.defaultGuild).members.fetch(user.id);
     if (!member) return false;
@@ -64,7 +63,6 @@ const ensureRoles = async (user) => {
         );
         if (toAdd.length > 0) await member.roles.add(toAdd);
         if (toRemove.length > 0) await member.roles.remove(toRemove);
-        console.timeEnd('roles');
         return true;
     } catch (e) {
         return false;
