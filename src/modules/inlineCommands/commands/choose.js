@@ -1,7 +1,7 @@
 import { getEmoji } from '../../../util';
 import Emotes from '../../../constants/Emotes';
 
-const command = RegExp('<choose ?\\d>');
+const command = /<choose ?\d>/;
 
 /**
  *
