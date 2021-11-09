@@ -35,7 +35,7 @@ const getEmoji = (search) =>
  * @returns {import('discord.js').GuildMember}
  */
 const getMember = async (query) => {
-    const mention = new RegExp(/<@!?(\d+)>/);
+    const mention = /<@!?(\d+)>/;
     const match = query.match(mention);
     const user = match ? match[1] : query;
     let result;
@@ -61,7 +61,7 @@ function getChannel(name) {
  * @returns {Promise<import('discord.js').User | null>} The user.
  */
 const fetchUser = async (query) => {
-    const mention = new RegExp(/<@!?(\d+)>/);
+    const mention = /<@!?(\d+)>/;
     const match = query.match(mention);
     const user = match ? match[1] : query;
     let result;
@@ -79,7 +79,7 @@ const fetchUser = async (query) => {
  * @returns {import('discord.js').Channel | null} The channel.
  */
 const fetchChannel = (query) => {
-    const mention = new RegExp(/<#(\d+)>/);
+    const mention = /<#(\d+)>/;
     const match = query.match(mention);
     const channel = match ? match[1] : query;
     let result;

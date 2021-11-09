@@ -11,6 +11,8 @@
     "rules": {
         "no-console": "off",
         "no-param-reassign": "off",
-        "no-restricted-syntax": "off"
+        "no-restricted-syntax": "off",
+        // This is disabled due to issues it has. We should re-enable when fixed.
+        "import/no-import-module-exports": "off"
     }
 }
