@@ -172,7 +172,7 @@ async function fun(client, message, args) {
                 case 'make':
                 case '+': {
                     const [, regex] = trigger.match(/^regex \/?(.+?)\/?$/) ?? [];
-                    const toAdd = new RegExp(regex, 'i') ?? trigger;
+                    const toAdd = regex ? new RegExp(regex, 'i') : trigger;
                     if (responseDto.trigger.includes(toAdd))
                         return message.reply('This trigger already exists!');
                     await message.reply(`Got it! Added trigger: ${toAdd}`);

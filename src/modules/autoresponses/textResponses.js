@@ -8,8 +8,8 @@ import Emotes from '../../constants/Emotes';
  * @return {Promise<void>}
  */
 export async function messageCreate(client, message) {
-    // No auto responses in dm's
-    if (!message.guild) return;
+    // No auto responses in dm's or to bots
+    if (!message.guild || message.author.bot) return;
     await Promise.all(
         responseDb.map(async (responseDto) => {
             const triggers = responseDto.trigger.some((trigger) =>
