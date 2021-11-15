@@ -5,6 +5,7 @@ import { xpCooldown } from '../../constants/Awards';
 import { getUserMod } from '../../permissions';
 import Mod from '../../constants/Mod';
 import { penalize } from '../../modUtil';
+import config from '../../config';
 
 /**
  *
@@ -115,8 +116,8 @@ async function handlePings(client, message) {
  */
 export async function messageCreate(client, message) {
     if (message.author.bot) return;
-    // If this is a DM we can ignore these
-    if (!message.guild) return;
+    // If the message is outside of the default guild we can ignore it
+    if (message.guild?.id !== config.defaultGuild) return;
     await handleSwearing(client, message);
     await handlePings(client, message);
 }
