@@ -15,14 +15,14 @@ src/modules/twitter/ @Chicken
 src/modules/welcome/ @Chicken
 
 # Constants
-src/constants/ @KommentatorForAll @WilsontheWolf
+src/constants/ @KommentatorForAll @WilsontheWolf @Chicken
 
 # DTO's
 src/dto/OffenceDto.js @WilsontheWolf
 src/dto/ResponseDto.js @KommentatorForAll
 src/dto/UserDto.js @WilsontheWolf @KommentatorForAll
 
-# Misc Code
+# Base Code
 src/loadModules.js @KommentatorForAll
 src/modUtil.js @WilsontheWolf
 src/notifcations.js @KommentatorForAll
@@ -30,6 +30,7 @@ src/permissons.js @KommentatorForAll @WilsontheWolf
 src/roles.js @WilsontheWolf
 src/util.js @WilsontheWolf @KommentatorForAll
 src/xpHandling.js @KommentatorForAll
+src/index.js @WilsontheWolf @KommentatorForAll @Chicken
 
 # Config
 .env.example @Chicken
