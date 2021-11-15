@@ -14,6 +14,14 @@ src/modules/threadjoin/ @Chicken
 src/modules/twitter/ @Chicken
 src/modules/welcome/ @Chicken
 
+# Constants
+src/constants/ @KommentatorForAll @WilsontheWolf
+
+# DTO's
+src/dto/OffenceDto.js @WilsontheWolf
+src/dto/ResponseDto.js @KommentatorForAll
+src/dto/UserDto.js @WilsontheWolf @KommentatorForAll
+
 # Misc Code
 src/loadModules.js @KommentatorForAll
 src/modUtil.js @WilsontheWolf
