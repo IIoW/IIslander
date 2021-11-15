@@ -25,15 +25,15 @@ src/dto/UserDto.js @WilsontheWolf @KommentatorForAll
 # Base Code
 src/loadModules.js @KommentatorForAll
 src/modUtil.js @WilsontheWolf
-src/notifcations.js @KommentatorForAll
-src/permissons.js @KommentatorForAll @WilsontheWolf
+src/notifications.js @KommentatorForAll
+src/permissions.js @KommentatorForAll @WilsontheWolf
 src/roles.js @WilsontheWolf
 src/util.js @WilsontheWolf @KommentatorForAll
 src/xpHandling.js @KommentatorForAll
 src/index.js @WilsontheWolf @KommentatorForAll @Chicken
 
 # Config
-.env.example @Chicken
+.env.example @Chicken @KommentatorForAll @WilsontheWolf
 src/config.js @Chicken @KommentatorForAll
 
 # Meta Stuff
@@ -45,3 +45,4 @@ src/config.js @Chicken @KommentatorForAll
 .prettierrc.json @Chicken
 docker-compose.yml @Chicken
 Dockerfile @Chicken
+package.json @Chicken
