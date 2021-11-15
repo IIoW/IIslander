@@ -116,7 +116,7 @@ async function handlePings(client, message) {
  */
 export async function messageCreate(client, message) {
     if (message.author.bot) return;
-    // If this is a DM we can ignore these
+    // If the message is outside of the default guild we can ignore it
     if (!message.guild || message.guild.id !== config.defaultGuild) return;
     await handleSwearing(client, message);
     await handlePings(client, message);
