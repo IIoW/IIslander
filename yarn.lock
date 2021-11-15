@@ -556,9 +556,9 @@ end-of-stream@^1.1.0, end-of-stream@^1.4.1:
   dependencies:
     once "^1.4.0"
 
-enmap@wilsonthewolf/enmap:
+enmap@eslachance/enmap:
   version "5.8.7"
-  resolved "https://codeload.github.com/wilsonthewolf/enmap/tar.gz/6a114c28b0eaf09253d3c7729d15238346582fa5"
+  resolved "https://codeload.github.com/eslachance/enmap/tar.gz/feffa960f705ec1294bb200e695b92da96321290"
   dependencies:
     better-sqlite3 "^7.1.0"
     lodash "^4.17.20"
