@@ -1,10 +1,16 @@
 import { userDb } from './util';
 import sendLevelNotification from './notifications';
+import ensureRoles from './roles';
 
 /**
  * @return {Promise<void>}
  */
 async function addXp(member, xp, silent = false) {
+    // Prevent invalid xp from getting set.
+    // If NaN was passed the db value would be
+    // set to NaN reseting a user's xp.
+    if (typeof xp !== 'number' || Number.isNaN(xp)) return;
+
     const userDto = userDb.get(member.id);
 
     let oldLevel = userDto.level;
@@ -30,6 +36,9 @@ async function addXp(member, xp, silent = false) {
         }
     }
     userDb.set(member.id, userDto);
+
+    // Ensure the user has the right roles.
+    await ensureRoles(member);
 }
 
 async function removeXp(member, xp, silent) {
