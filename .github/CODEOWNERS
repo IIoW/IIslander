@@ -1,33 +1,33 @@
 # To be done
 
 # Modules
-modules/automod/ @WilsontheWolf @KommentatorForAll
-modules/autoresponses/ @KommentatorForAll
-modules/cooldownNotifications/ @KommentatorForAll
-modules/dmCommands/ @KommentatorForAll
-modules/errorHandling/ @KommentatorForAll
-modules/inlineCommands/ @KommentatorForAll
-modules/interactions/ @WilsontheWolf @KommentatorForAll
-modules/leveling/ @KommentatorForAll
-modules/messagePreview/ @Chicken
-modules/modCommands/ @WilsontheWolf
-modules/startupModule/ @KommentatorForAll
-modules/threadjoin/ @Chicken
-modules/twitter/ @Chicken
-modules/welcome/ @Chicken
+src/modules/automod/ @WilsontheWolf @KommentatorForAll
+src/modules/autoresponses/ @KommentatorForAll
+src/modules/cooldownNotifications/ @KommentatorForAll
+src/modules/dmCommands/ @KommentatorForAll
+src/modules/errorHandling/ @KommentatorForAll
+src/modules/inlineCommands/ @KommentatorForAll
+src/modules/interactions/ @WilsontheWolf @KommentatorForAll
+src/modules/leveling/ @KommentatorForAll
+src/modules/messagePreview/ @Chicken
+src/modules/modCommands/ @WilsontheWolf
+src/modules/startupModule/ @KommentatorForAll
+src/modules/threadjoin/ @Chicken
+src/modules/twitter/ @Chicken
+src/modules/welcome/ @Chicken
 
 # Misc Code
-loadModules.js @KommentatorForAll
-modUtil.js @WilsontheWolf
-notifcations.js @KommentatorForAll
-permissons.js @KommentatorForAll @WilsontheWolf
-roles.js @WilsontheWolf
-util.js @WilsontheWolf @KommentatorForAll
-xpHandling.js @KommentatorForAll
+src/loadModules.js @KommentatorForAll
+src/modUtil.js @WilsontheWolf
+src/notifcations.js @KommentatorForAll
+src/permissons.js @KommentatorForAll @WilsontheWolf
+src/roles.js @WilsontheWolf
+src/util.js @WilsontheWolf @KommentatorForAll
+src/xpHandling.js @KommentatorForAll
 
 # Config
 .env.example @Chicken
-config.js @Chicken @KommentatorForAll
+src/config.js @Chicken @KommentatorForAll
 
 # Meta Stuff
 .github/workflows/ @Chicken
