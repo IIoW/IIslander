@@ -1,20 +1,20 @@
 # To be done
 
 # Modules
-modules/automod @WilsontheWolf @KommentatorForAll
-modules/autoresponses @KommentatorForAll
-modules/cooldownNotifications @KommentatorForAll
-modules/dmCommands @KommentatorForAll
-modules/errorHandling @KommentatorForAll
-modules/inlineCommands @KommentatorForAll
-modules/interactions @WilsontheWolf @KommentatorForAll
-modules/leveling @KommentatorForAll
-modules/messagePreview @Chicken
-modules/modCommands @WilsontheWolf
-modules/startupModule @KommentatorForAll
-modules/threadjoin @Chicken
-modules/twitter @Chicken
-modules/welcome @Chicken
+modules/automod/ @WilsontheWolf @KommentatorForAll
+modules/autoresponses/ @KommentatorForAll
+modules/cooldownNotifications/ @KommentatorForAll
+modules/dmCommands/ @KommentatorForAll
+modules/errorHandling/ @KommentatorForAll
+modules/inlineCommands/ @KommentatorForAll
+modules/interactions/ @WilsontheWolf @KommentatorForAll
+modules/leveling/ @KommentatorForAll
+modules/messagePreview/ @Chicken
+modules/modCommands/ @WilsontheWolf
+modules/startupModule/ @KommentatorForAll
+modules/threadjoin/ @Chicken
+modules/twitter/ @Chicken
+modules/welcome/ @Chicken
 
 # Misc Code
 loadModules.js @KommentatorForAll
@@ -30,7 +30,7 @@ xpHandling.js @KommentatorForAll
 config.js @Chicken @KommentatorForAll
 
 # Meta Stuff
-.github/workflows/* @Chicken
+.github/workflows/ @Chicken
 .github/dependabot.yml @Chicken
 
 .dockerignore @Chicken
