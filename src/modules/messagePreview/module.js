@@ -3,6 +3,7 @@ import config from '../../config';
 
 const subscriptions = new Map();
 subscriptions.set('messageCreate', async (client, message) => {
+    if (message.author.bot) return;
     const messages = [
         ...message.content.matchAll(
             /https?:\/\/(?:(?:ptb|canary)\.)?discord(?:app)?\.com\/channels\/\d+\/(\d+)\/(\d+)\/?/gi
