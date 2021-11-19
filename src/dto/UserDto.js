@@ -7,34 +7,34 @@ export default class UserDto {
      * @param {number} xp
      * @param {Map<string, number>} cooldown
      * @param {string} faction
-     * @param {string} key
      * @param {number} swearlevel
      * @param {number} everyoneping
      * @param {string|null} steamVia
      * @param {Map<string, boolean>} notifications
      * @param {OffenceDto[]} offences
+     * @param {string} eligibleGiveaways
      */
     constructor(
         xp = 0,
         cooldown = new Map(),
         faction = '',
-        key = '',
         swearlevel = 0,
         everyoneping = 0,
         steamVia = null,
         notifications = new Map(),
-        offences = []
+        offences = [],
+        eligibleGiveaways = ''
     ) {
         // Data, which is getting saved across reboots
         this.xp = xp;
         this.cooldown = cooldown;
         this.faction = faction;
-        this.key = key;
         this.swearlevel = swearlevel;
         this.everyoneping = everyoneping;
         this.steamVia = steamVia;
         this.notifications = notifications;
         this.offences = offences;
+        this.eligibleGiveaways = eligibleGiveaways;
 
         // Data which is not necessary to be saved
         this.voiceTimeStampJoin = -1;
@@ -57,12 +57,12 @@ export default class UserDto {
             xp: this.xp,
             cooldown: this.cooldown,
             faction: this.faction,
-            key: this.key,
             swearlevel: this.swearlevel,
             everyoneping: this.everyoneping,
             steamVia: this.steamVia,
             notifications: this.notifications,
             offences: this.offences.map((o) => o.toJSON()),
+            eligibleGiveaways: this.eligibleGiveaways,
         };
     }
 
@@ -76,12 +76,12 @@ export default class UserDto {
             object.xp,
             object.cooldown,
             object.faction,
-            object.key,
             object.swearlevel,
             object.everyoneping,
             object.steamVia,
             object.notifications,
-            (object.offences || []).map((o) => OffenceDto.fromJSON(o))
+            (object.offences || []).map((o) => OffenceDto.fromJSON(o)),
+            object.eligibleGiveaways
         );
     }
 }

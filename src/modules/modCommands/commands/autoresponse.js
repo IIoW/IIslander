@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js';
 import ResponseDto from '../../../dto/ResponseDto';
-import { makeTitle, responseDb } from '../../../util';
+import { countEmbed, makeTitle, responseDb } from '../../../util';
 
 const info = {
     name: 'ar',
@@ -61,41 +61,42 @@ async function fun(client, message, args) {
 
         case 'list':
         case 'ls': {
-            const embed = new MessageEmbed()
-                .setTitle('Auto Responses')
-                .setDescription(
-                    `Total auto responses: ${responseDb.size}${
-                        responseDb.size > 25 && args[0] !== 'all'
-                            ? "\nNote all auto responses couldn't fit on this page. Please run `ar list all` to see all."
-                            : ''
-                    }`
-                );
-            const fields = responseDb.map((response, name) => ({
-                name,
-                value: `${makeTitle(response.title)}\n\n${response.response}\n\n**Triggers:**\n${
-                    response.trigger.join('\n') || 'None!'
-                }`,
-                inline: true,
-            }));
-            if (fields.length > 25 && args[0] === 'all') {
-                const embeds = fields.reduce(
-                    (newEmbeds, cur, i) => {
-                        const index = Math.floor(i / 25);
-                        const newEmbed = newEmbeds[index] || new MessageEmbed();
-                        newEmbed.addField(cur.name, cur.value, cur.inline);
-                        newEmbeds[index] = newEmbed;
-                        return newEmbeds;
-                    },
-                    [embed]
-                );
+            const embeds = responseDb.reduce(
+                (acc, response, name) => {
+                    let value = `${makeTitle(response.title)}\n\n${
+                        response.response
+                    }\n\n**Triggers:**\n${response.trigger.join('\n') || 'None!'}`;
+                    if (value.length > 1024) value = `${value.slice(0, 1020)}...`;
+                    const old = acc[acc.length - 1];
+                    let newEmbed = old;
+                    if (
+                        old.fields.length >= 25 ||
+                        countEmbed(old) + value.length + name.length > 6000
+                    ) {
+                        newEmbed = new MessageEmbed();
+                        acc.push(newEmbed);
+                    }
+                    newEmbed.addField(name, value, true);
+                    return acc;
+                },
+                [
+                    new MessageEmbed()
+                        .setTitle('Auto Responses')
+                        .setDescription(
+                            `Total auto responses: ${responseDb.size}${
+                                responseDb.size > 25 && args[0] !== 'all'
+                                    ? "\nNote all auto responses couldn't fit on this page. Please run `ar list all` to see all."
+                                    : ''
+                            }`
+                        ),
+                ]
+            );
+            if (args[0] === 'all')
                 for (const toSend of embeds) {
                     // eslint-disable-next-line no-await-in-loop
                     await message.channel.send({ embeds: [toSend] });
                 }
-            } else {
-                embed.addFields(fields.slice(-25));
-                await message.reply({ embeds: [embed] });
-            }
+            else await message.channel.send({ embeds: [embeds[0]] });
             break;
         }
 

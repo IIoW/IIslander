@@ -100,6 +100,19 @@ function getRole(name) {
 }
 
 /**
+ * Gets role info and adds it. Will not error if the role or member doesn't exist.
+ * @param {string} name - The name of the role.
+ * @param {import('discord.js'.GuildMemberResolvable)} memberResolvable - The member to add.
+ * @returns {false|Promise<import('discord.js').GuildMember>} Returns false if the role or member doesn't exist. Otherwise returns the result of adding a role.
+ */
+function getAndAddRole(name, memberResolvable) {
+    const guild = client.guilds.cache.get(config.defaultGuild);
+    const role = getRole(name);
+    const member = guild.members.resolve(memberResolvable);
+    if (!role || !guild || !member) return false;
+    return member.roles.add(role);
+}
+/**
  * Converts a js timestamp to a discord markdown timestamp.
  * @param {number} time - The js timestamp to convert.
  * @param {'t'|'T'|'d'|'D'|'f'|'F'|'R'} format - The format to display the timestamp in.
@@ -124,6 +137,24 @@ function makeTitle(string) {
     }
     return res;
 }
+
+/**
+ * Counts the characters in an embed.
+ * @param {MessageEmbed} embed
+ */
+const countEmbed = (embed) =>
+    [
+        embed.title,
+        embed.description,
+        embed.fields.map((f) => [f.name, f.value]),
+        embed.footer?.text,
+        embed.author?.name,
+    ]
+        .flat(2)
+        .reduce((p, c) => {
+            if (typeof c === 'string') return p + c.length;
+            return p;
+        }, 0);
 
 // Databases
 
@@ -177,10 +208,12 @@ export {
     responseDb,
     getChannel,
     getRole,
+    getAndAddRole,
     getMember,
     getClient,
     fetchUser,
     fetchChannel,
     stringifyTimestamp,
     makeTitle,
+    countEmbed,
 };

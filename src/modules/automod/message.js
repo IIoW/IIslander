@@ -35,6 +35,8 @@ async function handleSwearing(client, message) {
             userDto.swearlevel = 0; // resets the swear level, if time ran out
         }
         userDto.swearlevel += 1;
+        userDto.cooldown.set('swearing', now + xpCooldown.swearing);
+        userDb.set(message.author.id, userDto);
         switch (userDto.swearlevel) {
             case 1:
                 await message.author
@@ -57,8 +59,6 @@ async function handleSwearing(client, message) {
                         .replace('[match]', word)}`
                 );
         }
-        userDto.cooldown.set('swearing', now + xpCooldown.swearing);
-        userDb.set(message.author.id, userDto);
         await getChannel('log').send(
             logMessages
                 .get('swearing')

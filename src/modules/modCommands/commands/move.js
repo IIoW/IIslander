@@ -1,5 +1,5 @@
 import { MessageEmbed } from 'discord.js';
-import { fetchChannel } from '../../../util';
+import { countEmbed, fetchChannel } from '../../../util';
 
 const info = {
     name: 'move',
@@ -40,24 +40,6 @@ const genEmbed = async (message) => {
 
     return [embed, ...message.embeds];
 };
-
-/**
- *
- * @param {MessageEmbed} embed
- */
-const countEmbed = (embed) =>
-    [
-        embed.title,
-        embed.description,
-        embed.fields.map((f) => [f.name, f.value]),
-        embed.footer?.text,
-        embed.author?.name,
-    ]
-        .flat(2)
-        .reduce((p, c) => {
-            if (typeof c === 'string') return p + c.length;
-            return p;
-        }, 0);
 
 const move = async (message, limit, channel, after = null) => {
     let msg;

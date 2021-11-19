@@ -7,9 +7,8 @@ export default class ResponseDto {
      * @param {String} response - What to respond with or the image location.
      * @param {String} title - What to put as the title of the response.
      */
-    constructor(trigger = [''], isRegex = false, response = '', title = '') {
+    constructor(trigger = [''], response = '', title = '') {
         this.trigger = trigger;
-        this.isRegex = isRegex;
         this.response = response;
         this.title = title;
     }
@@ -21,7 +20,6 @@ export default class ResponseDto {
     toJSON() {
         return {
             trigger: this.trigger,
-            isRegex: this.isRegex,
             response: this.response,
             title: this.title,
         };
@@ -33,6 +31,6 @@ export default class ResponseDto {
      * @returns {ResponseDto} The auto response object from the JSON.
      */
     static fromJSON(object) {
-        return new ResponseDto(object.trigger, object.isRegex, object.response, object.title);
+        return new ResponseDto(object.trigger, object.response, object.title);
     }
 }

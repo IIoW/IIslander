@@ -3,6 +3,7 @@
  */
 const swearWords = [
     'ar+s+e(?:\\s|$)', // This one has the thing at the end cause it triggers on the //ar set command
+    'ass',
     'anal',
     'anus',
     'boo+b',
@@ -21,7 +22,7 @@ const swearWords = [
     'dildo',
     'dyke',
     'ejaculate',
-    '(?:f|ph)(?:u|o)+(?:c?k|q|x)',
+    '(?:da)?(?:f|ph)(?:u|o)+(?:c?k|q|x)',
     'fag',
     'gangbang',
     'horn(?:y|i)',
