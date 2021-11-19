@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { MessageEmbed, Permissions } from 'discord.js';
 import config from '../../config';
 
 const subscriptions = new Map();
@@ -22,6 +22,12 @@ subscriptions.set('messageCreate', async (client, message) => {
             .catch(() => null);
         if (!msg) return;
         if (msg.guildId !== config.defaultGuild) return;
+        if (
+            !msg.channel
+                .permissionsFor(message.author)
+                ?.has([Permissions.FLAGS.VIEW_CHANNEL, Permissions.FLAGS.READ_MESSAGE_HISTORY])
+        )
+            return;
         if (!msg.member) await msg.guild.members.fetch(msg.author);
 
         const embed = new MessageEmbed()
