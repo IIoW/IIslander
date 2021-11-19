@@ -40,7 +40,7 @@ export default async function messageReactionAdd(client, messageReaction, user) 
 
     if (!message.member) await message.guild.members.fetch(message.author);
 
-    await getAndAddRole(member, `cooldown_${reactionName}`);
+    await getAndAddRole(`cooldown_${reactionName}`, member);
 
     setTimeout(emit, xpCooldown[reactionName], client, reactionName, user.id);
 

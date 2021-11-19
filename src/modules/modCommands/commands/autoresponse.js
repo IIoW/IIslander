@@ -39,7 +39,6 @@ async function fun(client, message, args) {
             const [, title, content] = args.join(' ').match(/^(.*?) ?(?:\| ?(.*?))?$/);
             const responseDto = new ResponseDto(
                 [],
-                false,
                 content || 'This is a default response.',
                 title || name
             );

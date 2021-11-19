@@ -72,7 +72,7 @@ async function modActionCore({ user, type, reason, actionType, timeoutDuration =
         const member = await user.client.guilds.cache
             .get(config.defaultGuild)
             .members.fetch(user.id);
-        await getAndAddRole(member, 'cooldown_timeout');
+        await getAndAddRole('cooldown_timeout', member);
         setTimeout(() => user.client.emit('cooldownEnd', 'timeout', user.id), timeoutDuration);
     }
     // Have to set the thing before removing xp or
