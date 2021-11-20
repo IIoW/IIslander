@@ -19,6 +19,8 @@ async function addXp(member, xp, silent = false) {
 
     if (userDto.xp < 0) userDto.xp = 0;
 
+    userDto.xp = Math.round(userDto.xp);
+
     const newLevel = userDto.level;
 
     if (newLevel !== oldLevel && !silent) {

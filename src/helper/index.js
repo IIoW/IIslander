@@ -6,7 +6,10 @@ import { fileURLToPath } from 'url';
 
 // Ensure we can import from files without extensions.
 spawn(argv0, [join(dirname(fileURLToPath(import.meta.url)), 'main.js'), ...argv.slice(2)], {
-    env: { ...env, NODE_OPTIONS: '--es-module-specifier-resolution=node' },
+    env: {
+        ...env,
+        NODE_OPTIONS: `--es-module-specifier-resolution=node ${process.env.NODE_OPTIONS || ''}`,
+    },
     stdio: 'inherit',
     stdin: 'inherit',
 });

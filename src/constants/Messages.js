@@ -31,7 +31,7 @@ const roleMessages = [
 ];
 
 const swearWarning = [
-    'I know, one sometimes has to rant, but keep it minimal.',
+    'Hey I noticed you swearing! Please try your best to refrain from swearing. Thanks!',
     'Hey, please stop swearing, this is the last warning, next time you will get a penalty',
 ];
 

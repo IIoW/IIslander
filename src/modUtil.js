@@ -2,7 +2,7 @@ import config from './config';
 import OffenseDescriptions from './constants/OffenseDescriptions';
 import OffenseMultiplier from './constants/OffenseMultiplier';
 import OffenceDto from './dto/OffenceDto';
-import { getChannel, getRole, stringifyTimestamp, userDb } from './util';
+import { getAndAddRole, getChannel, stringifyTimestamp, userDb } from './util';
 import { getXpFromLevel, removeXp } from './xpHandling';
 
 /**
@@ -72,7 +72,7 @@ async function modActionCore({ user, type, reason, actionType, timeoutDuration =
         const member = await user.client.guilds.cache
             .get(config.defaultGuild)
             .members.fetch(user.id);
-        await member.roles.add(getRole('cooldown_timeout'));
+        await getAndAddRole('cooldown_timeout', member);
         setTimeout(() => user.client.emit('cooldownEnd', 'timeout', user.id), timeoutDuration);
     }
     // Have to set the thing before removing xp or

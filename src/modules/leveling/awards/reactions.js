@@ -1,6 +1,6 @@
 import Emotes from '../../../constants/Emotes';
 import { xpCooldown, xpReward, xpRewardDonor } from '../../../constants/Awards';
-import { getChannel, getRole, userDb } from '../../../util';
+import { getAndAddRole, getChannel, userDb } from '../../../util';
 import { addXp } from '../../../xpHandling';
 import updateBoard from './starboard';
 
@@ -40,7 +40,7 @@ export default async function messageReactionAdd(client, messageReaction, user) 
 
     if (!message.member) await message.guild.members.fetch(message.author);
 
-    await member.roles.add(getRole(`cooldown_${reactionName}`));
+    await getAndAddRole(`cooldown_${reactionName}`, member);
 
     setTimeout(emit, xpCooldown[reactionName], client, reactionName, user.id);
 

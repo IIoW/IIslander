@@ -79,6 +79,74 @@ import { logAndDie, helpMessage, databases } from './helperUtil';
             console.log('Finished!');
             break;
         }
+        case 'firebase': {
+            try {
+                console.log('Reading info...');
+                const info = JSON.parse(await fs.readFile('./data/firebase.json'));
+                const ownerOrKeyRegex = /^(?:\w+-\w+-\w+)|(?:owner)$/;
+                const {
+                    discordUserData: users,
+                    discord: { autoresponse, cooldowns },
+                } = info;
+                console.log('Converting users...');
+                const newUsers = Object.entries(users).map(([id, { xp, faction, ...data }]) => {
+                    let key = null;
+                    let giveaways = '';
+                    if (data.key) {
+                        if (data.key.match(ownerOrKeyRegex)) key = data.key;
+                        else giveaways = data.key;
+                    }
+                    const user = new UserDto(
+                        xp,
+                        undefined,
+                        faction,
+                        0,
+                        0,
+                        key,
+                        undefined,
+                        undefined,
+                        giveaways
+                    );
+                    return [id, user];
+                });
+                console.log('Converting cooldowns...');
+                Object.entries(cooldowns).forEach(([id, cooldownStuff]) => {
+                    Object.entries(cooldownStuff).forEach(([userId, cooldown]) => {
+                        if (userId === 'holder') return;
+                        const user = newUsers.find(([uid]) => userId === uid);
+                        if (!user) console.warn(`Couldn't find user ${userId} in users!`);
+                        else user[1].cooldown.set(id, cooldown);
+                    });
+                });
+                console.log('Converting auto responses...');
+                const newAutoResponces = Object.entries(autoresponse).map(
+                    ([id, { triggers, response, title }]) => [
+                        id,
+                        new ResponseDto(
+                            triggers.filter((t) => t),
+                            response,
+                            title
+                        ),
+                    ]
+                );
+
+                console.log('Storing user data...');
+                for (const [id, user] of newUsers) {
+                    if (id !== 'holder') userDb.set(id, user);
+                }
+
+                console.log('Storing response data...');
+                for (const [id, response] of newAutoResponces) {
+                    if (id !== 'holder') responseDb.set(id, response);
+                }
+            } catch (e) {
+                console.error(
+                    'Error getting data. Please ensure you have a valid json file in data/firebase.json.\nMore info:'
+                );
+                console.error(e);
+            }
+            break;
+        }
         default: {
             logAndDie(`Unknown command "${command}"!`);
             break;
