@@ -3,6 +3,7 @@ import config from './config';
 import UserDto from './dto/UserDto';
 import ResponseDto from './dto/ResponseDto';
 import Emotes from './constants/Emotes';
+import KeyDto from './dto/KeyDto';
 
 /**
  * @type {import('discord.js').Client}
@@ -176,6 +177,12 @@ function deserializerUserDto(object) {
 function deserializerResponseDto(object) {
     return ResponseDto.fromJSON(object);
 }
+/**
+ * Deserialize key database objects.
+ */
+function deserializerKeyDto(object) {
+    return KeyDto.fromJSON(object);
+}
 
 /**
  * Database to store user data in it.
@@ -201,11 +208,23 @@ const responseDb = new Enmap({
     autoEnsure: new ResponseDto(),
 });
 
+/**
+ * Database to store auto response data in it.
+ * @type {Enmap<string, KeyDto>}
+ * @see {@link KeyDto}
+ */
+const keyDb = new Enmap({
+    name: 'keys',
+    serializer,
+    deserializer: deserializerKeyDto,
+});
+
 export {
     setup,
     getEmoji,
     userDb,
     responseDb,
+    keyDb,
     getChannel,
     getRole,
     getAndAddRole,

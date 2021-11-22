@@ -1,10 +1,11 @@
 import 'dotenv/config';
 import fs from 'fs/promises';
 import startEval from './startEval';
-import { userDb, responseDb } from '../util';
+import { userDb, responseDb, keyDb } from '../util';
 import UserDto from '../dto/UserDto';
 import ResponseDto from '../dto/ResponseDto';
 import { logAndDie, helpMessage, databases } from './helperUtil';
+import KeyDto from '../dto/KeyDto';
 
 // Instantly executing async function to stop eslint from yelling at me.
 (async () => {
@@ -20,11 +21,11 @@ import { logAndDie, helpMessage, databases } from './helperUtil';
             break;
         }
         case 'debug': {
-            startEval(true, { userDb, responseDb });
+            startEval(true, { userDb, responseDb, keyDb });
             break;
         }
         case 'db': {
-            startEval(false, { userDb, responseDb, UserDto, ResponseDto });
+            startEval(false, { userDb, responseDb, keyDb, UserDto, ResponseDto, KeyDto });
             break;
         }
         case 'backup': {
@@ -86,7 +87,7 @@ import { logAndDie, helpMessage, databases } from './helperUtil';
                 const ownerOrKeyRegex = /^(?:\w+-\w+-\w+)|(?:owner)$/;
                 const {
                     discordUserData: users,
-                    discord: { autoresponse, cooldowns },
+                    discord: { autoresponse, cooldowns, keys },
                 } = info;
                 console.log('Converting users...');
                 const newUsers = Object.entries(users).map(([id, { xp, faction, ...data }]) => {
@@ -129,6 +130,8 @@ import { logAndDie, helpMessage, databases } from './helperUtil';
                         ),
                     ]
                 );
+                console.log('Converting keys...');
+                const newKeys = Object.keys(keys).map((key) => new KeyDto(key));
 
                 console.log('Storing user data...');
                 for (const [id, user] of newUsers) {
@@ -138,6 +141,11 @@ import { logAndDie, helpMessage, databases } from './helperUtil';
                 console.log('Storing response data...');
                 for (const [id, response] of newAutoResponces) {
                     if (id !== 'holder') responseDb.set(id, response);
+                }
+
+                console.log('Storing key data...');
+                for (const key of newKeys) {
+                    if (key.value !== 'holder') keyDb.set(key.value, key);
                 }
             } catch (e) {
                 console.error(
