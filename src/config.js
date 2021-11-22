@@ -18,6 +18,7 @@ export default {
         ['faction-strike-submission', process.env.CHANNEL_CHAT_STRIKE],
         ['faction-nova-submission', process.env.CHANNEL_CHAT_NOVA],
         ['faction-prime-submission', process.env.CHANNEL_CHAT_PRIME],
+        ['iislander-board', process.env.CHANNEL_IISLANDER_BOARD],
     ]),
     channelModes: {
         reducedXp: process.env.CHANNEL_REDUCED_XP?.split(',') || [],
@@ -41,5 +42,22 @@ export default {
         ['mac', process.env.ROLE_MAC],
         ['subscriber', process.env.ROLE_SUBSCRIBER],
         ['tester', process.env.ROLE_TESTER],
+    ]),
+
+    messages: new Map([
+        ['activity', { id: process.env.MESSAGE_ACTIVITY, channel: 'iislander-board' }],
+        ['leaderboard', { id: process.env.MESSAGE_LEADERBOARD, channel: 'iislander-board' }],
+        [
+            'prime-achievements',
+            { id: process.env.MESSAGE_PRIME_ACHIEVEMENTS, channel: 'iislander-board' },
+        ],
+        [
+            'strike-achievements',
+            { id: process.env.MESSAGE_STRIKE_ACHIEVEMENTS, channel: 'iislander-board' },
+        ],
+        [
+            'nova-achievements',
+            { id: process.env.MESSAGE_NOVA_ACHIEVEMENTS, channel: 'iislander-board' },
+        ],
     ]),
 };

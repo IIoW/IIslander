@@ -35,7 +35,10 @@ export default async (client) => {
                 try {
                     await fun(client, ...args);
                 } catch (e) {
-                    client.emit('error', e);
+                    client.emit('error', e, {
+                        event,
+                        name: fun.name || 'Unnamed Function',
+                    });
                 }
             });
         });

@@ -1,11 +1,12 @@
 import 'dotenv/config';
 import fs from 'fs/promises';
 import startEval from './startEval';
-import { userDb, responseDb, keyDb } from '../util';
+import { userDb, responseDb, keyDb, factionDb, getTomorrow } from '../util';
 import UserDto from '../dto/UserDto';
 import ResponseDto from '../dto/ResponseDto';
 import { logAndDie, helpMessage, databases } from './helperUtil';
 import KeyDto from '../dto/KeyDto';
+import FactionDto from '../dto/FactionDto';
 
 // Instantly executing async function to stop eslint from yelling at me.
 (async () => {
@@ -21,11 +22,20 @@ import KeyDto from '../dto/KeyDto';
             break;
         }
         case 'debug': {
-            startEval(true, { userDb, responseDb, keyDb });
+            startEval(true, { userDb, responseDb, keyDb, factionDb });
             break;
         }
         case 'db': {
-            startEval(false, { userDb, responseDb, keyDb, UserDto, ResponseDto, KeyDto });
+            startEval(false, {
+                userDb,
+                responseDb,
+                keyDb,
+                factionDb,
+                UserDto,
+                ResponseDto,
+                KeyDto,
+                FactionDto,
+            });
             break;
         }
         case 'backup': {
@@ -87,29 +97,33 @@ import KeyDto from '../dto/KeyDto';
                 const ownerOrKeyRegex = /^(?:\w+-\w+-\w+)|(?:owner)$/;
                 const {
                     discordUserData: users,
-                    discord: { autoresponse, cooldowns, keys },
+                    discord: { autoresponse, cooldowns, keys, factions },
                 } = info;
                 console.log('Converting users...');
-                const newUsers = Object.entries(users).map(([id, { xp, faction, ...data }]) => {
-                    let key = null;
-                    let giveaways = '';
-                    if (data.key) {
-                        if (data.key.match(ownerOrKeyRegex)) key = data.key;
-                        else giveaways = data.key;
+                const newUsers = Object.entries(users).map(
+                    ([id, { xp, faction, xpRecent, ...data }]) => {
+                        let key = null;
+                        let giveaways = '';
+                        if (data.key) {
+                            if (data.key.match(ownerOrKeyRegex)) key = data.key;
+                            else giveaways = data.key;
+                        }
+                        const user = new UserDto(
+                            xp,
+                            undefined,
+                            faction,
+                            0,
+                            0,
+                            key,
+                            undefined,
+                            undefined,
+                            giveaways,
+                            xpRecent,
+                            getTomorrow()
+                        );
+                        return [id, user];
                     }
-                    const user = new UserDto(
-                        xp,
-                        undefined,
-                        faction,
-                        0,
-                        0,
-                        key,
-                        undefined,
-                        undefined,
-                        giveaways
-                    );
-                    return [id, user];
-                });
+                );
                 console.log('Converting cooldowns...');
                 Object.entries(cooldowns).forEach(([id, cooldownStuff]) => {
                     Object.entries(cooldownStuff).forEach(([userId, cooldown]) => {
@@ -119,6 +133,21 @@ import KeyDto from '../dto/KeyDto';
                         else user[1].cooldown.set(id, cooldown);
                     });
                 });
+                console.log('Converting factions...');
+                const factionMap = {
+                    'Nova Alliance': 'nova',
+                    'Prime Federation': 'prime',
+                    'Strike Coalition': 'strike',
+                };
+                const newFactions = Object.entries(factions).map(
+                    ([id, { achievements, inventory }]) => [
+                        id,
+                        new FactionDto(
+                            Object.keys(achievements).filter((a) => a !== 'holder'),
+                            inventory
+                        ),
+                    ]
+                );
                 console.log('Converting auto responses...');
                 const newAutoResponces = Object.entries(autoresponse).map(
                     ([id, { triggers, response, title }]) => [
@@ -136,6 +165,13 @@ import KeyDto from '../dto/KeyDto';
                 console.log('Storing user data...');
                 for (const [id, user] of newUsers) {
                     if (id !== 'holder') userDb.set(id, user);
+                }
+
+                console.log('Storing faction data...');
+                for (const [id, faction] of newFactions) {
+                    const newId = factionMap[id];
+                    if (!id) console.warn(`Couldn't find faction ${id} in faction map!`);
+                    else factionDb.set(newId, faction);
                 }
 
                 console.log('Storing response data...');

@@ -4,6 +4,7 @@ import UserDto from './dto/UserDto';
 import ResponseDto from './dto/ResponseDto';
 import Emotes from './constants/Emotes';
 import KeyDto from './dto/KeyDto';
+import FactionDto from './dto/FactionDto';
 
 /**
  * @type {import('discord.js').Client}
@@ -56,6 +57,20 @@ function getChannel(name) {
     return client.channels.cache.get(config.channels.get(name));
 }
 
+/**
+ * @param {string} name
+ * @returns {Promise<import('discord.js').Message>}
+ */
+function getMessage(name) {
+    const message = config.messages.get(name);
+    const channel = getChannel(message.channel);
+    return channel.messages.fetch(message.id);
+}
+
+async function editMessage(name, ...content) {
+    const msg = await getMessage(name);
+    return msg.edit(...content);
+}
 /**
  * Fetch a user by id or mention string.
  * @param {string} query - The user id or ping of the user.
@@ -140,6 +155,13 @@ function makeTitle(string) {
 }
 
 /**
+ * Used to get the time of midnight tomorrow
+ * @returns {number} The unix time in milliseconds at midnight tomorrow.
+ */
+function getTomorrow() {
+    return new Date().setUTCHours(0, 0, 0, 0) + 8.64e7;
+}
+/**
  * Counts the characters in an embed.
  * @param {MessageEmbed} embed
  */
@@ -183,6 +205,12 @@ function deserializerResponseDto(object) {
 function deserializerKeyDto(object) {
     return KeyDto.fromJSON(object);
 }
+/**
+ * Deserialize faction database objects.
+ */
+function deserializerFactionDto(object) {
+    return FactionDto.fromJSON(object);
+}
 
 /**
  * Database to store user data in it.
@@ -219,20 +247,35 @@ const keyDb = new Enmap({
     deserializer: deserializerKeyDto,
 });
 
+/**
+ * Database to store faction data in it.
+ * @type {Enmap<string, FactionDto>}
+ * @see {@link KeyDto}
+ */
+const factionDb = new Enmap({
+    name: 'factions',
+    serializer,
+    deserializer: deserializerFactionDto,
+});
+
 export {
     setup,
     getEmoji,
     userDb,
     responseDb,
     keyDb,
+    factionDb,
     getChannel,
+    getMessage,
     getRole,
     getAndAddRole,
     getMember,
     getClient,
+    editMessage,
     fetchUser,
     fetchChannel,
     stringifyTimestamp,
     makeTitle,
     countEmbed,
+    getTomorrow,
 };

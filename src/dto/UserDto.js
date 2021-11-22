@@ -23,7 +23,9 @@ export default class UserDto {
         steamVia = null,
         notifications = new Map(),
         offences = [],
-        eligibleGiveaways = ''
+        eligibleGiveaways = '',
+        activityRecent = 0,
+        recentReset = 0
     ) {
         // Data, which is getting saved across reboots
         this.xp = xp;
@@ -35,6 +37,8 @@ export default class UserDto {
         this.notifications = notifications;
         this.offences = offences;
         this.eligibleGiveaways = eligibleGiveaways;
+        this.activityRecent = activityRecent;
+        this.recentReset = recentReset;
 
         // Data which is not necessary to be saved
         this.voiceTimeStampJoin = -1;
@@ -63,6 +67,8 @@ export default class UserDto {
             notifications: this.notifications,
             offences: this.offences.map((o) => o.toJSON()),
             eligibleGiveaways: this.eligibleGiveaways,
+            activityRecent: this.activityRecent,
+            recentReset: this.recentReset,
         };
     }
 
@@ -81,7 +87,9 @@ export default class UserDto {
             object.steamVia,
             object.notifications,
             (object.offences || []).map((o) => OffenceDto.fromJSON(o)),
-            object.eligibleGiveaways
+            object.eligibleGiveaways,
+            object.activityRecent,
+            object.recentReset
         );
     }
 }
