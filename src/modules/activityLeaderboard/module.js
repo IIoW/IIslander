@@ -53,7 +53,7 @@ const updateAwards = () => {
         const title = `${getEmoji(faction.emote)}${makeTitle(`${id} Awards`)}${getEmoji(
             faction.emote
         )}`;
-        const message = `${title}\n\n${content}\n\n` + '_ _';
+        const message = `${title}\n\n${content}\n\n_ _`;
         res.push(editMessage(faction.awardMessage, message));
     }
     return Promise.all(res);
