@@ -50,9 +50,14 @@ async function processCommandsNewMessage(client, message) {
         await cmd.fun(client, message, args, level);
     } catch (e) {
         console.error(`Error running command "${command}":\n${e?.stack || e}`);
-        message
-            .reply(`Something went wrong processing that command! Please try again later.`)
-            .catch((err) => console.error('Error sending error!\n', err));
+        if (message.deleted)
+            message.channel
+                .send(`Something went wrong processing that command! Please try again later.`)
+                .catch((err) => console.error('Error sending error!\n', err));
+        else
+            message
+                .reply(`Something went wrong processing that command! Please try again later.`)
+                .catch((err) => console.error('Error sending error!\n', err));
     }
 }
 

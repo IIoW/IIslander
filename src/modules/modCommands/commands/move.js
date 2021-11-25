@@ -84,8 +84,14 @@ const move = async (message, limit, channel, after = null) => {
         // eslint-disable-next-line no-await-in-loop
         await channel.send({ embeds });
     }
-    await message.channel.bulkDelete(msg);
-    return message.channel.send(`Successfully moved \`${msg.size}\` messages to ${channel}!`);
+    const deleted = await message.channel.bulkDelete(msg, true);
+    return message.channel.send(
+        `Successfully moved \`${msg.size}\` messages to ${channel}!${
+            deleted.size === msg.size
+                ? ''
+                : ` Not all messages were able to be deleted. Please delete these messages manually.`
+        }`
+    );
 };
 
 /**
