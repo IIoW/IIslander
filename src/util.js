@@ -159,7 +159,7 @@ function makeTitle(string) {
  * @returns {number} The unix time in milliseconds at midnight tomorrow.
  */
 function getTomorrow() {
-    return new Date().setUTCHours(0, 0, 0, 0) + 8.64e7;
+    return new Date().setUTCHours(24, 0, 0, 0);
 }
 /**
  * Counts the characters in an embed.

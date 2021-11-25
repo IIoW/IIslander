@@ -8,16 +8,16 @@ const subscriptions = new Map();
 const updateActivity = () => {
     const now = Date.now();
     const users = userDb
-        .filter((user) => user.recentReset > now && user.activityRecent > 100)
+        .filter((user) => user.activityValidUntil > now && user.activityRecent > 100)
         .map((user, id) => [user, id])
         .sort((a, b) => b[0].activityRecent - a[0].activityRecent);
     const content =
         users
+            .slice(0, 7)
             .map(
                 ([user, id], i) =>
                     `${makeTitle((i + 1).toString())} <@${id}> - ${user.activityRecent}`
             )
-            .slice(0, 7)
             .join('\n\n') ||
         'The leaderboard has been recently reset and there has been no recent activity.';
     const title = makeTitle('Activity Leaderboard');
@@ -63,7 +63,6 @@ const updateLeaderboards = () =>
     Promise.all([updateActivity(), updateLeaderboard(), updateAwards()]);
 
 subscriptions.set('ready', async () => {
-    await updateLeaderboards();
     setInterval(async () => {
         try {
             await updateLeaderboards();
@@ -71,7 +70,8 @@ subscriptions.set('ready', async () => {
             console.error('Error updating leaderboards:');
             console.error(e);
         }
-    }, 3000 * 60);
+    }, 30 * 60 * 1000);
+    await updateLeaderboards();
 });
 
 export { enabled, subscriptions };

@@ -25,7 +25,7 @@ export default class UserDto {
         offences = [],
         eligibleGiveaways = '',
         activityRecent = 0,
-        recentReset = 0
+        activityValidUntil = 0
     ) {
         // Data, which is getting saved across reboots
         this.xp = xp;
@@ -38,7 +38,7 @@ export default class UserDto {
         this.offences = offences;
         this.eligibleGiveaways = eligibleGiveaways;
         this.activityRecent = activityRecent;
-        this.recentReset = recentReset;
+        this.activityValidUntil = activityValidUntil;
 
         // Data which is not necessary to be saved
         this.voiceTimeStampJoin = -1;
@@ -68,7 +68,7 @@ export default class UserDto {
             offences: this.offences.map((o) => o.toJSON()),
             eligibleGiveaways: this.eligibleGiveaways,
             activityRecent: this.activityRecent,
-            recentReset: this.recentReset,
+            activityValidUntil: this.activityValidUntil,
         };
     }
 
@@ -89,7 +89,7 @@ export default class UserDto {
             (object.offences || []).map((o) => OffenceDto.fromJSON(o)),
             object.eligibleGiveaways,
             object.activityRecent,
-            object.recentReset
+            object.activityValidUntil
         );
     }
 }

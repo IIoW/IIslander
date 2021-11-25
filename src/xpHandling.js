@@ -39,9 +39,9 @@ async function addXp(member, xp, silent = false) {
     }
 
     // Ensure recent xp.
-    if (userDto.recentReset < Date.now()) {
+    if (userDto.activityValidUntil < Date.now()) {
         userDto.activityRecent = 0;
-        userDto.recentReset = getTomorrow();
+        userDto.activityValidUntil = getTomorrow();
     }
     userDto.activityRecent += xp;
 
