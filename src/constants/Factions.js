@@ -13,7 +13,8 @@ export default {
             submissions: config.channels.get('faction-strike-submissions'),
         },
         role: config.roles.get('faction_strike'),
-        emote: '_S',
+        emote: 'strike',
+        awardMessage: 'strike-achievements',
     },
     nova: {
         fullName: 'Nova Alliance',
@@ -26,7 +27,8 @@ export default {
             submissions: config.channels.get('faction-nova-submissions'),
         },
         role: config.roles.get('faction_nova'),
-        emote: '_N',
+        emote: 'nova',
+        awardMessage: 'nova-achievements',
     },
     prime: {
         fullName: 'Prime Federation',
@@ -41,6 +43,7 @@ export default {
             submissions: config.channels.get('faction-prime-submissions'),
         },
         role: config.roles.get('faction_prime'),
-        emote: '_P',
+        emote: 'prime',
+        awardMessage: 'prime-achievements',
     },
 };

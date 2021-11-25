@@ -1,4 +1,5 @@
 # Modules
+src/modules/activityLeaderboard @WilsontheWolf
 src/modules/automod/ @WilsontheWolf @KommentatorForAll
 src/modules/autoresponses/ @KommentatorForAll
 src/modules/cooldownNotifications/ @KommentatorForAll

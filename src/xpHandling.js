@@ -1,4 +1,4 @@
-import { userDb } from './util';
+import { getTomorrow, userDb } from './util';
 import sendLevelNotification from './notifications';
 import ensureRoles from './roles';
 
@@ -37,6 +37,14 @@ async function addXp(member, xp, silent = false) {
                 .catch((e) => console.error('Error sending level down dm!', e));
         }
     }
+
+    // Ensure recent xp.
+    if (userDto.activityValidUntil < Date.now()) {
+        userDto.activityRecent = 0;
+        userDto.activityValidUntil = getTomorrow();
+    }
+    userDto.activityRecent += xp;
+
     userDb.set(member.id, userDto);
 
     // Ensure the user has the right roles.
