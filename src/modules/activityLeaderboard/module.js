@@ -70,7 +70,7 @@ subscriptions.set('ready', async () => {
             console.error('Error updating leaderboards:');
             console.error(e);
         }
-    }, 30 * 60 * 1000);
+    }, 3 * 60 * 1000);
     await updateLeaderboards();
 });
 
