@@ -95,6 +95,7 @@ import FactionDto from '../dto/FactionDto';
                 console.log('Reading info...');
                 const info = JSON.parse(await fs.readFile('./data/firebase.json'));
                 const ownerOrKeyRegex = /^(?:\w+-\w+-\w+)|(?:owner)$/;
+                const giveawayRegex = /^[\w ]+\((\d)\)$/;
                 const {
                     discordUserData: users,
                     discord: { autoresponse, cooldowns, keys, factions },
@@ -103,10 +104,15 @@ import FactionDto from '../dto/FactionDto';
                 const newUsers = Object.entries(users).map(
                     ([id, { xp, faction, xpRecent, ...data }]) => {
                         let key = null;
-                        let giveaways = '';
+                        let giveaways = null;
                         if (data.key) {
                             if (data.key.match(ownerOrKeyRegex)) key = data.key;
-                            else giveaways = data.key;
+                            else {
+                                const num = parseInt(data.key.match(giveawayRegex)?.[1], 10);
+                                if (!num || Number.isNaN(num))
+                                    console.error(`Unknown key "${data.key}" on user "${id}".`);
+                                else giveaways = num;
+                            }
                         }
                         const user = new UserDto(
                             xp,
