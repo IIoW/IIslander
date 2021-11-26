@@ -1,3 +1,5 @@
+import './unhandledError';
+
 /**
  * Function called, when an error occurred while executing an event.
  * prints out the stacktrace.

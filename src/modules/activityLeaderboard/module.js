@@ -59,8 +59,13 @@ const updateAwards = () => {
     return Promise.all(res);
 };
 
-const updateLeaderboards = () =>
-    Promise.all([updateActivity(), updateLeaderboard(), updateAwards()]);
+const updateLeaderboards = async () => {
+    (await Promise.allSettled([updateActivity(), updateLeaderboard(), updateAwards()])).forEach(
+        (s) => {
+            if (s.status === 'rejected') console.error('Error updating leaderboards:\n', s.reason);
+        }
+    );
+};
 
 subscriptions.set('ready', async () => {
     setInterval(async () => {

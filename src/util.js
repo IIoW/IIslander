@@ -256,6 +256,7 @@ const factionDb = new Enmap({
     name: 'factions',
     serializer,
     deserializer: deserializerFactionDto,
+    autoEnsure: new FactionDto(),
 });
 
 export {
