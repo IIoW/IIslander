@@ -12,7 +12,7 @@ export default class UserDto {
      * @param {string|null} steamVia
      * @param {Map<string, boolean>} notifications
      * @param {OffenceDto[]} offences
-     * @param {string} eligibleGiveaways
+     * @param {number} eligibleGiveaway
      */
     constructor(
         xp = 0,
@@ -23,7 +23,7 @@ export default class UserDto {
         steamVia = null,
         notifications = new Map(),
         offences = [],
-        eligibleGiveaways = '',
+        eligibleGiveaway = null,
         activityRecent = 0,
         activityValidUntil = 0
     ) {
@@ -36,7 +36,7 @@ export default class UserDto {
         this.steamVia = steamVia;
         this.notifications = notifications;
         this.offences = offences;
-        this.eligibleGiveaways = eligibleGiveaways;
+        this.eligibleGiveaway = eligibleGiveaway;
         this.activityRecent = activityRecent;
         this.activityValidUntil = activityValidUntil;
 
@@ -66,7 +66,7 @@ export default class UserDto {
             steamVia: this.steamVia,
             notifications: this.notifications,
             offences: this.offences.map((o) => o.toJSON()),
-            eligibleGiveaways: this.eligibleGiveaways,
+            eligibleGiveaway: this.eligibleGiveaway,
             activityRecent: this.activityRecent,
             activityValidUntil: this.activityValidUntil,
         };
@@ -87,7 +87,7 @@ export default class UserDto {
             object.steamVia,
             object.notifications,
             (object.offences || []).map((o) => OffenceDto.fromJSON(o)),
-            object.eligibleGiveaways,
+            object.eligibleGiveaway,
             object.activityRecent,
             object.activityValidUntil
         );

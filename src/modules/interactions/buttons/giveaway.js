@@ -1,3 +1,4 @@
+import ensureRoles from '../../../roles';
 import { getMember, keyDb, userDb } from '../../../util';
 
 const command = 'giveaway';
@@ -14,7 +15,7 @@ async function fun(client, interaction, args) {
         const member = await getMember(args[0]);
         const userDto = userDb.get(member.id);
         if (!userDto.steamVia) {
-            if (!userDto.eligibleGiveaways) {
+            if (!userDto.eligibleGiveaway) {
                 await interaction.editReply({
                     content: 'You have not won a giveaway.',
                     components: [],
@@ -35,6 +36,7 @@ async function fun(client, interaction, args) {
                         content: `You have claimed a key. Click the spoiler down below to view it.\n||${userDto.steamVia}||`,
                         components: [],
                     });
+                    await ensureRoles(member);
                 }
             }
         } else {
