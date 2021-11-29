@@ -8,12 +8,11 @@ import { penalize } from '../../modUtil';
 import config from '../../config';
 
 /**
- *
- * @param {import('discord.js').Client} client
- * @param {import('discord.js').Message} message
- * @return {Promise<void>}
+ * Checks if a message contains a swear
+ * @param message The message to check
+ * @return {RegExpMatchArray} any match with the blacklist
  */
-async function handleSwearing(client, message) {
+function containsSwear(message) {
     const content = message.content
         .toLowerCase()
         .replaceAll('0', 'o')
@@ -25,7 +24,17 @@ async function handleSwearing(client, message) {
         .replaceAll('8', 'b')
         .replaceAll(/[^a-z ]/g, '');
     const regex = Blacklist.swearRegex;
-    const match = content.match(regex);
+    return content.match(regex);
+}
+
+/**
+ *
+ * @param {import('discord.js').Client} client
+ * @param {import('discord.js').Message} message
+ * @return {Promise<void>}
+ */
+async function handleSwearing(client, message) {
+    const match = containsSwear(message);
     if (match) {
         const word = match[0].trim();
         const userDto = userDb.get(message.author.id);
@@ -130,5 +139,7 @@ export async function messageCreate(client, message) {
  * @return {Promise<void>}
  */
 export async function messageUpdate(client, oldMessage, newMessage) {
-    return messageCreate(client, newMessage.partial ? await newMessage.fetch() : newMessage);
+    if (!containsSwear(oldMessage.partial ? await oldMessage.fetch() : oldMessage)) {
+        await messageCreate(client, newMessage.partial ? await newMessage.fetch() : newMessage);
+    }
 }

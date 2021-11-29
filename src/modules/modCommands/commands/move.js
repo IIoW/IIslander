@@ -47,9 +47,13 @@ const move = async (message, limit, channel, after = null) => {
     try {
         msg = await message.channel.messages.fetch({ limit, after });
         if (!msg)
-            return message.reply('Please provide a valid number from 2-100 or a valid message ID.');
+            return message.channel.send(
+                'Please provide a valid number from 2-100 or a valid message ID.'
+            );
     } catch (e) {
-        return message.reply('Please provide a valid number from 2-100 or a valid message ID.');
+        return message.channel.send(
+            'Please provide a valid number from 2-100 or a valid message ID.'
+        );
     }
     const toMove = [
         new MessageEmbed()

@@ -17,14 +17,18 @@ const purge = async (message, limit, after = null) => {
     try {
         msg = await message.channel.messages.fetch({ limit, after });
         if (!msg)
-            return message.reply('Please provide a valid number from 2-100 or a valid message ID.');
+            return message.channel.send(
+                'Please provide a valid number from 2-100 or a valid message ID.'
+            );
     } catch (e) {
-        return message.reply('Please provide a valid number from 2-100 or a valid message ID.');
+        return message.channel.send(
+            'Please provide a valid number from 2-100 or a valid message ID.'
+        );
     }
-    const res = await message.channel.bulkDelete(msg);
+    const res = await message.channel.bulkDelete(msg, true);
     // Remove xp
     await Promise.all(
-        msg.map(async (m) => {
+        res.map(async (m) => {
             if (m.partial || m.author.bot || m.guild?.id !== config.defaultGuild) return;
             await removeXp(message.member, getXpOfMessage(message));
         })
@@ -40,7 +44,8 @@ const purge = async (message, limit, after = null) => {
 // eslint-disable-next-line no-unused-vars
 async function fun(client, message, args) {
     const input = args.shift();
-    if (!input) return message.reply('Please provide a number or message.');
+    if (!input)
+        return message.reply('Please provide a valid number from 2-100 or a valid message ID.');
     const num = parseInt(input, 10);
     // Not a valid number and not a valid message.
     if (num < 2)

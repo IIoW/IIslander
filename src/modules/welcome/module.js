@@ -1,3 +1,4 @@
+import config from '../../config';
 import { welcomeMessage, welcomeMessages, welcomeQuestions } from '../../constants/Messages';
 import ensureRoles from '../../roles';
 import { getChannel } from '../../util';
@@ -5,6 +6,7 @@ import { getChannel } from '../../util';
 const subscriptions = new Map();
 
 subscriptions.set('guildMemberAdd', async (client, member) => {
+    if (member.guild !== config.defaultGuild) return;
     await member.send(welcomeMessage).catch((e) => console.error('Error sending dm', e));
 
     const welcomeChannel = getChannel('welcome');
