@@ -1,7 +1,7 @@
 /** Descriptions for different offenses. */
 export default {
     NSFW: 'sending inappropriate or suggestive messages or attachments',
-    SWEARING: 'swearing or using words that are not allowed on this server',
+    SWEARING: 'excessive swearing',
     SPAM: 'spamming without hesitation',
     ADVERTISE: 'advertising other discord servers',
     PINGING: 'repeatedly and unnecessarily pinging roles or members',
