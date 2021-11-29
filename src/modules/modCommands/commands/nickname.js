@@ -28,17 +28,26 @@ async function fun(client, message, args) {
             const newNick = cleanNickname(args.join(' '));
             if (!newNick) return message.reply('Invalid nickname!');
             const member = await getMember(user.id);
-            await member.setNickname(newNick);
+            try {
+                await member.setNickname(newNick);
+            } catch (e) {
+                return message.reply("I do not have permission to change that user's nickname!");
+            }
             await message.reply(`Successfully set ${user.tag}'s nickname to "${newNick}"`);
             break;
         }
 
         case 'reset': {
+            if (!args[0]) return message.reply('Please choose a valid user.');
             const user = await fetchUser(args.shift());
             if (!user) return message.reply('Please choose a valid user.');
             const newNick = cleanNickname(user.username) || 'Invalid Nickname';
             const member = await getMember(user.id);
-            await member.setNickname(newNick);
+            try {
+                await member.setNickname(newNick);
+            } catch (e) {
+                return message.reply("I do not have permission to change that user's nickname!");
+            }
             await message.reply(`Successfully reset ${user.tag}'s nickname to "${newNick}"`);
             break;
         }

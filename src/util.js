@@ -77,6 +77,7 @@ async function editMessage(name, ...content) {
  * @returns {Promise<import('discord.js').User | null>} The user.
  */
 const fetchUser = async (query) => {
+    if (!query) return null;
     const mention = /<@!?(\d+)>/;
     const match = query.match(mention);
     const user = match ? match[1] : query;
@@ -95,6 +96,7 @@ const fetchUser = async (query) => {
  * @returns {import('discord.js').Channel | null} The channel.
  */
 const fetchChannel = (query) => {
+    if (!query) return null;
     const mention = /<#(\d+)>/;
     const match = query.match(mention);
     const channel = match ? match[1] : query;

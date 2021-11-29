@@ -33,6 +33,7 @@ async function fun(client, message, args) {
         case 'make':
         case 'new':
         case 'add': {
+            if (!args[0]) return message.reply('Please provide a name for the auto response.');
             const name = args.shift().toLowerCase();
             if (responseDb.has(name))
                 return message.reply(`Auto response \`${name}\` already exists.`);
@@ -50,6 +51,7 @@ async function fun(client, message, args) {
         case 'delete':
         case 'rm':
         case 'remove': {
+            if (!args[0]) return message.reply('Please provide a name for the auto response.');
             const name = args.shift().toLowerCase();
             if (!responseDb.has(name))
                 return message.reply(`Auto response \`${name}\` does not exist.`);
@@ -101,7 +103,9 @@ async function fun(client, message, args) {
 
         case 'view':
         case 'show':
+        case 'info':
         case 'preview': {
+            if (!args[0]) return message.reply('Please provide a name for the auto response.');
             const name = args.shift().toLowerCase();
             if (!responseDb.has(name))
                 return message.reply(`Auto response \`${name}\` does not exist.`);
@@ -119,6 +123,7 @@ async function fun(client, message, args) {
         case 'set': {
             const editCommand = args.shift();
             if (!editCommand) return message.reply('Please choose a valid edit action.');
+            if (!args[0]) return message.reply('Please provide a name for the auto response.');
             const name = args.shift().toLowerCase();
             if (!responseDb.has(name))
                 return message.reply(`Auto response \`${name}\` does not exist.`);
@@ -160,6 +165,7 @@ async function fun(client, message, args) {
                 return message.reply(
                     'Please specify if you would like to add or remove a trigger.'
                 );
+            if (!args[0]) return message.reply('Please provide a name for the auto response.');
             const name = args.shift().toLowerCase();
             if (!responseDb.has(name))
                 return message.reply(`Auto response \`${name}\` does not exist.`);
