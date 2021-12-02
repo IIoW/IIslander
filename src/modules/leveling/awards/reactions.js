@@ -51,6 +51,5 @@ export default async function messageReactionAdd(client, messageReaction, user) 
     await addXp(message.member, xpReward[reactionName]);
     await addXp(user, xpRewardDonor[reactionName]);
 
-
     await updateBoard(message);
 }
