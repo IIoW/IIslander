@@ -42,6 +42,8 @@ export default {
         ['mac', process.env.ROLE_MAC],
         ['subscriber', process.env.ROLE_SUBSCRIBER],
         ['tester', process.env.ROLE_TESTER],
+        ['giveaway', process.env.ROLE_GIVEAWAY],
+        ['giveaway_available', process.env.ROLE_GIVEAWAY_AVAILABLE],
     ]),
 
     messages: new Map([
