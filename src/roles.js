@@ -60,7 +60,7 @@ const ensureRoles = async (user) => {
             ([add, remove], roleData) => {
                 const role =
                     member.guild.roles.cache.get(roleData.id) ||
-                    member.guild.roles.cache.find((r) => r.name === roleData.name);
+                    member.guild.roles.cache.find((r) => r.name.toLowerCase() === roleData.name.toLowerCase() );
                 // This shouldn't happen, but just in case.
                 if (!role) return [add, remove];
                 if (roleData.check(userDto, member)) {
