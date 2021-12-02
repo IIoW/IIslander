@@ -47,7 +47,7 @@ export default async function messageReactionAdd(client, messageReaction, user) 
     await getChannel('notifications').send(
         `${message.member.displayName} has been awarded a ${messageReaction.emoji} for <${message.url}>!`
     );
-    
+
     await addXp(message.member, xpReward[reactionName]);
     await addXp(user, xpRewardDonor[reactionName]);
 
