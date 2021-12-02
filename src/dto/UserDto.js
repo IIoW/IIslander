@@ -12,7 +12,7 @@ export default class UserDto {
      * @param {string|null} steamVia
      * @param {Map<string, boolean>} notifications
      * @param {OffenceDto[]} offences
-     * @param {number} eligibleGiveaway
+     * @param {boolean} eligibleGiveaway
      */
     constructor(
         xp = 0,
@@ -23,7 +23,7 @@ export default class UserDto {
         steamVia = null,
         notifications = new Map(),
         offences = [],
-        eligibleGiveaway = null,
+        eligibleGiveaway = false,
         activityRecent = 0,
         activityValidUntil = 0
     ) {
