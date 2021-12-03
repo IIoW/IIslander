@@ -34,6 +34,7 @@ export default async function sendLevelNotification(member, level) {
         return sendRoleNotification(member, level);
     const messageIndex = Math.floor(Math.random() * levelMessages.length);
 
+    await member.fetch(false);
     return replaceAndSend(levelMessages[messageIndex], {
         name: `**${member.displayName}**`,
         level: `**Level ${level}**`,
