@@ -10,6 +10,6 @@ export const desc = 'Who made what?';
  */
 export async function fun(client, message) {
     await message.reply(
-        'The game was made by the amazing JWIGGS and this bot by https://github.com/IIoW/IIslander/graphs/contributors'
+        'The game was made by the amazing JWIGGS and this bot by <https://github.com/IIoW/IIslander/graphs/contributors>'
     );
 }
