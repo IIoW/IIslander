@@ -44,12 +44,12 @@ export default async function messageReactionAdd(client, messageReaction, user) 
 
     setTimeout(emit, xpCooldown[reactionName], client, reactionName, user.id);
 
-    await addXp(message.member, xpReward[reactionName]);
-    await addXp(user, xpRewardDonor[reactionName]);
-
     await getChannel('notifications').send(
         `${message.member.displayName} has been awarded a ${messageReaction.emoji} for <${message.url}>!`
     );
+
+    await addXp(message.member, xpReward[reactionName]);
+    await addXp(user, xpRewardDonor[reactionName]);
 
     await updateBoard(message);
 }
