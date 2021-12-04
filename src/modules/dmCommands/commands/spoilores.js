@@ -20,12 +20,12 @@ export async function fun(client, message, member) {
     if (m.roles.cache.has(role)) {
         await m.roles.remove(role);
         await message.reply(
-            'Welcome to the secret realm, where all the spoilores are being discussed.'
+            "It is always sad to see someone leave this realm. Hopefully we'll see you around soon."
         );
     } else {
         await m.roles.add(role);
         await message.reply(
-            "It is always sad to see someone leave this realm. Hopefully we'll see you around soon."
+            'Welcome to the secret realm, where all the spoilores are being discussed.'
         );
     }
 }
