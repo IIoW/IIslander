@@ -22,7 +22,7 @@ const swearWords = [
     'dildo',
     'dyke',
     'ejaculate',
-    '(?:mother)?(?:da)?(?:f|ph)(?:u|o)+(?:c?k|q|x)',
+    '(?:mother)?(?:da)?(?:f|ph)u+(?:c?k|q|x)',
     'fag',
     'gangbang',
     'horn(?:y|i)',
