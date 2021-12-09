@@ -27,7 +27,7 @@ export default async function messageReactionAdd(client, messageReaction, user) 
 
     if (
         userDto.cooldown.get(reactionName) > now ||
-        message.author === user ||
+        message.author.id === user.id ||
         !awards(donor).includes(reactionName)
     ) {
         await messageReaction.users.remove(user.id);
