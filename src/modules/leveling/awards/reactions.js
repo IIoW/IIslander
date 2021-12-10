@@ -1,8 +1,9 @@
 import Emotes from '../../../constants/Emotes';
 import { xpCooldown, xpReward, xpRewardDonor } from '../../../constants/Awards';
-import { getAndAddRole, getChannel, userDb } from '../../../util';
+import { getAndAddRole, getChannel, getMember, userDb } from '../../../util';
 import { addXp } from '../../../xpHandling';
 import updateBoard from './starboard';
+import { awards } from '../../../permissions';
 
 function emit(client, reactionName, userid) {
     client.emit('cooldownEnd', reactionName, userid);
@@ -22,8 +23,13 @@ export default async function messageReactionAdd(client, messageReaction, user) 
     const { message } = messageReaction;
     const userDto = userDb.get(user.id);
     const now = Date.now();
+    const donor = await getMember(user.id);
 
-    if (userDto.cooldown.get(reactionName) > now || message.author === user) {
+    if (
+        userDto.cooldown.get(reactionName) > now ||
+        message.author.id === user.id ||
+        !awards(donor).includes(reactionName)
+    ) {
         await messageReaction.users.remove(user.id);
         return;
     }
@@ -36,11 +42,9 @@ export default async function messageReactionAdd(client, messageReaction, user) 
 
     userDb.set(user.id, userDto);
 
-    const member = await message.guild.members.fetch(user.id);
-
     if (!message.member) await message.guild.members.fetch(message.author);
 
-    await getAndAddRole(`cooldown_${reactionName}`, member);
+    await getAndAddRole(`cooldown_${reactionName}`, donor);
 
     setTimeout(emit, xpCooldown[reactionName], client, reactionName, user.id);
 
@@ -49,7 +53,7 @@ export default async function messageReactionAdd(client, messageReaction, user) 
     );
 
     await addXp(message.member, xpReward[reactionName]);
-    await addXp(user, xpRewardDonor[reactionName]);
+    await addXp(donor, xpRewardDonor[reactionName]);
 
     await updateBoard(message);
 }

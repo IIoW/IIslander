@@ -1,3 +1,4 @@
+import { xpRoleRequirement } from './constants/Awards';
 import Levels from './constants/Levels';
 import Mod from './constants/Mod';
 import Roles from './constants/Roles';
@@ -5,15 +6,6 @@ import { userDb } from './util';
 
 /** The requirements for if you can pin or not. */
 const allowPin = { user: Levels.CELESTIAL, mod: Mod.ENFORCER };
-/** Requirements to give out awards. */
-const xpRoleRequirement = {
-    tier1bronze: { user: Levels.RARE, mod: Mod.ENFORCER },
-    tier2silver: { user: Levels.EPIC, mod: Mod.ENFORCER },
-    tier3gold: { user: Levels.LEGENDARY, mod: Mod.ENFORCER },
-    tier4diamond: { user: Levels.INTERSTELLAR, mod: Mod.ENFORCER },
-    tier5crystal: { user: Levels.CELESTIAL, mod: Mod.ENFORCER },
-    tier6dev: { user: Infinity, mod: Mod.DEVELOPER },
-};
 
 /**
  * Gets an array of the user's roles by name.

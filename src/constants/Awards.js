@@ -1,3 +1,6 @@
+import Levels from './Levels';
+import Mod from './Mod';
+
 export const xpReward = {
     tier1bronze: 200,
     tier2silver: 500,
@@ -56,6 +59,16 @@ export const emojiStarBotRequired = {
     tier4diamond: true,
     tier5crystal: true,
     tier6dev: true,
+};
+
+/** Requirements to give out awards. */
+export const xpRoleRequirement = {
+    tier1bronze: { user: Levels.RARE, mod: Mod.ENFORCER },
+    tier2silver: { user: Levels.EPIC, mod: Mod.ENFORCER },
+    tier3gold: { user: Levels.LEGENDARY, mod: Mod.ENFORCER },
+    tier4diamond: { user: Levels.INTERSTELLAR, mod: Mod.ENFORCER },
+    tier5crystal: { user: Levels.CELESTIAL, mod: Mod.ENFORCER },
+    tier6dev: { user: Infinity, mod: Mod.DEVELOPER },
 };
 
 export const starBoardThreshold = 100;
