@@ -67,7 +67,7 @@ export const xpRoleRequirement = {
     tier2silver: { user: Levels.EPIC, mod: Mod.ENFORCER },
     tier3gold: { user: Levels.LEGENDARY, mod: Mod.ENFORCER },
     tier4diamond: { user: Levels.INTERSTELLAR, mod: Mod.ENFORCER },
-    tier5crystal: { user: Levels.CELESTIAL, mod: Mod.ENFORCER },
+    tier5crystal: { user: Levels.ETHEREAL, mod: Mod.ENFORCER },
     tier6dev: { user: Infinity, mod: Mod.DEVELOPER },
 };
 
