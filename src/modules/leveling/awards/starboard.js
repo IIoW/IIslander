@@ -7,6 +7,7 @@ import {
 import Emotes from '../../../constants/Emotes';
 import { getChannel } from '../../../util';
 
+const starboardSet = new Set();
 /**
  *
  * @param {import('discord.js').Message} message
@@ -38,7 +39,12 @@ function messageGetStarValue(message) {
  */
 export default async function updateBoard(message) {
     const starBoardValue = messageGetStarValue(message);
-    if (starBoardValue > starBoardThreshold && !message.reactions.cache.get(Emotes.star)?.me) {
+    if (
+        starBoardValue > starBoardThreshold &&
+        !message.reactions.cache.get(Emotes.star)?.me &&
+        !starboardSet.has(message.id)
+    ) {
+        starboardSet.add(message.id);
         await message.react(Emotes.star);
         const embed = new MessageEmbed()
             .setTitle(message.member.displayName)
