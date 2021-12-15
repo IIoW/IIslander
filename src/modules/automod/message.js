@@ -15,13 +15,15 @@ import config from '../../config';
 function containsSwear(message) {
     const content = message.content
         .toLowerCase()
-        .replaceAll('0', 'o')
-        .replaceAll(/1|!/g, 'i')
-        .replaceAll('3', 'e')
-        .replaceAll(/4|@/g, 'a')
-        .replaceAll('5', 's')
-        .replaceAll(/7|\+/g, 't')
-        .replaceAll('8', 'b')
+        .replaceAll(/[0ö]/g, 'o')
+        .replaceAll(/[1!|]/g, 'i')
+        .replaceAll(/3/g, 'e')
+        .replaceAll(/[4@ä]/g, 'a')
+        .replaceAll(/[5$]/g, 's')
+        .replaceAll(/[7+]/g, 't')
+        .replaceAll(/8/g, 'b')
+        .replaceAll(/\(/g, 'c')
+        .replaceAll(/ü/g, 'u')
         .replaceAll(/[^a-z ]/g, '');
     const regex = Blacklist.swearRegex;
     return content.match(regex);
