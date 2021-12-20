@@ -15,10 +15,7 @@ export async function messageCreate(client, message) {
             const triggers = responseDto.trigger.some((trigger) =>
                 trigger instanceof RegExp
                     ? message.content.toLowerCase().match(trigger)
-                    : message.content
-                          .toLowerCase()
-                          .split(' ')
-                          .some((w) => w === trigger)
+                    : message.content.toLowerCase().match(new RegExp(`\\b${trigger}\\b`))
             );
             if (triggers) {
                 if (
