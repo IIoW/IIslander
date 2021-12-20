@@ -17,8 +17,9 @@ export async function messageCreate(client, message) {
                     ? message.content.toLowerCase().match(trigger)
                     : message.content
                           .toLowerCase()
-                          .split(' ')
-                          .some((w) => w === trigger)
+                          .match(
+                              new RegExp(`\\b${trigger.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`)
+                          )
             );
             if (triggers) {
                 if (
