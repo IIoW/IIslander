@@ -36,7 +36,7 @@ export default async function sendLevelNotification(member, level) {
 
     await member.fetch(false);
     return replaceAndSend(levelMessages[messageIndex], {
-        name: `**${member.displayName}**`,
+        name: `**${level < 20? member.displayName: member}**`,
         level: `**Level ${level}**`,
     });
 }
