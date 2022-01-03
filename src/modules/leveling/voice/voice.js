@@ -22,7 +22,7 @@ function getVoiceMultiplier(state) {
  * @return {Promise<void>}
  */
 export default async function voiceStateUpdate(client, oldState, newState) {
-    if (newState.guild.id !== config.defaultGuild) return;
+    if (newState.guild.id !== config.defaultGuild || oldState.member.user.bot) return;
     const userDto = userDb.get(newState.member.id);
     const now = Date.now();
 

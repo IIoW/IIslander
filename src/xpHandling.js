@@ -6,6 +6,8 @@ import ensureRoles from './roles';
  * @return {Promise<void>}
  */
 async function addXp(member, xp, silent = false) {
+    // Prevents bots from getting xp.
+    if (member?.user?.bot) return;
     // Prevent invalid xp from getting set.
     // If NaN was passed the db value would be
     // set to NaN reseting a user's xp.
