@@ -25,14 +25,13 @@ export default async function voiceStateUpdate(client, oldState, newState) {
     if (newState.guild.id !== config.defaultGuild || oldState.member.user.bot) return;
     const userDto = userDb.get(newState.member.id);
     const now = Date.now();
-    const xpToGive = Math.min(
-        ((now - userDto.voiceTimeStampJoin) / 1000) * userDto.voiceXpMultiplier,
-        60 * 60 * 3 * userDto.voiceXpMultiplier
-    );
     userDto.voiceTimeStampJoin = now;
     userDto.voiceXpMultiplier = getVoiceMultiplier(newState);
     userDb.set(newState.member.id, userDto);
     if (oldState.channelId) {
-        await addXp(newState.member, xpToGive);
+        await addXp(
+            newState.member,
+            ((now - userDto.voiceTimeStampJoin) / 1000) * userDto.voiceXpMultiplier
+        );
     }
 }
