@@ -26,17 +26,13 @@ export default async function voiceStateUpdate(client, oldState, newState) {
     const userDto = userDb.get(newState.member.id);
     const now = Date.now();
 
-    if (!oldState.channelId) {
-        userDto.voiceTimeStampJoin = now;
-        userDto.voiceXpMultiplier = getVoiceMultiplier(newState);
-    } else {
+    userDto.voiceTimeStampJoin = now;
+    userDto.voiceXpMultiplier = getVoiceMultiplier(newState);
+    userDb.set(newState.member.id, userDto);
+    if (oldState.channelId) {
         await addXp(
             newState.member,
             ((now - userDto.voiceTimeStampJoin) / 1000) * userDto.voiceXpMultiplier
         );
-        userDto.voiceTimeStampJoin = now;
-        userDto.voiceXpMultiplier = getVoiceMultiplier(newState);
     }
-
-    userDb.set(newState.member.id, userDto);
 }
