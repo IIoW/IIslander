@@ -62,4 +62,5 @@ export default {
             { id: process.env.MESSAGE_NOVA_ACHIEVEMENTS, channel: 'iislander-board' },
         ],
     ]),
+    warlanderPublicKey: process.env.WARLANDER_PUBLIC_KEY,
 };
