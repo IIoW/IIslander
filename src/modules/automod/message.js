@@ -42,7 +42,7 @@ async function handleSwearing(client, message) {
         const userDto = userDb.get(message.author.id);
         const now = Date.now();
         const cooldown = userDto.cooldown.get('swearing');
-        if (now > cooldown) {
+        if (now > (cooldown || 0)) {
             userDto.swearlevel = 0; // resets the swear level, if time ran out
         }
         userDto.swearlevel += 1;

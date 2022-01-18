@@ -66,7 +66,7 @@ As you participate in the server, you will gain experience and level up, giving 
 - Be respectful
 \`\`\`
 You have been automatically **subscribed** to announcements and server related events. Just DM me \`unsubscribe\` if you don't want to get pinged.
-Do you already own the game on Steam? Use \`steam owner\` to declare yourself as an owner and gain an honorary role and special access to an owners only channel!
+Do you already own the game on Steam? Use \`steamowner\` to declare yourself as an owner and gain an honorary role and special access to an owners only channel!
 
 Thanks for joining our lively and growing community! Have fun!`;
 
