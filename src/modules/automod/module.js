@@ -4,6 +4,6 @@ const subscriptions = new Map();
 subscriptions.set('messageCreate', messageCreate);
 subscriptions.set('messageUpdate', messageUpdate);
 
-const enabled = true;
+const enabled = false;
 
 export { subscriptions, enabled };
