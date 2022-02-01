@@ -7,8 +7,10 @@ services:
       - .env
     volumes:
       - data:/app/data
+      - backups:/app/backups
     restart: on-failure:5
     stop_grace_period: 10s
 
 volumes:
   data:
+  backups:
