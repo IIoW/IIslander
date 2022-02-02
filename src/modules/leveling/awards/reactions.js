@@ -4,6 +4,7 @@ import { getAndAddRole, getChannel, getMember, userDb } from '../../../util';
 import { addXp } from '../../../xpHandling';
 import updateBoard from './starboard';
 import { awards } from '../../../permissions';
+import config from '../../../config';
 
 function emit(client, reactionName, userid) {
     client.emit('cooldownEnd', reactionName, userid);
@@ -19,6 +20,7 @@ export default async function messageReactionAdd(client, messageReaction, user) 
 
     const reactionName = messageReaction.emoji.name;
     if (user.bot || !Object.values(Emotes.awards).includes(reactionName)) return;
+    if (messageReaction.emoji.guild?.id !== config.defaultGuild) return;
 
     const { message } = messageReaction;
     const userDto = userDb.get(user.id);
