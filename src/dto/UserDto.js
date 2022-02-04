@@ -13,6 +13,8 @@ export default class UserDto {
      * @param {Map<string, boolean>} notifications
      * @param {OffenceDto[]} offences
      * @param {boolean} eligibleGiveaway
+     * @param {number} activityRecent
+     * @param {number} activityValidUntil
      */
     constructor(
         xp = 0,
