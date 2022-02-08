@@ -22,6 +22,8 @@ src/constants/ @KommentatorForAll @WilsontheWolf @Chicken
 src/dto/OffenceDto.js @WilsontheWolf
 src/dto/ResponseDto.js @KommentatorForAll
 src/dto/UserDto.js @WilsontheWolf @KommentatorForAll
+src/dto/EmbedPage.js @KommentatorForAll
+src/dto/EmbedPageMessage.js @KommentatorForAll
 
 # Base Code
 src/loadModules.js @KommentatorForAll

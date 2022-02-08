@@ -4,7 +4,7 @@ import { getMember, getRole, userDb } from '../../../util';
 import EmbedPageMessage from '../../../dto/EmbedPageMessage';
 
 export const command = 'settings';
-export const desc = 'Configure your profile';
+export const desc = 'Configure your user settings';
 
 /**
  *

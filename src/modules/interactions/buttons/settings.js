@@ -76,16 +76,16 @@ async function fun(client, interaction, args) {
     const currentPage = page.pages[page.index];
     switch (args[0]) {
         case 'left':
-           page.index = (page.index + pages.pages.length - 1) % pages.pages.length;
-           break;
+            page.index = (page.index + page.pages.length - 1) % page.pages.length;
+            break;
         case 'right':
-           page.index = (page.index + 1) % page.pages.length;
-           break;
+            page.index = (page.index + 1) % page.pages.length;
+            break;
         case 'os':
-           await handleOS(await getMember(interaction.user.id), currentPage, args[1]);
-           break;
+            await handleOS(await getMember(interaction.user.id), currentPage, args[1]);
+            break;
         default:
-           await handleToggle(await getMember(interaction.user.id), currentPage, args[0]);
+            await handleToggle(await getMember(interaction.user.id), currentPage, args[0]);
     }
     await page.update();
     await interaction.deferUpdate();
