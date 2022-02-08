@@ -21,10 +21,11 @@
         "helper": "node src/helper"
     },
     "dependencies": {
+        "discord-api-types": "^0.26.1",
+        "discord-interactions": "^2.4.1",
         "discord.js": "^13.6.0",
         "dotenv": "^14.2.0",
         "enmap": "eslachance/enmap",
-        "discord-interactions": "^2.4.1",
         "koa": "^2.13.4",
         "koa-bodyparser": "^4.3.0"
     },

@@ -30,8 +30,6 @@ async function loadButtons() {
  * @param {import('discord.js').MessageComponentInteraction} interaction
  */
 async function processInteractions(client, interaction) {
-    // Ignore interactions that are not for the main bot
-    if (interaction.applicationId !== client.id) return null;
     if (!interaction.isButton()) return null;
     const [name, ...args] = interaction.customId.split('.');
     const cmd = commands.get(name);
