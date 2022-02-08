@@ -67,7 +67,7 @@ async function fun(client, interaction, args) {
     const page = EmbedPageMessage.getInstance(interaction.message.id);
     if (!page) {
         await interaction.update({
-            content: 'This settings has expired. Please run `settings` again!',
+            content: 'These settings have expired. Please run `settings` again!',
             embeds: [],
             components: [],
         });
