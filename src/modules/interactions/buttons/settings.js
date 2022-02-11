@@ -11,7 +11,6 @@ const command = 'settings';
  * @returns {Promise<void>}
  */
 async function handleToggle(member, page, roleName) {
-    const m = await member.fetch(true);
     const role = await getRole(roleName);
     if (role === undefined) {
         const userDto = userDb.get(member.id);
@@ -22,11 +21,11 @@ async function handleToggle(member, page, roleName) {
             userDto.notifications.set(roleName, false);
             page.buttons[0].setLabel('subscribe').setStyle('SUCCESS');
         }
-    } else if (m.roles.cache.has(role)) {
-        await m.roles.remove(role);
+    } else if (member.roles.cache.has(role)) {
+        await member.roles.remove(role);
         page.buttons[0].setLabel('subscribe').setStyle('SUCCESS');
     } else {
-        await m.roles.add(role);
+        await member.roles.add(role);
         page.buttons[0].setLabel('unsubscribe').setStyle('DANGER');
     }
 }
@@ -87,8 +86,11 @@ async function fun(client, interaction, args) {
         default:
             await handleToggle(await getMember(interaction.user.id), currentPage, args[0]);
     }
-    await page.update();
-    await interaction.deferUpdate();
+    await Promise.all([
+        // batch updates interaction and page message
+        interaction.deferUpdate(),
+        page.update(),
+    ]);
 }
 
 export { command, fun };

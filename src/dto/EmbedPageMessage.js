@@ -26,7 +26,10 @@ export default class EmbedPageMessage {
      */
     async send(message = null) {
         this.message = await message.reply('settings');
-        cache[this.message.id] = this;
+        cache.set(this.message.id, this);
+        setTimeout(() => {
+            cache.delete(this.message.id);
+        }, 360000);
     }
 
     async update(message) {
@@ -58,6 +61,6 @@ export default class EmbedPageMessage {
      * @returns {EmbedPageMessage}
      */
     static getInstance(id) {
-        return cache[id];
+        return cache.has(id) ? cache.get(id) : null;
     }
 }
