@@ -488,9 +488,10 @@ end-of-stream@^1.1.0, end-of-stream@^1.4.1:
   dependencies:
     once "^1.4.0"
 
-enmap@eslachance/enmap:
-  version "5.8.7"
-  resolved "https://codeload.github.com/eslachance/enmap/tar.gz/feffa960f705ec1294bb200e695b92da96321290"
+enmap@^5.8.8:
+  version "5.8.8"
+  resolved "https://registry.yarnpkg.com/enmap/-/enmap-5.8.8.tgz#4e4aeb3c54e07432b19285f4894296e69b39d31d"
+  integrity sha512-nrvRhTtQ3MFbYQzoKqELXkZIGcF9rm+wFBqLC2q8nrJq6b9sD1bi0IhBbtES9qRtUmJrYakw2tJwCwPavqAGqw==
   dependencies:
     better-sqlite3 "^7.1.0"
     lodash "^4.17.20"
