@@ -99,5 +99,5 @@ async function getPages(user) {
 export async function fun(client, message) {
     const embedPages = await getPages(message.author);
     const embedPageMessage = new EmbedPageMessage(embedPages);
-    await embedPageMessage.update(message);
+    await embedPageMessage.send(message);
 }

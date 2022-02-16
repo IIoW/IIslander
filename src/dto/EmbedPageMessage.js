@@ -25,19 +25,16 @@ export default class EmbedPageMessage {
      * @param {import('discord.js').Message} message
      */
     async send(message = null) {
-        this.message = await message.reply('settings');
+        this.message = await message.reply(this.updateMessage());
         cache.set(this.message.id, this);
         setTimeout(() => {
             cache.delete(this.message.id);
         }, 360000);
     }
 
-    async update(message) {
-        if (!this.message) {
-            await this.send(message);
-        }
+    updateMessage() {
         const page = this.pages[this.index];
-        this.message.edit({
+        return {
             embeds: [page.toEmbed()],
             components: [
                 new MessageActionRow().addComponents(page.buttons),
@@ -52,7 +49,7 @@ export default class EmbedPageMessage {
                         .setCustomId(`settings.right`),
                 ]),
             ],
-        });
+        };
     }
 
     /**

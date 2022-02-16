@@ -21,6 +21,7 @@ async function handleToggle(member, page, roleName) {
             userDto.notifications.set(roleName, false);
             page.buttons[0].setLabel('subscribe').setStyle('SUCCESS');
         }
+        userDb.set(member.id, userDto);
     } else if (member.roles.cache.has(role)) {
         await member.roles.remove(role);
         page.buttons[0].setLabel('subscribe').setStyle('SUCCESS');
@@ -86,11 +87,7 @@ async function fun(client, interaction, args) {
         default:
             await handleToggle(await getMember(interaction.user.id), currentPage, args[0]);
     }
-    await Promise.all([
-        // batch updates interaction and page message
-        interaction.deferUpdate(),
-        page.update(),
-    ]);
+    await interaction.update(page.updateMessage());
 }
 
 export { command, fun };
