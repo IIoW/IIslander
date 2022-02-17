@@ -22,9 +22,15 @@ function messageGetStarValue(message) {
         const emojiName = messageReaction.emoji.name;
 
         if (emojiName in emojiStarValue) {
-            const reactionCount = messageReaction.count - messageReaction.me;
+            const reactionCount =
+                messageReaction.count -
+                messageReaction.users.cache.has(messageReaction.client.user.id);
 
-            if (emojiStarBotRequired[emojiName] ? messageReaction.me : true) {
+            if (
+                emojiStarBotRequired[emojiName]
+                    ? messageReaction.users.cache.has(messageReaction.client.user.id)
+                    : true
+            ) {
                 points += emojiStarValue[emojiName] * reactionCount;
             }
         }
