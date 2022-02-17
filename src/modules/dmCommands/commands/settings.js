@@ -37,12 +37,16 @@ async function getPages(user) {
     pages.push(twitterPage);
 
     subscribe = userDto.notifications.get('levelPing');
-    const levelPingPage = new EmbedPage('Levelup Pings', 'Get notified when you level up', [
-        new MessageButton()
-            .setLabel(subscribe ? 'unsubscribe' : 'subscribe')
-            .setStyle(subscribe ? 'DANGER' : 'SUCCESS')
-            .setCustomId('settings.levelPing'),
-    ]);
+    const levelPingPage = new EmbedPage(
+        'Levelup Pings',
+        'Get notified when you level up or get awarded',
+        [
+            new MessageButton()
+                .setLabel(subscribe ? 'unsubscribe' : 'subscribe')
+                .setStyle(subscribe ? 'DANGER' : 'SUCCESS')
+                .setCustomId('settings.levelPing'),
+        ]
+    );
     pages.push(levelPingPage);
 
     const member = await getMember(user.id);
