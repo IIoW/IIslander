@@ -36,7 +36,7 @@ export default async function messageReactionAdd(client, messageReaction, user) 
         return;
     }
 
-    if (!messageReaction.me) {
+    if (!messageReaction.users.cache.has(client.user.id)) {
         await message.react(messageReaction.emoji);
     }
 
