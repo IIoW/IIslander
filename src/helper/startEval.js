@@ -2,16 +2,15 @@ import repl from 'repl';
 // eslint-disable-next-line import/no-unresolved
 import { setTimeout } from 'timers/promises';
 import config from '../config';
-import * as util from '../util';
+import { getClient } from '../util';
 
 const defaultContext = {
     config,
-    util,
 };
 const startEval = async (startBot = false, context = {}) => {
     if (startBot) {
         await import('../index');
-        context.client = util.getClient();
+        context.client = getClient();
         context.client.on('ready', async () => {
             // Just so other stuff can log first.
             await setTimeout(100);

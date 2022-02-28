@@ -1,6 +1,7 @@
 import { MessageEmbed } from 'discord.js';
 import ResponseDto from '../../../dto/ResponseDto';
-import { countEmbed, makeTitle, responseDb } from '../../../util';
+import { responseDb } from '../../../dbs';
+import { countEmbedCharacters, makeTitle } from '../../../util';
 
 const info = {
     name: 'ar',
@@ -72,7 +73,7 @@ async function fun(client, message, args) {
                     let newEmbed = old;
                     if (
                         old.fields.length >= 25 ||
-                        countEmbed(old) + value.length + name.length > 6000
+                        countEmbedCharacters(old) + value.length + name.length > 6000
                     ) {
                         newEmbed = new MessageEmbed();
                         acc.push(newEmbed);

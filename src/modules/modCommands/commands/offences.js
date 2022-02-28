@@ -1,5 +1,6 @@
 import { MessageEmbed } from 'discord.js';
-import { fetchUser, stringifyTimestamp, userDb } from '../../../util';
+import { userDb } from '../../../dbs';
+import { fetchUser, stringifyTimestamp } from '../../../util';
 
 const info = {
     name: 'offences',

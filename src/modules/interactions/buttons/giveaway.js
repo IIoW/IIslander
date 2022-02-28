@@ -1,5 +1,6 @@
 import ensureRoles from '../../../roles';
-import { getMember, keyDb, userDb } from '../../../util';
+import { keyDb, userDb } from '../../../dbs';
+import { getMember } from '../../../util';
 
 const command = 'giveaway';
 

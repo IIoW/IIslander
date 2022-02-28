@@ -2,7 +2,7 @@ import { xpRoleRequirement } from './constants/Awards';
 import Levels from './constants/Levels';
 import Mod from './constants/Mod';
 import Roles from './constants/Roles';
-import { userDb } from './util';
+import { userDb } from './dbs';
 
 /** The requirements for if you can pin or not. */
 const allowPin = { user: Levels.CELESTIAL, mod: Mod.ENFORCER };

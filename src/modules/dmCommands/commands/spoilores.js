@@ -1,6 +1,6 @@
 import { getUserLevel } from '../../../permissions';
-import { getRole } from '../../../util';
 import Levels from '../../../constants/Levels';
+import { getRole } from '../../../util';
 
 export const command = 'spoilores';
 export const desc = '';

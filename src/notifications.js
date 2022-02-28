@@ -1,6 +1,7 @@
 import { levelMessages, roleMessages } from './constants/Messages';
-import { getChannel, sanitizeUserInput, userDb } from './util';
 import Levels from './constants/Levels';
+import { userDb } from './dbs';
+import { getChannel, sanitizeUserInput } from './util';
 
 /**
  * Replace objects in block brackets with the values in the passed object.

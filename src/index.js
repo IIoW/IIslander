@@ -1,7 +1,8 @@
 import { Client, Intents } from 'discord.js';
 import config from './config';
 import loadModules from './loadModules';
-import { setup as utilSetup, userDb, responseDb } from './util';
+import { responseDb, userDb } from './dbs';
+import { setup as utilSetup } from './util';
 
 const client = new Client({
     intents: [

@@ -1,5 +1,5 @@
 import { MessageActionRow, MessageButton } from 'discord.js';
-import { userDb } from '../../../util';
+import { userDb } from '../../../dbs';
 
 export const command = 'steamrequest';
 export const desc = "Receive a key if you've won one.";
@@ -8,7 +8,6 @@ export const desc = "Receive a key if you've won one.";
  *
  * @param {import('discord.js').Client} client
  * @param {import('discord.js').Message} message
- * @param {import('discord.js').GuildMember} member
  * @return {Promise<void>}
  */
 export async function fun(client, message) {

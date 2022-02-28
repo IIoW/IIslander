@@ -1,5 +1,6 @@
 import Factions from '../../constants/Factions';
-import { editMessage, factionDb, getEmoji, makeTitle, userDb } from '../../util';
+import { factionDb, userDb } from '../../dbs';
+import { editMessage, getEmoji, makeTitle } from '../../util';
 
 const enabled = true;
 

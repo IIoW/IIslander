@@ -1,5 +1,5 @@
 import { MessageEmbed } from 'discord.js';
-import { countEmbed, fetchChannel } from '../../../util';
+import { countEmbedCharacters, fetchChannel } from '../../../util';
 
 const info = {
     name: 'move',
@@ -62,7 +62,7 @@ const move = async (message, limit, channel, after = null) => {
         ...(await Promise.all(msg.map(genEmbed).reverse())),
     ].flat(2);
     const toSend = toMove.reduce((p, embed) => {
-        const size = countEmbed(embed);
+        const size = countEmbedCharacters(embed);
         if (!p[0])
             p.push({
                 size,

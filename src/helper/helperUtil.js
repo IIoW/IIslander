@@ -1,4 +1,4 @@
-import { userDb, responseDb } from '../util';
+import { responseDb, userDb } from '../dbs';
 
 /**
  * Constant with database info.

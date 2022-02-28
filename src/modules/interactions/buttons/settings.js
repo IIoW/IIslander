@@ -1,5 +1,6 @@
 import EmbedPageMessage from '../../../dto/EmbedPageMessage';
-import { getMember, getRole, userDb } from '../../../util';
+import { userDb } from '../../../dbs';
+import { getMember, getRole } from '../../../util';
 
 const command = 'settings';
 

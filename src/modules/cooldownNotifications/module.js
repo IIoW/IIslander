@@ -1,5 +1,6 @@
-import { getEmoji, userDb } from '../../util';
 import { cooldownEndMessages } from '../../constants/Messages';
+import { userDb } from '../../dbs';
+import { getEmoji } from '../../util';
 
 const enabled = true;
 

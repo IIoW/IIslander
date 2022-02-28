@@ -2,8 +2,9 @@ import config from './config';
 import OffenseDescriptions from './constants/OffenseDescriptions';
 import OffenseMultiplier from './constants/OffenseMultiplier';
 import OffenceDto from './dto/OffenceDto';
-import { getAndAddRole, getChannel, stringifyTimestamp, userDb } from './util';
 import { getXpFromLevel, removeXp } from './xpHandling';
+import { userDb } from './dbs';
+import { getAndAddRole, getChannel, stringifyTimestamp } from './util';
 
 /**
  * Information about different mod actions.

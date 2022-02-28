@@ -1,5 +1,5 @@
 import { MessageActionRow, MessageButton } from 'discord.js';
-import { userDb } from '../../../util';
+import { userDb } from '../../../dbs';
 
 export const command = 'steamowner';
 export const desc = 'Show that you bought the game.';
@@ -8,7 +8,6 @@ export const desc = 'Show that you bought the game.';
  *
  * @param {import('discord.js').Client} client
  * @param {import('discord.js').Message} message
- * @param {import('discord.js').GuildMember} member
  * @return {Promise<void>}
  */
 export async function fun(client, message) {

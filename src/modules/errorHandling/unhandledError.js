@@ -1,4 +1,5 @@
-import { getClient, userDb, responseDb, keyDb, factionDb } from '../../util';
+import { factionDb, keyDb, responseDb, userDb } from '../../dbs';
+import { getClient } from '../../util';
 
 process.on('uncaughtException', (err) => {
     console.error('Uncaught Error!!!!\nSomebody better fix this!!!');

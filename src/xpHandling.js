@@ -1,6 +1,7 @@
-import { getTomorrow, userDb } from './util';
 import sendLevelNotification from './notifications';
 import ensureRoles from './roles';
+import { userDb } from './dbs';
+import { getTomorrow } from './util';
 
 /**
  * @return {Promise<void>}

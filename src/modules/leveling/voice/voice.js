@@ -1,6 +1,6 @@
-import { userDb } from '../../../util';
 import config from '../../../config';
 import { addXp } from '../../../xpHandling';
+import { userDb } from '../../../dbs';
 
 /**
  *

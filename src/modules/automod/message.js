@@ -1,11 +1,12 @@
 import Blacklist from '../../constants/Blacklist';
-import { getChannel, userDb } from '../../util';
 import { logMessages, swearWarning } from '../../constants/Messages';
 import { xpCooldown } from '../../constants/Awards';
 import { getUserMod } from '../../permissions';
 import Mod from '../../constants/Mod';
 import { penalize } from '../../modUtil';
 import config from '../../config';
+import { userDb } from '../../dbs';
+import { getChannel } from '../../util';
 
 /**
  * Checks if a message contains a swear

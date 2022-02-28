@@ -1,10 +1,11 @@
 import Emotes from '../../../constants/Emotes';
 import { xpCooldown, xpReward, xpRewardDonor } from '../../../constants/Awards';
-import { getAndAddRole, getChannel, getMember, sanitizeUserInput, userDb } from '../../../util';
 import { addXp } from '../../../xpHandling';
 import updateBoard from './starboard';
 import { awards } from '../../../permissions';
 import config from '../../../config';
+import { userDb } from '../../../dbs';
+import { getAndAddRole, getChannel, getMember, sanitizeUserInput } from '../../../util';
 
 function emit(client, reactionName, userid) {
     client.emit('cooldownEnd', reactionName, userid);
