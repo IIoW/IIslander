@@ -12,6 +12,7 @@ const info = {
  * @param {import('discord.js').Client} client
  * @param {import('discord.js').Message} message
  * @param {string[]} args
+ * @param {number} level
  */
 // eslint-disable-next-line no-unused-vars
 async function fun(client, message, args, level) {

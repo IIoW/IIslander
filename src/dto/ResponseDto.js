@@ -3,7 +3,6 @@ export default class ResponseDto {
     /**
      * Create new auto response data.
      * @param {String[]} trigger - The regex to trigger.
-     * @param {boolean} isRegex - If the trigger is a regular expression
      * @param {String} response - What to respond with or the image location.
      * @param {String} title - What to put as the title of the response.
      */

@@ -8,7 +8,6 @@ export const desc = 'Shows you this message.';
  *
  * @param {import('discord.js').Client} client
  * @param {import('discord.js').Message} message
- * @param {import('discord.js').GuildMember} member
  * @return {Promise<void>}
  */
 export async function fun(client, message) {

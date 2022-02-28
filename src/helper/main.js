@@ -23,11 +23,11 @@ import { getTomorrow } from '../util';
             break;
         }
         case 'debug': {
-            startEval(true, { userDb, responseDb, keyDb, factionDb });
+            await startEval(true, { userDb, responseDb, keyDb, factionDb });
             break;
         }
         case 'db': {
-            startEval(false, {
+            await startEval(false, {
                 userDb,
                 responseDb,
                 keyDb,

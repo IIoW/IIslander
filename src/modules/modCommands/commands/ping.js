@@ -13,7 +13,7 @@ const info = {
 // eslint-disable-next-line no-unused-vars
 async function fun(client, message, args) {
     const msg = await message.reply('Pong!');
-    msg.edit(
+    return msg.edit(
         `Ping! Latency is ${msg.createdTimestamp - message.createdTimestamp}ms. Api latency is ${
             client.ws.ping
         }ms.`

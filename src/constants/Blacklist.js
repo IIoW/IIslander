@@ -51,7 +51,7 @@ const swearRegex = new RegExp(
             str +
             swear
                 // This function makes the swear allow spaces inbetween letters
-                .replace(/(?:(?:\(.+?\)(?:\{.+?\})?)|[a-z=.-])(?:\+|\?|\*|\$)?/g, '$&\\s*') +
+                .replace(/(?:(\(.+?\)(?:{.+?})?)|[a-z=.-])([+?*$])?/g, '$&\\s*') +
             (i === arr.length - 1 ? '' : '|'),
         ''
     )})`

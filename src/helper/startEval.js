@@ -16,7 +16,7 @@ const startEval = async (startBot = false, context = {}) => {
             await setTimeout(100);
             console.log('The bot has been started and you now have eval permissions!');
             context.guild = context.client.guilds.cache.get(config.defaultGuild);
-            startEval(false, context);
+            return startEval(false, context);
         });
     } else {
         context = { ...defaultContext, ...context };
