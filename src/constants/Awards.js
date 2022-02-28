@@ -47,7 +47,7 @@ export const emojiStarValue = {
     tier3gold: 50,
     tier4diamond: 75,
     tier5crystal: 100,
-    tier6dev: 200,
+    tier6dev: 300,
 };
 
 export const emojiStarBotRequired = {
@@ -71,4 +71,4 @@ export const xpRoleRequirement = {
     tier6dev: { user: Infinity, mod: Mod.DEVELOPER },
 };
 
-export const starBoardThreshold = 200;
+export const starBoardThreshold = 300;
