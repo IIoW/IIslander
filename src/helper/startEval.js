@@ -3,9 +3,11 @@ import repl from 'repl';
 import { setTimeout } from 'timers/promises';
 import config from '../config';
 import { getClient } from '../util';
+import * as util from '../util';
 
 const defaultContext = {
     config,
+    util,
 };
 const startEval = async (startBot = false, context = {}) => {
     if (startBot) {
