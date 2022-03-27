@@ -1,84 +1,9 @@
-import Blacklist from '../../constants/Blacklist';
 import { getChannel, userDb } from '../../util';
-import { logMessages, swearWarning } from '../../constants/Messages';
+import { logMessages } from '../../constants/Messages';
 import { xpCooldown } from '../../constants/Awards';
 import { getUserMod } from '../../permissions';
 import Mod from '../../constants/Mod';
-import { penalize } from '../../modUtil';
 import config from '../../config';
-
-/**
- * Checks if a message contains a swear
- * @param message The message to check
- * @return {RegExpMatchArray} any match with the blacklist
- */
-function containsSwear(message) {
-    const content = message.content
-        .toLowerCase()
-        .replaceAll(/[0ö]/g, 'o')
-        .replaceAll(/[1!|]/g, 'i')
-        .replaceAll(/3/g, 'e')
-        .replaceAll(/[4@ä]/g, 'a')
-        .replaceAll(/[5$]/g, 's')
-        .replaceAll(/[7+]/g, 't')
-        .replaceAll(/8/g, 'b')
-        .replaceAll(/\(/g, 'c')
-        .replaceAll(/ü/g, 'u')
-        .replaceAll(/[^a-z ]/g, '');
-    const regex = Blacklist.swearRegex;
-    return content.match(regex);
-}
-
-/**
- *
- * @param {import('discord.js').Client} client
- * @param {import('discord.js').Message} message
- * @return {Promise<void>}
- */
-async function handleSwearing(client, message) {
-    const match = containsSwear(message);
-    if (match) {
-        const word = match[0].trim();
-        const userDto = userDb.get(message.author.id);
-        const now = Date.now();
-        const cooldown = userDto.cooldown.get('swearing');
-        if (now > (cooldown || 0)) {
-            userDto.swearlevel = 0; // resets the swear level, if time ran out
-        }
-        userDto.swearlevel += 1;
-        userDto.cooldown.set('swearing', now + xpCooldown.swearing);
-        userDb.set(message.author.id, userDto);
-        switch (userDto.swearlevel) {
-            case 1:
-                await message.author
-                    .send(swearWarning[0])
-                    .catch((e) => console.error('Error sending dm', e));
-                break;
-            case 2:
-                await message.author
-                    .send(swearWarning[1])
-                    .catch((e) => console.error('Error sending dm', e));
-                break;
-            default:
-                await penalize(
-                    message.author,
-                    'SWEARING',
-                    `[automod] ${logMessages
-                        .get('swearing')
-                        .replace('[user]', message.member)
-                        .replace('[message]', message.content)
-                        .replace('[match]', word)}`
-                );
-        }
-        await getChannel('log').send(
-            logMessages
-                .get('swearing')
-                .replace('[user]', message.member)
-                .replace('[message]', message.content)
-                .replace('[match]', word)
-        );
-    }
-}
 
 /**
  *
@@ -129,7 +54,6 @@ export async function messageCreate(client, message) {
     if (message.author.bot) return;
     // If the message is outside of the default guild we can ignore it
     if (message.guild?.id !== config.defaultGuild) return;
-    await handleSwearing(client, message);
     await handlePings(client, message);
 }
 
@@ -141,7 +65,5 @@ export async function messageCreate(client, message) {
  * @return {Promise<void>}
  */
 export async function messageUpdate(client, oldMessage, newMessage) {
-    if (!containsSwear(oldMessage.partial ? await oldMessage.fetch() : oldMessage)) {
-        await messageCreate(client, newMessage.partial ? await newMessage.fetch() : newMessage);
-    }
+    await messageCreate(client, newMessage.partial ? await newMessage.fetch() : newMessage);
 }
