@@ -11,35 +11,20 @@ import { getChannel } from '../../util';
 /**
  * Checks if a message contains a swear
  * @param message The message to check
- * @return {RegExpMatchArray} any match with the blacklist
+ * @return {string} any match with the blacklist
  */
 function containsSwear(message) {
-    const content = message.content
-        .toLowerCase()
-        .replaceAll(/[0ö]/g, 'o')
-        .replaceAll(/[1!|]/g, 'i')
-        .replaceAll(/3/g, 'e')
-        .replaceAll(/[4@ä]/g, 'a')
-        .replaceAll(/[5$]/g, 's')
-        .replaceAll(/[7+]/g, 't')
-        .replaceAll(/8/g, 'b')
-        .replaceAll(/\(/g, 'c')
-        .replaceAll(/ü/g, 'u')
-        .replaceAll(/[^a-z ]/g, '');
-    const regex = Blacklist.swearRegex;
-    return content.match(regex);
+    const words = message.content.toLowerCase().split(' ');
+    return words.find((w) => Blacklist.swearWords.includes(w));
 }
 
 /**
- *
- * @param {import('discord.js').Client} client
  * @param {import('discord.js').Message} message
  * @return {Promise<void>}
  */
-async function handleSwearing(client, message) {
-    const match = containsSwear(message);
-    if (match) {
-        const word = match[0].trim();
+async function handleSwearing(message) {
+    const word = containsSwear(message);
+    if (word) {
         const userDto = userDb.get(message.author.id);
         const now = Date.now();
         const cooldown = userDto.cooldown.get('swearing');
@@ -82,12 +67,10 @@ async function handleSwearing(client, message) {
 }
 
 /**
- *
- * @param {import('discord.js').Client} client
  * @param {import('discord.js').Message} message
  * @return {Promise<void>}
  */
-async function handlePings(client, message) {
+async function handlePings(message) {
     if (getUserMod(message.member) >= Mod.ENFORCER) return;
     if (message.content.match('@(everyone|here)')) {
         const userDto = userDb.get(message.author.id);
@@ -122,16 +105,16 @@ async function handlePings(client, message) {
 
 /**
  *
- * @param {import('discord.js').Client} client
+ * @param {import('discord.js').Client} _
  * @param {import('discord.js').Message} message
  * @return {Promise<void>}
  */
-export async function messageCreate(client, message) {
+export async function messageCreate(_, message) {
     if (message.author.bot) return;
     // If the message is outside of the default guild we can ignore it
     if (message.guild?.id !== config.defaultGuild) return;
-    await handleSwearing(client, message);
-    await handlePings(client, message);
+    await handleSwearing(message);
+    await handlePings(message);
 }
 
 /**
@@ -142,7 +125,11 @@ export async function messageCreate(client, message) {
  * @return {Promise<void>}
  */
 export async function messageUpdate(client, oldMessage, newMessage) {
-    if (!containsSwear(oldMessage.partial ? await oldMessage.fetch() : oldMessage)) {
-        await messageCreate(client, newMessage.partial ? await newMessage.fetch() : newMessage);
+    if (
+        !newMessage.author.bot &&
+        newMessage.guild?.id === config.defaultGuild &&
+        !containsSwear(oldMessage.partial ? await oldMessage.fetch() : oldMessage)
+    ) {
+        await handleSwearing(newMessage.partial ? await newMessage.fetch() : newMessage);
     }
 }
