@@ -51,7 +51,7 @@ const twitterMessages = [
 
 const welcomeMessage = `**Welcome to the IIslands of War server!**
 
-If you are here for **[Night Time](https://gxc.gg/games/7pornw/Night-Time/)** you may talk about it in <#630846522526924821>.
+If you are here for **Night Time** you may talk about it in <#630846522526924821>.
 
 I am the IIslands of War Server bot, and I manage the server. You can send me commands in this channel, like \`help\`.
 
