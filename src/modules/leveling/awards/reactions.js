@@ -1,6 +1,6 @@
 import Emotes from '../../../constants/Emotes';
 import { xpCooldown, xpReward, xpRewardDonor } from '../../../constants/Awards';
-import { getAndAddRole, getChannel, getMember, userDb } from '../../../util';
+import { getAndAddRole, getChannel, getMember, sanitizeUserInput, userDb } from '../../../util';
 import { addXp } from '../../../xpHandling';
 import updateBoard from './starboard';
 import { awards } from '../../../permissions';
@@ -56,7 +56,9 @@ export default async function messageReactionAdd(client, messageReaction, user) 
 
     await getChannel('notifications').send(
         `**${
-            awardeeDto.notifications.get('levelPing') ? awardee : awardee.displayName
+            awardeeDto.notifications.get('levelPing')
+                ? awardee
+                : sanitizeUserInput(awardee.displayName)
         }** has been awarded a ${messageReaction.emoji} for <${message.url}>!`
     );
 

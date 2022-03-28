@@ -1,5 +1,5 @@
 import { levelMessages, roleMessages } from './constants/Messages';
-import { getChannel, userDb } from './util';
+import { getChannel, sanitizeUserInput, userDb } from './util';
 import Levels from './constants/Levels';
 
 /**
@@ -37,7 +37,9 @@ export default async function sendLevelNotification(member, level) {
     await member.fetch(false);
     const userDto = userDb.get(member.id);
     return replaceAndSend(levelMessages[messageIndex], {
-        name: `**${userDto.notifications.get('levelPing') ? member : member.displayName}**`,
+        name: `**${
+            userDto.notifications.get('levelPing') ? member : sanitizeUserInput(member.displayName)
+        }**`,
         level: `**Level ${level}**`,
     });
 }

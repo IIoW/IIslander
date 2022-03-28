@@ -1,8 +1,7 @@
-import { Util } from 'discord.js';
 import config from '../../config';
 import { welcomeMessage, welcomeMessages, welcomeQuestions } from '../../constants/Messages';
 import ensureRoles from '../../roles';
-import { getChannel } from '../../util';
+import { getChannel, sanitizeUserInput } from '../../util';
 
 const subscriptions = new Map();
 
@@ -21,7 +20,7 @@ subscriptions.set('guildMemberAdd', async (client, member) => {
     );
 
     await offtopicChannel.send(
-        `I have a question for you ${Util.escapeMarkdown(member.user.username)}! ${
+        `I have a question for you ${sanitizeUserInput(member.user.username)}! ${
             welcomeQuestions[Math.floor(Math.random() * welcomeQuestions.length)]
         }`
     );
