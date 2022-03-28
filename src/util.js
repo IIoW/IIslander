@@ -1,4 +1,5 @@
 import Enmap from 'enmap';
+import { Util } from 'discord.js';
 import config from './config';
 import UserDto from './dto/UserDto';
 import ResponseDto from './dto/ResponseDto';
@@ -141,6 +142,10 @@ function stringifyTimestamp(time, format = 'f') {
     return `<t:${Math.round(time / 1000)}:${format}>`;
 }
 
+function sanitizeUserInput(input) {
+    return Util.escapeMarkdown(input).replace(/@|#/g, '$&\u200b');
+}
+
 /**
  * Transforms a string to an emojified representation of itself.
  * NOTE: This will remove any non-alphanumeric characters.
@@ -281,4 +286,5 @@ export {
     makeTitle,
     countEmbed,
     getTomorrow,
+    sanitizeUserInput,
 };

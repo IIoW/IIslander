@@ -1,4 +1,4 @@
-import { getChannel, getMember, userDb } from '../../../util';
+import { getChannel, getMember, sanitizeUserInput, userDb } from '../../../util';
 import Factions from '../../../constants/Factions';
 
 const command = 'faction';
@@ -30,7 +30,7 @@ async function fun(client, interaction, args) {
 
     await client.channels.cache
         .get(faction.channels.chat)
-        .send(`Welcome to the ${faction.fullName}, ${member.displayName}`);
+        .send(`Welcome to the ${faction.fullName}, ${sanitizeUserInput(member.displayName)}`);
 
     return interaction.reply({
         content: faction.joinMessages[Math.floor(Math.random() * faction.joinMessages.length)],
