@@ -52,6 +52,7 @@ async function processCommandsNewMessage(client, message) {
  */
 async function processCommandsEditMessage(client, oldMessage, newMessage) {
     if (newMessage.partial) newMessage = await newMessage.fetch();
+    if (!newMessage.editedTimestamp || Date.now() - newMessage.editedTimestamp > 3000) return;
     await processCommandsNewMessage(client, newMessage);
 }
 
