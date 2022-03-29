@@ -14,7 +14,7 @@ import { getChannel } from '../../util';
  * @return {string} any match with the blacklist
  */
 function containsSwear(message) {
-    const words = message.content.toLowerCase().split(' ');
+    const words = message.content.toLowerCase().split(/(?:\b|\s)+/g);
     return words.find((w) => Blacklist.swearWords.includes(w));
 }
 
