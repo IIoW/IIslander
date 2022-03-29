@@ -8,7 +8,7 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
-    if: "! contains(toJSON(github.event.commits.*.message), 'chore(deps-dev)')"
+    if: "! contains(toJSON(github.event.commits.*.message), 'build(deps-dev)')"
     concurrency:
       group: main
       cancel-in-progress: true
