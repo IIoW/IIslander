@@ -137,7 +137,7 @@ function stringifyTimestamp(time, format = 'f') {
 }
 
 function sanitizeUserInput(input) {
-    return Util.escapeMarkdown(input).replace(/@|#/g, '$&\u200b');
+    return Util.escapeMarkdown(input).replace(/[@#]/g, '$&\u200b');
 }
 
 /**

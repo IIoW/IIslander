@@ -5,7 +5,9 @@ process.on('uncaughtException', (err) => {
     console.error('Uncaught Error!!!!\nSomebody better fix this!!!');
     console.error(err);
     getClient()?.destroy();
-    Promise.all([userDb.close(), responseDb.close(), keyDb.close(), factionDb.close()]).then(
-        process.exit(1)
-    );
+    userDb.close();
+    responseDb.close();
+    keyDb.close();
+    factionDb.close();
+    process.exit(1);
 });
