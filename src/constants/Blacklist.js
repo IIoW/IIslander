@@ -2,60 +2,39 @@
  * An array of regex swears.
  */
 const swearWords = [
-    'ar+s+e(?:\\s|$)', // This one has the thing at the end cause it triggers on the //ar set command
-    'ass\\b',
+    'arse',
     'anus',
-    'boo+b',
+    'boob',
     'bitch',
-    'ball(?:bag|sack)',
     'bastard',
     'blowjob',
     'boner',
-    'butt(?:hole|plug)',
-    '(?:c|k)ock',
+    'cock',
     'clit',
     'cunt',
     'cum',
-    'condom',
     'dick',
     'dildo',
-    'dyke',
     'ejaculate',
-    '(?:mother)?(?:da)?(?:f|ph)u+(?:c?k|q|x)',
+    'motherfucker',
     'fag',
     'gangbang',
-    'horn(?:y|i)',
+    'horny',
     'jackoff',
     'jerkoff',
-    'mof(?:o|u)',
-    'mast(?:r|u|e){2}b(?:at|8)',
-    'nigg(?:a|er)',
-    'orgasi?m',
+    'masturbate',
+    'nigga',
+    'nigger',
     'porn',
-    'pus+[iey]',
+    'pussy',
     'shit',
-    'se(?:x|c?ks)',
-    'shag',
+    'sex',
     'slut',
-    'ti+t+(?:ie|s)',
+    'tits',
+    'titties',
     'vagina',
-    'viagra',
-    'b=+d', // for things like B====D
 ];
-/**
- * The combined swear regex. Has all the words and checks for spaces between words.
- */
-const swearRegex = new RegExp(
-    `(?:\\W|^)(?:${swearWords.reduce(
-        (str, swear, i, arr) =>
-            str +
-            swear
-                // This function makes the swear allow spaces inbetween letters
-                .replace(/(?:(\(.+?\)(?:{.+?})?)|[a-z=.-])([+?*$])?/g, '$&\\s*') +
-            (i === arr.length - 1 ? '' : '|'),
-        ''
-    )})`
-);
+
 export default {
-    swearRegex,
+    swearWords,
 };
