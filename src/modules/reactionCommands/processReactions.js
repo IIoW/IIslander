@@ -25,7 +25,10 @@ export default async function messageReactionAdd(client, messageReaction, user) 
     if (user.id === client.user.id || msg.guildId !== config.defaultGuild) return;
     switch (messageReaction.emoji.name) {
         case Emotes.pin:
-            if (!pin(await getMember(user.id))) return;
+            if (!pin(await getMember(user.id))) {
+                await messageReaction.users.remove(user);
+                return;
+            }
             if (msg.pinned) {
                 await msg.unpin();
                 if (users.has(client.user.id)) await messageReaction.users.remove();
