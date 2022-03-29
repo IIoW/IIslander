@@ -1,5 +1,6 @@
-import { getChannel, getMember, sanitizeUserInput, userDb } from '../../../util';
 import Factions from '../../../constants/Factions';
+import { getChannel, getMember, sanitizeUserInput } from '../../../util';
+import { userDb } from '../../../dbs';
 
 const command = 'faction';
 

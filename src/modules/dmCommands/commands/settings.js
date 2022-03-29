@@ -1,7 +1,8 @@
 import { MessageButton } from 'discord.js';
 import EmbedPage from '../../../dto/EmbedPage';
-import { getMember, getRole, userDb } from '../../../util';
 import EmbedPageMessage from '../../../dto/EmbedPageMessage';
+import { userDb } from '../../../dbs';
+import { getMember, getRole } from '../../../util';
 
 export const command = 'settings';
 export const desc = 'Configure your user settings.';

@@ -1,5 +1,6 @@
-import { getRole, userDb } from '../../util';
 import config from '../../config';
+import { userDb } from '../../dbs';
+import { getRole } from '../../util';
 
 function emit(client, reactionName, userid) {
     client.emit('cooldownEnd', reactionName, userid);

@@ -1,4 +1,5 @@
-import { getChannel, getMember, getRole, userDb } from '../../../util';
+import { userDb } from '../../../dbs';
+import { getChannel, getMember, getRole } from '../../../util';
 
 const command = 'steam';
 

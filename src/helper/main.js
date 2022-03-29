@@ -1,12 +1,13 @@
 import 'dotenv/config';
 import fs from 'fs/promises';
 import startEval from './startEval';
-import { userDb, responseDb, keyDb, factionDb, getTomorrow } from '../util';
 import UserDto from '../dto/UserDto';
 import ResponseDto from '../dto/ResponseDto';
 import { logAndDie, helpMessage, databases } from './helperUtil';
 import KeyDto from '../dto/KeyDto';
 import FactionDto from '../dto/FactionDto';
+import { factionDb, keyDb, responseDb, userDb } from '../dbs';
+import { getTomorrow } from '../util';
 
 // Instantly executing async function to stop eslint from yelling at me.
 (async () => {
@@ -22,11 +23,11 @@ import FactionDto from '../dto/FactionDto';
             break;
         }
         case 'debug': {
-            startEval(true, { userDb, responseDb, keyDb, factionDb });
+            await startEval(true, { userDb, responseDb, keyDb, factionDb });
             break;
         }
         case 'db': {
-            startEval(false, {
+            await startEval(false, {
                 userDb,
                 responseDb,
                 keyDb,
@@ -94,7 +95,7 @@ import FactionDto from '../dto/FactionDto';
             try {
                 console.log('Reading info...');
                 const info = JSON.parse(await fs.readFile('./data/firebase.json'));
-                const ownerOrKeyRegex = /^(?:\w+-\w+-\w+)|(?:owner)$/;
+                const ownerOrKeyRegex = /^(\w+-\w+-\w+)|(owner)$/;
                 const {
                     discordUserData: users,
                     discord: { autoresponse, cooldowns, keys, factions },

@@ -1,7 +1,8 @@
 import config from './config';
 import Factions from './constants/Factions';
 import Levels from './constants/Levels';
-import { getRole, userDb } from './util';
+import { userDb } from './dbs';
+import { getRole } from './util';
 
 const roleInfo = [
     // Permanent roles (status, achievements, etc.)

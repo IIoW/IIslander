@@ -1,6 +1,7 @@
 import { MessageActionRow, MessageButton } from 'discord.js';
-import { getEmoji, userDb } from '../../../util';
 import Factions from '../../../constants/Factions';
+import { userDb } from '../../../dbs';
+import { getEmoji } from '../../../util';
 
 export const command = 'factions';
 export const desc = 'Shows an overview over the factions and lets you join them.';
@@ -9,7 +10,6 @@ export const desc = 'Shows an overview over the factions and lets you join them.
  *
  * @param {import('discord.js').Client} client
  * @param {import('discord.js').Message} message
- * @param {import('discord.js').GuildMember} member
  * @return {Promise<void>}
  */
 export async function fun(client, message) {

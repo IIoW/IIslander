@@ -1,5 +1,6 @@
-import { getChannel, makeTitle, responseDb } from '../../util';
 import Emotes from '../../constants/Emotes';
+import { responseDb } from '../../dbs';
+import { getChannel, makeTitle } from '../../util';
 
 /**
  *

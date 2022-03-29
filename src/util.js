@@ -1,11 +1,6 @@
-import Enmap from 'enmap';
 import { Util } from 'discord.js';
 import config from './config';
-import UserDto from './dto/UserDto';
-import ResponseDto from './dto/ResponseDto';
 import Emotes from './constants/Emotes';
-import KeyDto from './dto/KeyDto';
-import FactionDto from './dto/FactionDto';
 
 /**
  * @type {import('discord.js').Client}
@@ -19,11 +14,10 @@ let client;
 const setup = (newClient) => {
     client = newClient;
 };
-
 const getClient = () => client;
 
 /**
- * Get an emoji from name from the default guild.
+ * Get an emoji by name from the default guild.
  * @param {string} search - The string to search for.
  * @returns {import('discord.js').EmojiIdentifierResolvable} The emoji for that name if found.
  */
@@ -31,7 +25,6 @@ const getEmoji = (search) =>
     client.guilds.cache
         .get(config.defaultGuild)
         .emojis.cache.find((emote) => emote.name === search) || search;
-
 /**
  * Gets a member by their id
  * @param query
@@ -72,6 +65,7 @@ async function editMessage(name, ...content) {
     const msg = await getMessage(name);
     return msg.edit(...content);
 }
+
 /**
  * Fetch a user by id or mention string.
  * @param {string} query - The user id or ping of the user.
@@ -90,7 +84,6 @@ const fetchUser = async (query) => {
     }
     return result;
 };
-
 /**
  * Fetch a channel by id or mention string.
  * @param {string} query - The channel id or ping of the channel.
@@ -131,6 +124,7 @@ function getAndAddRole(name, memberResolvable) {
     if (!role || !guild || !member) return false;
     return member.roles.add(role);
 }
+
 /**
  * Converts a js timestamp to a discord markdown timestamp.
  * @param {number} time - The js timestamp to convert.
@@ -143,13 +137,13 @@ function stringifyTimestamp(time, format = 'f') {
 }
 
 function sanitizeUserInput(input) {
-    return Util.escapeMarkdown(input).replace(/@|#/g, '$&\u200b');
+    return Util.escapeMarkdown(input).replace(/[@#]/g, '$&\u200b');
 }
 
 /**
  * Transforms a string to an emojified representation of itself.
  * NOTE: This will remove any non-alphanumeric characters.
- * @param {String} String - The string to transform.
+ * @param {String} string - The string to transform.
  * @returns {String} The finished string.
  */
 function makeTitle(string) {
@@ -162,17 +156,10 @@ function makeTitle(string) {
 }
 
 /**
- * Used to get the time of midnight tomorrow
- * @returns {number} The unix time in milliseconds at midnight tomorrow.
- */
-function getTomorrow() {
-    return new Date().setUTCHours(24, 0, 0, 0);
-}
-/**
  * Counts the characters in an embed.
- * @param {MessageEmbed} embed
+ * @param {import('discord.js').MessageEmbed} embed
  */
-const countEmbed = (embed) =>
+const countEmbedCharacters = (embed) =>
     [
         embed.title,
         embed.description,
@@ -186,105 +173,29 @@ const countEmbed = (embed) =>
             return p;
         }, 0);
 
-// Databases
-
 /**
- * Serialize database objects.
+ * Used to get the time of midnight tomorrow
+ * @returns {number} The unix time in milliseconds at midnight tomorrow.
  */
-function serializer(object) {
-    return object.toJSON();
+function getTomorrow() {
+    return new Date().setUTCHours(24, 0, 0, 0);
 }
-/**
- * Deserialize user database objects.
- */
-function deserializerUserDto(object) {
-    return UserDto.fromJSON(object);
-}
-/**
- * Deserialize auto response database objects.
- */
-function deserializerResponseDto(object) {
-    return ResponseDto.fromJSON(object);
-}
-/**
- * Deserialize key database objects.
- */
-function deserializerKeyDto(object) {
-    return KeyDto.fromJSON(object);
-}
-/**
- * Deserialize faction database objects.
- */
-function deserializerFactionDto(object) {
-    return FactionDto.fromJSON(object);
-}
-
-/**
- * Database to store user data in it.
- * @type {Enmap<string, UserDto>}
- * @see {@link UserDto}
- */
-const userDb = new Enmap({
-    name: 'users',
-    serializer,
-    deserializer: deserializerUserDto,
-    autoEnsure: new UserDto(),
-});
-
-/**
- * Database to store auto response data in it.
- * @type {Enmap<string, ResponseDto>}
- * @see {@link ResponseDto}
- */
-const responseDb = new Enmap({
-    name: 'autoresponses',
-    serializer,
-    deserializer: deserializerResponseDto,
-    autoEnsure: new ResponseDto(),
-});
-
-/**
- * Database to store auto response data in it.
- * @type {Enmap<string, KeyDto>}
- * @see {@link KeyDto}
- */
-const keyDb = new Enmap({
-    name: 'keys',
-    serializer,
-    deserializer: deserializerKeyDto,
-});
-
-/**
- * Database to store faction data in it.
- * @type {Enmap<string, FactionDto>}
- * @see {@link KeyDto}
- */
-const factionDb = new Enmap({
-    name: 'factions',
-    serializer,
-    deserializer: deserializerFactionDto,
-    autoEnsure: new FactionDto(),
-});
 
 export {
     setup,
     getEmoji,
-    userDb,
-    responseDb,
-    keyDb,
-    factionDb,
-    getChannel,
     getMessage,
+    getMember,
+    getChannel,
+    editMessage,
+    fetchChannel,
+    fetchUser,
     getRole,
     getAndAddRole,
-    getMember,
-    getClient,
-    editMessage,
-    fetchUser,
-    fetchChannel,
     stringifyTimestamp,
     makeTitle,
-    countEmbed,
+    countEmbedCharacters,
     getTomorrow,
+    getClient,
     sanitizeUserInput,
 };

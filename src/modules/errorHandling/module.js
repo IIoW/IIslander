@@ -5,6 +5,7 @@ import './unhandledError';
  * prints out the stacktrace.
  * @param client discord client
  * @param exception the exception which occurred
+ * @param additionalInfo
  */
 function error(client, exception, additionalInfo) {
     if (!additionalInfo) console.error(`An error occurred:\n${exception.stack}`);
