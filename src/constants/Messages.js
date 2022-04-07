@@ -143,7 +143,7 @@ const welcomeQuestions = [
     'If you could remove anything from the game, what would it be?',
     'If you could add anything to the game, what would it be?',
     'What are your favorite games?',
-    'Ask jwiggs any question you want.',
+    'What would you like to ask Jwiggs?',
     'What is the most useless item in the game?',
     'If you lived in IIsla, what type of house would you build?',
     'If you lived in IIsla, what pet would you keep?',
