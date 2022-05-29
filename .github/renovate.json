@@ -1,5 +1,5 @@
 {
-    "extends": ["config:base", "group:allNonMajor", "group:recommended"],
+    "extends": ["config:base", "group:allNonMajor", "group:recommended", ":prHourlyLimitNone"],
 
     "docker-compose": {
         "digest": {
