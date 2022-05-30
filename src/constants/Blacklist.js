@@ -17,6 +17,8 @@ const swearWords = [
     'dildo',
     'ejaculate',
     'motherfucker',
+    'fuck',
+    'fucker',
     'fag',
     'gangbang',
     'horny',
