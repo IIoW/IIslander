@@ -35,16 +35,16 @@ async function handleSwearing(message) {
         userDto.cooldown.set('swearing', now + xpCooldown.swearing);
         userDb.set(message.author.id, userDto);
         switch (userDto.swearlevel) {
-            case 1:
-                await message.author
-                    .send(swearWarning[0])
-                    .catch((e) => console.error('Error sending dm', e));
-                break;
-            case 2:
-                await message.author
-                    .send(swearWarning[1])
-                    .catch((e) => console.error('Error sending dm', e));
-                break;
+            // case 1:
+            //     await message.author
+            //         .send(swearWarning[0])
+            //         .catch((e) => console.error('Error sending dm', e));
+            //     break;
+            // case 2:
+            //     await message.author
+            //         .send(swearWarning[1])
+            //         .catch((e) => console.error('Error sending dm', e));
+            //     break;
             default:
                 await penalize(
                     message.author,
