@@ -1,5 +1,5 @@
 import Blacklist from '../../constants/Blacklist';
-import { logMessages, swearWarning } from '../../constants/Messages';
+import { logMessages } from '../../constants/Messages';
 import { xpCooldown } from '../../constants/Awards';
 import { getUserMod } from '../../permissions';
 import Mod from '../../constants/Mod';
@@ -34,28 +34,15 @@ async function handleSwearing(message) {
         userDto.swearlevel += 1;
         userDto.cooldown.set('swearing', now + xpCooldown.swearing);
         userDb.set(message.author.id, userDto);
-        switch (userDto.swearlevel) {
-            // case 1:
-            //     await message.author
-            //         .send(swearWarning[0])
-            //         .catch((e) => console.error('Error sending dm', e));
-            //     break;
-            // case 2:
-            //     await message.author
-            //         .send(swearWarning[1])
-            //         .catch((e) => console.error('Error sending dm', e));
-            //     break;
-            default:
-                await penalize(
-                    message.author,
-                    'SWEARING',
-                    `[automod] ${logMessages
-                        .get('swearing')
-                        .replace('[user]', message.member)
-                        .replace('[message]', message.content)
-                        .replace('[match]', word)}`
-                );
-        }
+        await penalize(
+            message.author,
+            'SWEARING',
+            `[automod] ${logMessages
+                .get('swearing')
+                .replace('[user]', message.member)
+                .replace('[message]', message.content)
+                .replace('[match]', word)}`
+        );
         await getChannel('log').send(
             logMessages
                 .get('swearing')
