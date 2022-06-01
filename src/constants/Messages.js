@@ -36,7 +36,10 @@ const swearWarning = [
 ];
 
 const logMessages = new Map([
-    ['swearing', '[user] swore.\nMessage: `[message]`\nTriggered on: `[match]`'],
+    [
+        'swearing',
+        '[user] swore.\nMessage: `[message]`\nTriggered on: `[match]`\nTotal Swear Level: `[level]`',
+    ],
     ['everyoneping', '[user] pinged everyone. Message was deleted.\nMessage: `[message]`'],
 ]);
 

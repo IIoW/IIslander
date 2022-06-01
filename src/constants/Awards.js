@@ -35,7 +35,7 @@ export const xpCooldown = {
     tier4diamond: 2 * 24 * 60 * 60 * 1000,
     tier5crystal: 3 * 24 * 60 * 60 * 1000,
     tier6dev: 5 * 24 * 60 * 60 * 1000,
-    swearing: 10 * 60 * 1000,
+    swearing: 60 * 60 * 1000,
     everyoneping: 60 * 60 * 1000,
 };
 

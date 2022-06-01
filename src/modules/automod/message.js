@@ -10,12 +10,30 @@ import { getChannel } from '../../util';
 
 /**
  * Checks if a message contains a swear
- * @param message The message to check
- * @return {string} any match with the blacklist
+ * @param {import('discord.js').Message} message - The message to check
+ * @return {[string, number][]?} any match with the blacklist
  */
 function containsSwear(message) {
-    const words = message.content.toLowerCase().split(/(?:\b|\s)+/g);
-    return words.find((w) => Blacklist.swearWords.includes(w));
+    const words = message.content
+        .toLowerCase()
+        .replace(/[0ö]/g, 'o')
+        .replace(/[1!|]/g, 'i')
+        .replace(/3/g, 'e')
+        .replace(/[4@ä]/g, 'a')
+        .replace(/[5$]/g, 's')
+        .replace(/[7+]/g, 't')
+        .replace(/8/g, 'b')
+        .replace(/\(/g, 'c')
+        .replace(/ü/g, 'u')
+        .replace(/[^a-z ]/g, '')
+        .split(/(?:\b|\s)+/g);
+    const swears = words.reduce((acc, word) => {
+        if (Blacklist.swearWords.has(word)) {
+            acc.push([word, Blacklist.swearWords.get(word)]);
+        }
+        return acc;
+    }, []);
+    return swears.length ? swears.sort((a, b) => b[1] - a[1]) : null;
 }
 
 /**
@@ -23,17 +41,24 @@ function containsSwear(message) {
  * @return {Promise<void>}
  */
 async function handleSwearing(message) {
-    const word = containsSwear(message);
-    if (word) {
+    if (getUserMod(message.member) >= Mod.ENFORCER) return;
+    const swears = containsSwear(message) || [];
+    if (swears.length) {
         const userDto = userDb.get(message.author.id);
         const now = Date.now();
         const cooldown = userDto.cooldown.get('swearing');
         if (now > (cooldown || 0)) {
             userDto.swearlevel = 0; // resets the swear level, if time ran out
         }
-        userDto.swearlevel += 1;
+        const level = swears.reduce((acc, [, count]) => acc + count, 0);
+        userDto.swearlevel += level;
         userDto.cooldown.set('swearing', now + xpCooldown.swearing);
         userDb.set(message.author.id, userDto);
+        const friendlyDisplay = `${swears[0][0]}${
+            swears.length > 1
+                ? ` + ${swears.length - 1} other${swears.length === 2 ? '' : 's'}`
+                : ''
+        }`;
         switch (userDto.swearlevel) {
             case 1:
                 await message.author
@@ -53,7 +78,8 @@ async function handleSwearing(message) {
                         .get('swearing')
                         .replace('[user]', message.member)
                         .replace('[message]', message.content)
-                        .replace('[match]', word)}`
+                        .replace('[match]', friendlyDisplay)
+                        .replace('[level]', userDto.swearlevel)}`
                 );
         }
         await getChannel('log').send(
@@ -61,8 +87,12 @@ async function handleSwearing(message) {
                 .get('swearing')
                 .replace('[user]', message.member)
                 .replace('[message]', message.content)
-                .replace('[match]', word)
+                .replace('[match]', friendlyDisplay)
+                .replace('[level]', userDto.swearlevel)
         );
+        if (level >= 3) {
+            await message.delete();
+        }
     }
 }
 
