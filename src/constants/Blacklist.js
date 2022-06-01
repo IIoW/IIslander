@@ -4,8 +4,8 @@
  */
 const swearWords = new Map([
     ['arse', 1],
-    ['anus', 3],
-    ['boob', 3],
+    ['anus', 2],
+    ['boob', 2],
     ['bitch', 3],
     ['bastard', 2],
     ['blowjob', 3],
@@ -21,8 +21,9 @@ const swearWords = new Map([
     ['fuck', 2],
     ['fucker', 3],
     ['fag', 3],
+    ['faggot', 3],
     ['gangbang', 3],
-    ['horny', 3],
+    ['horny', 2],
     ['jackoff', 3],
     ['jerkoff', 3],
     ['masturbate', 3],
@@ -33,8 +34,8 @@ const swearWords = new Map([
     ['shit', 1],
     ['sex', 1],
     ['slut', 3],
-    ['tits', 3],
-    ['titties', 3],
+    ['tits', 2],
+    ['titties', 2],
     ['vagina', 3],
 ]);
 

@@ -43,7 +43,6 @@ function containsSwear(message) {
 async function handleSwearing(message) {
     if (getUserMod(message.member) >= Mod.ENFORCER) return;
     const swears = containsSwear(message) || [];
-    console.log(swears);
     if (swears.length) {
         const userDto = userDb.get(message.author.id);
         const now = Date.now();
