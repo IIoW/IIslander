@@ -1,9 +1,14 @@
 {
     "extends": ["config:base", "group:allNonMajor", "group:recommended", ":prHourlyLimitNone"],
-
     "docker-compose": {
         "digest": {
             "enabled": false
         }
-    }
+    },
+    "packageRules": [
+        {
+            "matchDepTypes": ["devDependencies"],
+            "semanticCommitScope": "deps-dev"
+        }
+    ]
 }
