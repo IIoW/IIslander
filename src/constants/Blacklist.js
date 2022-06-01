@@ -1,8 +1,8 @@
 /**
  * An array of regex swears.
- * @type {[string, number][]}
+ * @type {Map<string, number>}
  */
-const swearWords = [
+const swearWords = new Map([
     ['arse', 1],
     ['anus', 3],
     ['boob', 3],
@@ -36,7 +36,7 @@ const swearWords = [
     ['tits', 3],
     ['titties', 3],
     ['vagina', 3],
-];
+]);
 
 export default {
     swearWords,
