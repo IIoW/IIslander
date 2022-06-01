@@ -10,12 +10,26 @@ import { getChannel } from '../../util';
 
 /**
  * Checks if a message contains a swear
- * @param message The message to check
- * @return {string} any match with the blacklist
+ * @param {import('discord.js').Message} message - The message to check
+ * @return {[string, number]?} any match with the blacklist
  */
 function containsSwear(message) {
-    const words = message.content.toLowerCase().split(/(?:\b|\s)+/g);
-    return words.find((w) => Blacklist.swearWords.includes(w));
+    const words = message.content
+        .toLowerCase()
+        .replace(/[0ö]/g, 'o')
+        .replace(/[1!|]/g, 'i')
+        .replace(/3/g, 'e')
+        .replace(/[4@ä]/g, 'a')
+        .replace(/[5$]/g, 's')
+        .replace(/[7+]/g, 't')
+        .replace(/8/g, 'b')
+        .replace(/\(/g, 'c')
+        .replace(/ü/g, 'u')
+        .replace(/[^a-z ]/g, '')
+        .split(/(?:\b|\s)+/g);
+    const word = words.find((w) => Blacklist.swearWords.find(([swear]) => w === swear));
+    if (!word) return null;
+    return Blacklist.swearWords.find(([swear]) => swear === word);
 }
 
 /**
@@ -23,7 +37,7 @@ function containsSwear(message) {
  * @return {Promise<void>}
  */
 async function handleSwearing(message) {
-    const word = containsSwear(message);
+    const [word, level] = containsSwear(message) || [];
     if (word) {
         const userDto = userDb.get(message.author.id);
         const now = Date.now();
@@ -31,7 +45,7 @@ async function handleSwearing(message) {
         if (now > (cooldown || 0)) {
             userDto.swearlevel = 0; // resets the swear level, if time ran out
         }
-        userDto.swearlevel += 1;
+        userDto.swearlevel += level;
         userDto.cooldown.set('swearing', now + xpCooldown.swearing);
         userDb.set(message.author.id, userDto);
         switch (userDto.swearlevel) {
