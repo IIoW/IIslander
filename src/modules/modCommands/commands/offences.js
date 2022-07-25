@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { userDb } from '../../../dbs';
 import { fetchUser, stringifyTimestamp } from '../../../util';
 
@@ -28,7 +28,7 @@ async function fun(client, message, args) {
         const { offences } = userDb.get(user.id);
         const offence = offences[num - 1];
         if (!offence) return message.reply('Invalid offence!');
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setDescription(
                 `Offence #${num} for ${user}.\n${
                     offence.type
@@ -44,7 +44,7 @@ async function fun(client, message, args) {
                     offence.modReason || 'Error Getting reason'
                 }`
             )
-            .setColor('RED');
+            .setColor('Red');
         return message.reply({ embeds: [embed] });
     }
     const { offences } = userDb.get(user.id);
@@ -71,7 +71,7 @@ async function fun(client, message, args) {
         },
         [[], 0, 0]
     );
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
         .setDescription(
             `Offences for ${user}.\nRecent Offences: ${recentOffences}\nTotal Offences: ${
                 offences.length
@@ -80,7 +80,7 @@ async function fun(client, message, args) {
             }`
         )
         .addFields(fields)
-        .setColor('RED');
+        .setColor('Red');
     return message.reply({ embeds: [embed] });
 }
 

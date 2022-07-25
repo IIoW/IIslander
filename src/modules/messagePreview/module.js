@@ -1,4 +1,4 @@
-import { MessageEmbed, Permissions } from 'discord.js';
+import { EmbedBuilder, PermissionsBitField } from 'discord.js';
 import config from '../../config';
 
 const subscriptions = new Map();
@@ -25,24 +25,27 @@ subscriptions.set('messageCreate', async (client, message) => {
         if (
             !msg.channel
                 .permissionsFor(message.author)
-                ?.has([Permissions.FLAGS.VIEW_CHANNEL, Permissions.FLAGS.READ_MESSAGE_HISTORY])
+                ?.has([
+                    PermissionsBitField.Flags.ViewChannel,
+                    PermissionsBitField.Flags.ReadMessageHistory,
+                ])
         )
             return;
         if (!msg.member) await msg.guild.members.fetch(msg.author);
 
-        const embed = new MessageEmbed()
-            .setAuthor(msg.member.displayName, msg.member.displayAvatarURL({ dynamic: true }))
+        const embed = new EmbedBuilder()
+            .setAuthor({ name: msg.member.displayName, iconURL: msg.member.displayAvatarURL() })
             .setDescription(msg.content)
             .setColor(msg.member.displayColor)
-            .setFooter(`Requested by ${message.member.displayName}`)
+            .setFooter({ text: `Requested by ${message.member.displayName}` })
             .setTimestamp(msg.createdTimestamp);
 
         if (msg.attachments.size) {
             embed.setImage(msg.attachments.first().url);
-            embed.addField(
-                'Attachments:',
-                msg.attachments.map((a) => `[${a.name}](${a.url})`).join('\n')
-            );
+            embed.addFields({
+                name: 'Attachments:',
+                value: msg.attachments.map((a) => `[${a.name}](${a.url})`).join('\n'),
+            });
         }
 
         await message.channel.send({ embeds: [embed] });

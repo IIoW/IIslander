@@ -1,4 +1,4 @@
-import { Util } from 'discord.js';
+import { escapeMarkdown } from 'discord.js';
 import config from './config';
 import Emotes from './constants/Emotes';
 
@@ -114,7 +114,7 @@ function getRole(name) {
 /**
  * Gets role info and adds it. Will not error if the role or member doesn't exist.
  * @param {string} name - The name of the role.
- * @param {import('discord.js'.GuildMemberResolvable)} memberResolvable - The member to add.
+ * @param {import('discord.js').GuildMemberResolvable} memberResolvable - The member to add.
  * @returns {false|Promise<import('discord.js').GuildMember>} Returns false if the role or member doesn't exist. Otherwise returns the result of adding a role.
  */
 function getAndAddRole(name, memberResolvable) {
@@ -137,7 +137,7 @@ function stringifyTimestamp(time, format = 'f') {
 }
 
 function sanitizeUserInput(input) {
-    return Util.escapeMarkdown(input).replace(/[@#]/g, '$&\u200b');
+    return escapeMarkdown(input).replace(/[@#]/g, '$&\u200b');
 }
 
 /**
@@ -157,15 +157,15 @@ function makeTitle(string) {
 
 /**
  * Counts the characters in an embed.
- * @param {import('discord.js').MessageEmbed} embed
+ * @param {import('discord.js').EmbedBuilder} embed
  */
 const countEmbedCharacters = (embed) =>
     [
-        embed.title,
-        embed.description,
-        embed.fields.map((f) => [f.name, f.value]),
-        embed.footer?.text,
-        embed.author?.name,
+        embed.data.title,
+        embed.data.description,
+        embed.data.fields?.map((f) => [f.name, f.value]) ?? [],
+        embed.data.footer?.text,
+        embed.data.author?.name,
     ]
         .flat(2)
         .reduce((p, c) => {

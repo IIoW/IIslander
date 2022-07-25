@@ -66,7 +66,7 @@ const ensureRoles = async (user) => {
                     );
                 // This shouldn't happen, but just in case.
                 if (!role) return [add, remove];
-                if (roleData.check(userDto, member)) {
+                if (roleData.check(userDto)) {
                     if (!member.roles.cache.has(role.id)) add.push(role);
                 } else if (member.roles.cache.has(role.id)) remove.push(role);
                 return [add, remove];
