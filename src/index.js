@@ -1,4 +1,4 @@
-import { Client, Intents } from 'discord.js';
+import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import config from './config';
 import loadModules from './loadModules';
 import { responseDb, userDb } from './dbs';
@@ -6,14 +6,14 @@ import { setup as utilSetup } from './util';
 
 const client = new Client({
     intents: [
-        Intents.FLAGS.DIRECT_MESSAGES,
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MEMBERS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-        Intents.FLAGS.GUILD_VOICE_STATES,
+        GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildMessageReactions,
+        GatewayIntentBits.GuildVoiceStates,
     ],
-    partials: ['CHANNEL', 'MESSAGE', 'USER', 'REACTION'],
+    partials: [Partials.Channel, Partials.Message, Partials.User, Partials.Reaction],
 });
 
 utilSetup(client);

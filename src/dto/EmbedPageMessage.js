@@ -1,4 +1,4 @@
-import { MessageActionRow, MessageButton } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 
 /**
  *
@@ -37,15 +37,15 @@ export default class EmbedPageMessage {
         return {
             embeds: [page.toEmbed()],
             components: [
-                new MessageActionRow().addComponents(page.buttons),
-                new MessageActionRow().addComponents([
-                    new MessageButton()
+                new ActionRowBuilder().addComponents(page.buttons),
+                new ActionRowBuilder().addComponents([
+                    new ButtonBuilder()
                         .setLabel('«')
-                        .setStyle('PRIMARY')
+                        .setStyle(ButtonStyle.Primary)
                         .setCustomId(`settings.left`),
-                    new MessageButton()
+                    new ButtonBuilder()
                         .setLabel('»')
-                        .setStyle('PRIMARY')
+                        .setStyle(ButtonStyle.Primary)
                         .setCustomId(`settings.right`),
                 ]),
             ],

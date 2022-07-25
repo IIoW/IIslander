@@ -1,11 +1,11 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 
 export default class EmbedPage {
     /**
      *
      * @param {String} title
      * @param {String} description
-     * @param {import('discord.js').MessageButton[]} buttons
+     * @param {import('discord.js').ButtonBuilder[]} buttons
      */
     constructor(title, description, buttons) {
         this.title = title;
@@ -14,6 +14,6 @@ export default class EmbedPage {
     }
 
     toEmbed() {
-        return new MessageEmbed().setTitle(this.title).setDescription(this.description);
+        return new EmbedBuilder().setTitle(this.title).setDescription(this.description);
     }
 }

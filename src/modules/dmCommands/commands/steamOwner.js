@@ -1,4 +1,4 @@
-import { MessageActionRow, MessageButton } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { userDb } from '../../../dbs';
 
 export const command = 'steamowner';
@@ -21,15 +21,15 @@ export async function fun(client, message) {
             'By becoming a steam owner, you state, that you **bought** the game.\n' +
             "Therefore you won't be able to participate in giveaways.",
         components: [
-            new MessageActionRow().addComponents(
-                new MessageButton({
+            new ActionRowBuilder().addComponents(
+                new ButtonBuilder({
                     customId: `steam.${message.author.id}.y`,
-                    style: 'PRIMARY',
+                    style: ButtonStyle.Primary,
                     label: 'I want the role',
                 }),
-                new MessageButton({
+                new ButtonBuilder({
                     customId: `steam.${message.author.id}.n`,
-                    style: 'PRIMARY',
+                    style: ButtonStyle.Primary,
                     label: "Ok, I don't want it",
                 })
             ),

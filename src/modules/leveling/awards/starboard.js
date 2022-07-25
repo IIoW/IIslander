@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import {
     emojiStarBotRequired,
     emojiStarValue,
@@ -52,7 +52,7 @@ export default async function updateBoard(message) {
     ) {
         starboardSet.add(message.id);
         await message.react(Emotes.star);
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(message.member.displayName)
             .setThumbnail(message.author.avatarURL())
             .setColor(message.member.displayHexColor)
