@@ -13,7 +13,12 @@ subscriptions.set('messageCreate', async (client, message) => {
 
     if (message.member) await message.guild.members.fetch(message.author);
 
+    const sent = new Set();
     for (const msgData of messages) {
+        // Avoid sending the same message twice
+        /* eslint-disable-next-line no-continue */
+        if (sent.has(msgData.message)) continue;
+        sent.add(msgData.message);
         // links need to be handled in order
         /* eslint-disable no-await-in-loop */
         const msg = await client.channels.cache
@@ -34,21 +39,34 @@ subscriptions.set('messageCreate', async (client, message) => {
         if (!msg.member) await msg.guild.members.fetch(msg.author);
 
         const embed = new EmbedBuilder()
-            .setAuthor({ name: msg.member.displayName, iconURL: msg.member.displayAvatarURL() })
-            .setDescription(msg.content)
+            .setAuthor({
+                name: msg.member.displayName,
+                iconURL: msg.member.displayAvatarURL(),
+                url: msg.url,
+            })
             .setColor(msg.member.displayColor)
             .setFooter({ text: `Requested by ${message.member.displayName}` })
-            .setTimestamp(msg.createdTimestamp);
+            .setTimestamp(msg.createdTimestamp)
+            .setURL(msg.url);
 
+        const additionalEmbeds = [];
+        if (msg.content) embed.setDescription(msg.content);
         if (msg.attachments.size) {
-            embed.setImage(msg.attachments.first().url);
+            const imgs = msg.attachments.filter((a) => a.contentType.startsWith('image/'));
+            Array.from(imgs.entries()).forEach(([, a], i) => {
+                console.log(a, i);
+                if (i === 0) return embed.setImage(a.url);
+                if (i > 3) return null;
+                return additionalEmbeds.push(new EmbedBuilder().setImage(a.url).setURL(msg.url));
+            });
             embed.addFields({
                 name: 'Attachments:',
                 value: msg.attachments.map((a) => `[${a.name}](${a.url})`).join('\n'),
             });
         }
 
-        await message.channel.send({ embeds: [embed] });
+        console.log(embed, additionalEmbeds);
+        await message.channel.send({ embeds: [embed, ...additionalEmbeds] });
     }
 });
 
