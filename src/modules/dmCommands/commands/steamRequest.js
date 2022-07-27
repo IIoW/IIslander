@@ -1,4 +1,4 @@
-import { MessageActionRow, MessageButton } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { userDb } from '../../../dbs';
 
 export const command = 'steamrequest';
@@ -28,20 +28,20 @@ export async function fun(client, message) {
     }
     await message.author.send({
         content:
-            'You have a key that can be claimed!' +
+            'You have a key that can be claimed! ' +
             'By requesting a key, you are unable to declare yourself as an owner of the game to receive a special honorary role in the server. ' +
             'If you still want to confirm your request, click the `I want the key` button. ' +
             "If you want to declare yourself an owner of the game and forgo this key, click the `Ok, I don't want it` button and then type `steamowner`.",
         components: [
-            new MessageActionRow().addComponents(
-                new MessageButton({
+            new ActionRowBuilder().addComponents(
+                new ButtonBuilder({
                     customId: `giveaway.${message.author.id}.y`,
-                    style: 'PRIMARY',
+                    style: ButtonStyle.Primary,
                     label: 'I want the key',
                 }),
-                new MessageButton({
+                new ButtonBuilder({
                     customId: `giveaway.${message.author.id}.n`,
-                    style: 'PRIMARY',
+                    style: ButtonStyle.Primary,
                     label: "Ok, I don't want it",
                 })
             ),

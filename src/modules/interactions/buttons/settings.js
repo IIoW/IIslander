@@ -1,3 +1,4 @@
+import { ButtonStyle } from 'discord.js';
 import EmbedPageMessage from '../../../dto/EmbedPageMessage';
 import { userDb } from '../../../dbs';
 import { getMember, getRole } from '../../../util';
@@ -17,18 +18,18 @@ async function handleToggle(member, page, roleName) {
         const userDto = userDb.get(member.id);
         if (!userDto.notifications.get(roleName)) {
             userDto.notifications.set(roleName, true);
-            page.buttons[0].setLabel('unsubscribe').setStyle('DANGER');
+            page.buttons[0].setLabel('unsubscribe').setStyle(ButtonStyle.Danger);
         } else {
             userDto.notifications.set(roleName, false);
-            page.buttons[0].setLabel('subscribe').setStyle('SUCCESS');
+            page.buttons[0].setLabel('subscribe').setStyle(ButtonStyle.Success);
         }
         userDb.set(member.id, userDto);
     } else if (member.roles.cache.has(role)) {
         await member.roles.remove(role);
-        page.buttons[0].setLabel('subscribe').setStyle('SUCCESS');
+        page.buttons[0].setLabel('subscribe').setStyle(ButtonStyle.Success);
     } else {
         await member.roles.add(role);
-        page.buttons[0].setLabel('unsubscribe').setStyle('DANGER');
+        page.buttons[0].setLabel('unsubscribe').setStyle(ButtonStyle.Danger);
     }
 }
 
@@ -51,10 +52,10 @@ async function handleOS(member, page, roleName) {
 
     if (member.roles.cache.has(role)) {
         await member.roles.remove(role);
-        page.buttons[buttonIndex].setStyle('SUCCESS');
+        page.buttons[buttonIndex].setStyle(ButtonStyle.Success);
     } else {
         await member.roles.add(role);
-        page.buttons[buttonIndex].setStyle('DANGER');
+        page.buttons[buttonIndex].setStyle(ButtonStyle.Danger);
     }
 }
 

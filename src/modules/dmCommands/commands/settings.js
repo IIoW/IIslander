@@ -1,4 +1,4 @@
-import { MessageButton } from 'discord.js';
+import { ButtonBuilder, ButtonStyle } from 'discord.js';
 import EmbedPage from '../../../dto/EmbedPage';
 import EmbedPageMessage from '../../../dto/EmbedPageMessage';
 import { userDb } from '../../../dbs';
@@ -15,24 +15,24 @@ export const desc = 'Configure your user settings.';
 async function getPages(user) {
     const userDto = userDb.get(user.id);
     const pages = [];
-    let subscribe = userDto.notifications.get('cooldown');
+    let subscribe = userDto.notifications.get('cooldownEnd');
     const cooldownPage = new EmbedPage(
         'cooldown',
         'Get notified if you are able to use your awards again',
         [
-            new MessageButton()
+            new ButtonBuilder()
                 .setLabel(subscribe ? 'unsubscribe' : 'subscribe')
-                .setStyle(subscribe ? 'DANGER' : 'SUCCESS')
-                .setCustomId('settings.cooldown'),
+                .setStyle(subscribe ? ButtonStyle.Danger : ButtonStyle.Success)
+                .setCustomId('settings.cooldownEnd'),
         ]
     );
     pages.push(cooldownPage);
 
     subscribe = userDto.notifications.get('twitter');
     const twitterPage = new EmbedPage('twitter', 'Get notified when Jwiggs tweets', [
-        new MessageButton()
+        new ButtonBuilder()
             .setLabel(subscribe ? 'unsubscribe' : 'subscribe')
-            .setStyle(subscribe ? 'DANGER' : 'SUCCESS')
+            .setStyle(subscribe ? ButtonStyle.Danger : ButtonStyle.Success)
             .setCustomId('settings.tweets'),
     ]);
     pages.push(twitterPage);
@@ -42,9 +42,9 @@ async function getPages(user) {
         'Levelup Pings',
         'Get notified when you level up or get awarded',
         [
-            new MessageButton()
+            new ButtonBuilder()
                 .setLabel(subscribe ? 'unsubscribe' : 'subscribe')
-                .setStyle(subscribe ? 'DANGER' : 'SUCCESS')
+                .setStyle(subscribe ? ButtonStyle.Danger : ButtonStyle.Success)
                 .setCustomId('settings.levelPing'),
         ]
     );
@@ -55,19 +55,25 @@ async function getPages(user) {
         'Operating System',
         'People use different Operating System. Choose the one you use below',
         [
-            new MessageButton({
+            new ButtonBuilder({
                 customId: `settings.os.windows`,
-                style: member.roles.cache.has(getRole('windows')) ? 'DANGER' : 'SUCCESS',
+                style: member.roles.cache.has(getRole('windows'))
+                    ? ButtonStyle.Danger
+                    : ButtonStyle.Success,
                 label: 'Windows (as useful as in space)',
             }),
-            new MessageButton({
+            new ButtonBuilder({
                 customId: `settings.os.linux`,
-                style: member.roles.cache.has(getRole('linux')) ? 'DANGER' : 'SUCCESS',
+                style: member.roles.cache.has(getRole('linux'))
+                    ? ButtonStyle.Danger
+                    : ButtonStyle.Success,
                 label: 'Linux (penguin gang)',
             }),
-            new MessageButton({
+            new ButtonBuilder({
                 customId: `settings.os.mac`,
-                style: member.roles.cache.has(getRole('mac')) ? 'DANGER' : 'SUCCESS',
+                style: member.roles.cache.has(getRole('mac'))
+                    ? ButtonStyle.Danger
+                    : ButtonStyle.Success,
                 label: 'Mac (with cheese please)',
             }),
         ]
@@ -76,18 +82,18 @@ async function getPages(user) {
 
     subscribe = member.roles.cache.has(getRole('subscriber'));
     const subscriberPage = new EmbedPage('Subscriber', 'Get Pinged, when Announcements are made', [
-        new MessageButton()
+        new ButtonBuilder()
             .setLabel(subscribe ? 'unsubscribe' : 'subscribe')
-            .setStyle(subscribe ? 'DANGER' : 'SUCCESS')
+            .setStyle(subscribe ? ButtonStyle.Danger : ButtonStyle.Success)
             .setCustomId('settings.subscriber'),
     ]);
     pages.push(subscriberPage);
 
     subscribe = member.roles.cache.has(getRole('tester'));
     const testerPage = new EmbedPage('Tester', 'Get access to test versions of the game', [
-        new MessageButton()
+        new ButtonBuilder()
             .setLabel(subscribe ? 'unsubscribe' : 'subscribe')
-            .setStyle(subscribe ? 'DANGER' : 'SUCCESS')
+            .setStyle(subscribe ? ButtonStyle.Danger : ButtonStyle.Success)
             .setCustomId('settings.tester'),
     ]);
     pages.push(testerPage);
