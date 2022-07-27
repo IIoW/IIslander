@@ -41,8 +41,12 @@ async function fun(client, interaction, args) {
                 }
             }
         } else {
+            const reply =
+                userDto.steamVia === 'owner'
+                    ? 'You are already a Steam Owner. You are unable to redeem a key.'
+                    : `You have already redeemed a key. Your key is ||${userDto.steamVia}||`;
             await interaction.editReply({
-                content: 'You already are a Steam Owner or have received a giveaway key.',
+                content: reply,
                 components: [],
             });
         }
