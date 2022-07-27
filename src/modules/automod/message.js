@@ -155,11 +155,12 @@ export async function messageCreate(_, message) {
  * @return {Promise<void>}
  */
 export async function messageUpdate(client, oldMessage, newMessage) {
+    if (newMessage.partial) await newMessage.fetch();
     if (
         !newMessage.author.bot &&
         newMessage.guild?.id === config.defaultGuild &&
         !containsSwear(oldMessage.partial ? await oldMessage.fetch() : oldMessage)
     ) {
-        await handleSwearing(newMessage.partial ? await newMessage.fetch() : newMessage);
+        await handleSwearing(newMessage);
     }
 }

@@ -1,6 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import Factions from '../../../constants/Factions';
 import { userDb } from '../../../dbs';
+import { getEmoji } from '../../../util';
 
 export const command = 'factions';
 export const desc = 'Shows an overview over the factions and lets you join them.';
@@ -29,8 +30,8 @@ export async function fun(client, message) {
                     ([name, faction]) =>
                         new ButtonBuilder({
                             customId: `faction.${message.author.id}.${name}`,
-                            style: ButtonStyle.Success,
-                            emoji: faction.emote,
+                            style: ButtonStyle.Primary,
+                            emoji: getEmoji(faction.emote).id,
                             label: faction.fullName,
                         })
                 )

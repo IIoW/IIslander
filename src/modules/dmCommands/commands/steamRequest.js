@@ -28,7 +28,7 @@ export async function fun(client, message) {
     }
     await message.author.send({
         content:
-            'You have a key that can be claimed!' +
+            'You have a key that can be claimed! ' +
             'By requesting a key, you are unable to declare yourself as an owner of the game to receive a special honorary role in the server. ' +
             'If you still want to confirm your request, click the `I want the key` button. ' +
             "If you want to declare yourself an owner of the game and forgo this key, click the `Ok, I don't want it` button and then type `steamowner`.",

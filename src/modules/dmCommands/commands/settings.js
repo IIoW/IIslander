@@ -15,7 +15,7 @@ export const desc = 'Configure your user settings.';
 async function getPages(user) {
     const userDto = userDb.get(user.id);
     const pages = [];
-    let subscribe = userDto.notifications.get('cooldown');
+    let subscribe = userDto.notifications.get('cooldownEnd');
     const cooldownPage = new EmbedPage(
         'cooldown',
         'Get notified if you are able to use your awards again',
@@ -23,7 +23,7 @@ async function getPages(user) {
             new ButtonBuilder()
                 .setLabel(subscribe ? 'unsubscribe' : 'subscribe')
                 .setStyle(subscribe ? ButtonStyle.Danger : ButtonStyle.Success)
-                .setCustomId('settings.cooldown'),
+                .setCustomId('settings.cooldownEnd'),
         ]
     );
     pages.push(cooldownPage);
