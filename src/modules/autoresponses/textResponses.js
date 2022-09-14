@@ -11,11 +11,12 @@ import { getChannel, makeTitle } from '../../util';
 export async function messageCreate(client, message) {
     // No auto responses in dm's or to bots
     if (!message.guild || message.author.bot) return;
+    if (message.channel.id !== getChannel('help').id && !message.mentions.has(client.user)) return;
     await Promise.all(
         responseDb.map(async (responseDto) => {
             const triggers = responseDto.trigger.some((trigger) =>
                 trigger instanceof RegExp
-                    ? message.content.toLowerCase().match(trigger)
+                    ? message.content.match(trigger)
                     : message.content
                           .toLowerCase()
                           .match(
@@ -23,11 +24,6 @@ export async function messageCreate(client, message) {
                           )
             );
             if (triggers) {
-                if (
-                    message.channel.id !== getChannel('help').id &&
-                    !message.mentions.has(client.user)
-                )
-                    return;
                 const msg = await message.channel.send(
                     `${makeTitle(responseDto.title)}\n\n${responseDto.response}`
                 );
