@@ -5,7 +5,10 @@ import { getChannel, sanitizeUserInput } from '../../util';
 
 const subscriptions = new Map();
 
-subscriptions.set('guildMemberAdd', async (client, member) => {
+subscriptions.set('guildMemberUpdate', async (client, oldMember, member) => {
+    // checks if the pending status (which is true while screening is still in progress) has changed.
+    // as it can only be set to false/null afterwards, this should work fine.
+    if (oldMember.pending === member.pending) return;
     if (member.guild.id !== config.defaultGuild) return;
     await member.send(welcomeMessage).catch((e) => console.error('Error sending dm', e));
 
