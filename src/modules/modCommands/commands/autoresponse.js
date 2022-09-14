@@ -72,7 +72,7 @@ async function fun(client, message, args) {
                     const old = acc[acc.length - 1];
                     let newEmbed = old;
                     if (
-                        old.fields.length >= 25 ||
+                        old.data.fields?.length >= 25 ||
                         countEmbedCharacters(old) + value.length + name.length > 6000
                     ) {
                         newEmbed = new EmbedBuilder();
