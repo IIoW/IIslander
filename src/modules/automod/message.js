@@ -3,7 +3,7 @@ import { logMessages, swearWarning } from '../../constants/Messages';
 import { xpCooldown } from '../../constants/Awards';
 import { getUserMod } from '../../permissions';
 import Mod from '../../constants/Mod';
-import { penalize } from '../../modUtil';
+import { penalize, timeout } from '../../modUtil';
 import config from '../../config';
 import { userDb } from '../../dbs';
 import { getChannel } from '../../util';
@@ -70,7 +70,7 @@ async function handleSwearing(message) {
                     .send(swearWarning[1])
                     .catch((e) => console.error('Error sending dm', e));
                 break;
-            default:
+            case 3:
                 await penalize(
                     message.author,
                     'SWEARING',
@@ -80,6 +80,19 @@ async function handleSwearing(message) {
                         .replace('[message]', message.content)
                         .replace('[match]', friendlyDisplay)
                         .replace('[level]', userDto.swearlevel)}`
+                );
+                break;
+            default:
+                await timeout(
+                    message.author,
+                    'SWEARING',
+                    `[automod] ${logMessages
+                        .get('swearing')
+                        .replace('[user]', message.member)
+                        .replace('[message]', message.content)
+                        .replace('[match]', friendlyDisplay)
+                        .replace('[level]', userDto.swearlevel)}`,
+                    Blacklist.swearTimeout
                 );
         }
         await getChannel('log').send(

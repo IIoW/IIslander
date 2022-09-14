@@ -4,7 +4,7 @@ import OffenseMultiplier from './constants/OffenseMultiplier';
 import OffenceDto from './dto/OffenceDto';
 import { getXpFromLevel, removeXp } from './xpHandling';
 import { userDb } from './dbs';
-import { getAndAddRole, getChannel, stringifyTimestamp } from './util';
+import { getChannel, stringifyTimestamp } from './util';
 
 /**
  * Information about different mod actions.
@@ -69,12 +69,10 @@ async function modActionCore({ user, type, reason, actionType, timeoutDuration =
     if (action.timeout) {
         // Maybe make this a function thats shared
         // between awards and this later
-        userDto.cooldown.set('timeout', endTime);
         const member = await user.client.guilds.cache
             .get(config.defaultGuild)
             .members.fetch(user.id);
-        await getAndAddRole('cooldown_timeout', member);
-        setTimeout(() => user.client.emit('cooldownEnd', 'timeout', user.id), timeoutDuration);
+        await member.disableCommunicationUntil(endTime);
     }
     // Have to set the thing before removing xp or
     // else it overwrites with the old numbers.
