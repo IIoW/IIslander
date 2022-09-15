@@ -6,6 +6,7 @@ import { getChannel, sanitizeUserInput } from '../../util';
 const subscriptions = new Map();
 
 subscriptions.set('guildMemberAdd', async (client, member) => {
+    if (member.guild.id !== config.defaultGuild) return;
     await member.send(welcomeMessage).catch((e) => console.error('Error sending dm', e));
 });
 
