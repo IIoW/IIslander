@@ -19,8 +19,9 @@ const genEmbed = async (message) => {
     const embed = new EmbedBuilder()
         .setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL() })
         .setColor(message.member.displayColor)
-        .setDescription(message.content)
         .setTimestamp(message.createdTimestamp);
+
+    if (message.content) embed.setDescription(message.content);
 
     if (message.attachments.size) {
         embed.setImage(message.attachments.first().url);

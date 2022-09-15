@@ -46,15 +46,13 @@ subscriptions.set('messageCreate', async (client, message) => {
             })
             .setColor(msg.member.displayColor)
             .setFooter({ text: `Requested by ${message.member.displayName}` })
-            .setTimestamp(msg.createdTimestamp)
-            .setURL(msg.url);
+            .setTimestamp(msg.createdTimestamp);
 
         const additionalEmbeds = [];
         if (msg.content) embed.setDescription(msg.content);
         if (msg.attachments.size) {
-            const imgs = msg.attachments.filter((a) => a.contentType.startsWith('image/'));
+            const imgs = msg.attachments.filter((a) => a.contentType?.startsWith('image/'));
             Array.from(imgs.entries()).forEach(([, a], i) => {
-                console.log(a, i);
                 if (i === 0) return embed.setImage(a.url);
                 if (i > 3) return null;
                 return additionalEmbeds.push(new EmbedBuilder().setImage(a.url).setURL(msg.url));
@@ -65,7 +63,6 @@ subscriptions.set('messageCreate', async (client, message) => {
             });
         }
 
-        console.log(embed, additionalEmbeds);
         await message.channel.send({ embeds: [embed, ...additionalEmbeds] });
     }
 });
