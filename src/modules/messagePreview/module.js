@@ -16,7 +16,6 @@ subscriptions.set('messageCreate', async (client, message) => {
     const sent = new Set();
     for (const msgData of messages) {
         // Avoid sending the same message twice
-        /* eslint-disable-next-line no-continue */
         if (sent.has(msgData.message)) continue;
         sent.add(msgData.message);
         // links need to be handled in order

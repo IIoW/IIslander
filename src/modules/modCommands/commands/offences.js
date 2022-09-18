@@ -1,4 +1,4 @@
-import { EmbedBuilder } from 'discord.js';
+import { Colors, EmbedBuilder } from 'discord.js';
 import { userDb } from '../../../dbs';
 import { fetchUser, stringifyTimestamp } from '../../../util';
 
@@ -44,7 +44,7 @@ async function fun(client, message, args) {
                     offence.modReason || 'Error Getting reason'
                 }`
             )
-            .setColor('Red');
+            .setColor(Colors.Red);
         return message.reply({ embeds: [embed] });
     }
     const { offences } = userDb.get(user.id);
@@ -80,7 +80,7 @@ async function fun(client, message, args) {
             }`
         )
         .addFields(fields)
-        .setColor('Red');
+        .setColor(Colors.Red);
     return message.reply({ embeds: [embed] });
 }
 
