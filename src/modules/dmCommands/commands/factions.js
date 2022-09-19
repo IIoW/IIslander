@@ -1,4 +1,4 @@
-import { MessageActionRow, MessageButton } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import Factions from '../../../constants/Factions';
 import { userDb } from '../../../dbs';
 import { getEmoji } from '../../../util';
@@ -25,13 +25,13 @@ export async function fun(client, message) {
                 ', '
             )}\nTo join one of them, in case you aren't in a faction already, click the buttons below.`,
         components: [
-            new MessageActionRow().addComponents(
+            new ActionRowBuilder().addComponents(
                 Object.entries(Factions).map(
                     ([name, faction]) =>
-                        new MessageButton({
+                        new ButtonBuilder({
                             customId: `faction.${message.author.id}.${name}`,
-                            style: 'PRIMARY',
-                            emoji: getEmoji(faction.emote),
+                            style: ButtonStyle.Primary,
+                            emoji: getEmoji(faction.emote).id,
                             label: faction.fullName,
                         })
                 )

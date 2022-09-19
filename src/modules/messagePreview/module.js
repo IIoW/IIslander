@@ -1,4 +1,4 @@
-import { MessageEmbed, Permissions } from 'discord.js';
+import { EmbedBuilder, PermissionsBitField } from 'discord.js';
 import config from '../../config';
 
 const subscriptions = new Map();
@@ -13,7 +13,11 @@ subscriptions.set('messageCreate', async (client, message) => {
 
     if (message.member) await message.guild.members.fetch(message.author);
 
+    const sent = new Set();
     for (const msgData of messages) {
+        // Avoid sending the same message twice
+        if (sent.has(msgData.message)) continue;
+        sent.add(msgData.message);
         // links need to be handled in order
         /* eslint-disable no-await-in-loop */
         const msg = await client.channels.cache
@@ -25,27 +29,40 @@ subscriptions.set('messageCreate', async (client, message) => {
         if (
             !msg.channel
                 .permissionsFor(message.author)
-                ?.has([Permissions.FLAGS.VIEW_CHANNEL, Permissions.FLAGS.READ_MESSAGE_HISTORY])
+                ?.has([
+                    PermissionsBitField.Flags.ViewChannel,
+                    PermissionsBitField.Flags.ReadMessageHistory,
+                ])
         )
             return;
         if (!msg.member) await msg.guild.members.fetch(msg.author);
 
-        const embed = new MessageEmbed()
-            .setAuthor(msg.member.displayName, msg.member.displayAvatarURL({ dynamic: true }))
-            .setDescription(msg.content)
+        const embed = new EmbedBuilder()
+            .setAuthor({
+                name: msg.member.displayName,
+                iconURL: msg.member.displayAvatarURL(),
+                url: msg.url,
+            })
             .setColor(msg.member.displayColor)
-            .setFooter(`Requested by ${message.member.displayName}`)
+            .setFooter({ text: `Requested by ${message.member.displayName}` })
             .setTimestamp(msg.createdTimestamp);
 
+        const additionalEmbeds = [];
+        if (msg.content) embed.setDescription(msg.content);
         if (msg.attachments.size) {
-            embed.setImage(msg.attachments.first().url);
-            embed.addField(
-                'Attachments:',
-                msg.attachments.map((a) => `[${a.name}](${a.url})`).join('\n')
-            );
+            const imgs = msg.attachments.filter((a) => a.contentType?.startsWith('image/'));
+            Array.from(imgs.entries()).forEach(([, a], i) => {
+                if (i === 0) return embed.setImage(a.url);
+                if (i > 3) return null;
+                return additionalEmbeds.push(new EmbedBuilder().setImage(a.url).setURL(msg.url));
+            });
+            embed.addFields({
+                name: 'Attachments:',
+                value: msg.attachments.map((a) => `[${a.name}](${a.url})`).join('\n'),
+            });
         }
 
-        await message.channel.send({ embeds: [embed] });
+        await message.channel.send({ embeds: [embed, ...additionalEmbeds] });
     }
 });
 

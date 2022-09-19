@@ -39,6 +39,9 @@ const swearWords = new Map([
     ['vagina', 3],
 ]);
 
+const swearTimeout = 10; // Minutes
+
 export default {
     swearWords,
+    swearTimeout,
 };

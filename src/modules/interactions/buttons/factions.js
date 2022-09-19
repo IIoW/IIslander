@@ -13,7 +13,10 @@ const command = 'faction';
 async function fun(client, interaction, args) {
     const userDto = userDb.get(args[0]);
     if (userDto.faction !== '')
-        return interaction.reply('You are already in a faction. Switching is not allowed.');
+        return interaction.update({
+            content: 'You are already in a faction. Switching is not allowed.',
+            components: [],
+        });
 
     const faction = Factions[args[1]];
     const member = await getMember(args[0]);
@@ -33,8 +36,9 @@ async function fun(client, interaction, args) {
         .get(faction.channels.chat)
         .send(`Welcome to the ${faction.fullName}, ${sanitizeUserInput(member.displayName)}`);
 
-    return interaction.reply({
+    return interaction.update({
         content: faction.joinMessages[Math.floor(Math.random() * faction.joinMessages.length)],
+        components: [],
     });
 }
 

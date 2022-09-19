@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { countEmbedCharacters, fetchChannel } from '../../../util';
 
 const info = {
@@ -16,26 +16,27 @@ const info = {
  */
 const genEmbed = async (message) => {
     if (!message.member) await message.guild.members.fetch(message.author);
-    const embed = new MessageEmbed()
-        .setAuthor(message.member.displayName, message.member.displayAvatarURL({ dynamic: true }))
+    const embed = new EmbedBuilder()
+        .setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL() })
         .setColor(message.member.displayColor)
-        .setDescription(message.content)
         .setTimestamp(message.createdTimestamp);
+
+    if (message.content) embed.setDescription(message.content);
 
     if (message.attachments.size) {
         embed.setImage(message.attachments.first().url);
-        embed.addField(
-            'Attachments:',
-            message.attachments.map((a) => `[${a.name}](${a.url})`).join('\n')
-        );
+        embed.addFields({
+            name: 'Attachments:',
+            value: message.attachments.map((a) => `[${a.name}](${a.url})`).join('\n'),
+        });
     }
     if (message.embeds.length) {
-        embed.addField(
-            'Embeds:',
-            `The next **${message.embeds.length}** embed${
+        embed.addFields({
+            name: 'Embeds:',
+            value: `The next **${message.embeds.length}** embed${
                 message.embeds.length === 1 ? ' was' : 's were'
-            } attached to this message.`
-        );
+            } attached to this message.`,
+        });
     }
 
     return [embed, ...message.embeds];
@@ -56,7 +57,7 @@ const move = async (message, limit, channel, after = null) => {
         );
     }
     const toMove = [
-        new MessageEmbed()
+        new EmbedBuilder()
             .setTitle('Moved Messages')
             .setDescription(`\`${msg.size}\` messages moved from ${message.channel}!`),
         ...(await Promise.all(msg.map(genEmbed).reverse())),
@@ -109,7 +110,8 @@ async function fun(client, message, args) {
     const input = args.shift();
     const channel = fetchChannel(args.shift() || '');
     if (!input) return message.reply('Please provide a number or message.');
-    if (!channel || !channel.isText()) return message.reply('Please provide a valid text channel.');
+    if (!channel || !channel.isTextBased())
+        return message.reply('Please provide a valid text channel.');
     const num = parseInt(input, 10);
     // Not a valid number and not a valid message.
     if (num < 2)

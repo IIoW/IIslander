@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import ResponseDto from '../../../dto/ResponseDto';
 import { responseDb } from '../../../dbs';
 import { countEmbedCharacters, makeTitle } from '../../../util';
@@ -72,17 +72,17 @@ async function fun(client, message, args) {
                     const old = acc[acc.length - 1];
                     let newEmbed = old;
                     if (
-                        old.fields.length >= 25 ||
+                        old.data.fields?.length >= 25 ||
                         countEmbedCharacters(old) + value.length + name.length > 6000
                     ) {
-                        newEmbed = new MessageEmbed();
+                        newEmbed = new EmbedBuilder();
                         acc.push(newEmbed);
                     }
-                    newEmbed.addField(name, value, true);
+                    newEmbed.addFields({ name, value, inline: true });
                     return acc;
                 },
                 [
-                    new MessageEmbed()
+                    new EmbedBuilder()
                         .setTitle('Auto Responses')
                         .setDescription(
                             `Total auto responses: ${responseDb.size}${

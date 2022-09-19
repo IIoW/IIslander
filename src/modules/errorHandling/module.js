@@ -11,7 +11,9 @@ function error(client, exception, additionalInfo) {
     if (!additionalInfo) console.error(`An error occurred:\n${exception.stack}`);
     else
         console.error(
-            `An error occurred in function ${additionalInfo.name} in event ${additionalInfo.event}:\n${exception.stack}`
+            `A "${exception.name || 'Error'}" occurred in function ${
+                additionalInfo.name
+            } in event ${additionalInfo.event}:\n${exception.stack}`
         );
 }
 /**
