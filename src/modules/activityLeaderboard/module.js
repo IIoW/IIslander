@@ -69,14 +69,17 @@ const updateLeaderboards = async () => {
 };
 
 subscriptions.set('ready', async () => {
-    setInterval(async () => {
-        try {
-            await updateLeaderboards();
-        } catch (e) {
-            console.error('Error updating leaderboards:');
-            console.error(e);
-        }
-    }, 3 * 60 * 1000);
+    setInterval(
+        async () => {
+            try {
+                await updateLeaderboards();
+            } catch (e) {
+                console.error('Error updating leaderboards:');
+                console.error(e);
+            }
+        },
+        3 * 60 * 1000
+    );
     await updateLeaderboards();
 });
 

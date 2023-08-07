@@ -37,6 +37,7 @@ export const xpCooldown = {
     tier6dev: 5 * 24 * 60 * 60 * 1000,
     swearing: 60 * 60 * 1000,
     everyoneping: 60 * 60 * 1000,
+    inviteSend: 60 * 60 * 1000,
 };
 
 export const emojiStarValue = {

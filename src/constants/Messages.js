@@ -41,6 +41,10 @@ const logMessages = new Map([
         '[user] swore.\nMessage: `[message]`\nTriggered on: `[match]`\nTotal Swear Level: `[level]`',
     ],
     ['everyoneping', '[user] pinged everyone. Message was deleted.\nMessage: `[message]`'],
+    [
+        'inviteSend',
+        '[user] sent an invite link. Message was deleted.\nInvites: `[invites]`\nMessage: `[message]`',
+    ],
 ]);
 
 const twitterMessages = [

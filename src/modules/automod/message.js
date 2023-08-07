@@ -1,12 +1,13 @@
 import Blacklist from '../../constants/Blacklist';
 import { logMessages, swearWarning } from '../../constants/Messages';
 import { xpCooldown } from '../../constants/Awards';
-import { getUserMod } from '../../permissions';
+import { getUserLevel, getUserMod } from '../../permissions';
 import Mod from '../../constants/Mod';
 import { penalize, timeout } from '../../modUtil';
 import config from '../../config';
 import { userDb } from '../../dbs';
 import { getChannel } from '../../util';
+import Levels from '../../constants/Levels';
 
 /**
  * Checks if a message contains a swear
@@ -146,6 +147,79 @@ async function handlePings(message) {
     }
 }
 
+let inviteCache = [0, new Map()];
+/**
+ * @param {import('discord.js').Guild} guild
+ */
+const getInvites = async (guild) => {
+    const now = Date.now();
+    if (now - inviteCache[0] > 1000 * 60 * 60) {
+        // 1 hour
+        inviteCache = [now, new Map()];
+        const invites = await guild.invites.fetch();
+        invites.forEach((invite) => inviteCache[1].set(invite.code, invite));
+    }
+    return inviteCache[1];
+};
+
+const inviteRegex =
+    /(?:discord\.gg|discordapp\.com\/invite|discord\.com\/invite)\s*\/\s*([a-zA-Z0-9-]+)/gi;
+/**
+ * @param {import('discord.js').Message} message
+ * @return {Promise<void>}
+ */
+async function handleInvites(message) {
+    const { user: userLevel, mod } = getUserLevel(message.member);
+    if (mod >= Mod.ENFORCER) return;
+    if (userLevel >= Levels.LEGENDARY) return;
+    const matchedInvites = [...message.content.matchAll(inviteRegex)];
+    if (!matchedInvites.length) return;
+    const invites = await getInvites(message.guild);
+    let valid = true;
+    const matchedCodes = new Set();
+    for (const [, code] of matchedInvites) {
+        if (!invites.has(code)) {
+            valid = false;
+            matchedCodes.add(code);
+        }
+    }
+    if (valid) return;
+    const userDto = userDb.get(message.author.id);
+    const now = Date.now();
+    const cooldown = userDto.cooldown.get('inviteSend');
+    if (now > cooldown) {
+        userDto.inviteSend = 0; // resets the invite counter, if time ran out
+    }
+    userDto.inviteSend += 1;
+    await message.delete();
+    userDto.cooldown.set('inviteSend', now + xpCooldown.inviteSend);
+    userDb.set(message.author.id, userDto);
+    await getChannel('log').send(
+        logMessages
+            .get('inviteSend')
+            .replace('[user]', message.member)
+            .replace('[message]', message.content)
+            .replace('[invites]', Array.from(matchedCodes).join(', '))
+    );
+    switch (userDto.inviteSend) {
+        case 1:
+        case 2:
+            await message.author
+                .send(
+                    'You are unable to send invites. If you believe that your invite will be beneficial to the server, please contact a moderator. Repeat offenders will be punished.'
+                )
+                .catch((e) => console.error('Error sending dm', e));
+            break;
+        default:
+            await timeout(
+                message.author,
+                'ADVERTISE',
+                '[automod] User send too many invites',
+                /* 24 hours */ 60 * 24
+            );
+    }
+}
+
 /**
  *
  * @param {import('discord.js').Client} _
@@ -158,6 +232,7 @@ export async function messageCreate(_, message) {
     if (message.guild?.id !== config.defaultGuild) return;
     await handleSwearing(message);
     await handlePings(message);
+    await handleInvites(message);
 }
 
 /**

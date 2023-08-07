@@ -1,5 +1,5 @@
-import { Collection } from 'discord.js';
 import fs from 'fs/promises';
+import { Collection } from 'discord.js';
 
 const commands = new Collection();
 
